@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/refersion/main/json-schema/conversion-trigger.json",
+  "title": "ConversionTrigger",
+  "description": "A mechanism used to attribute a conversion to a specific affiliate.",
+  "type": "object",
+  "required": ["affiliate_code", "type", "trigger"],
+  "properties": {
+    "trigger_id": {
+      "type": "integer",
+      "description": "Unique numeric identifier for this trigger."
+    },
+    "affiliate_code": {
+      "type": "string",
+      "description": "The affiliate's Refersion code."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["COUPON", "SKU", "EMAIL"],
+      "description": "The type of conversion trigger."
+    },
+    "trigger": {
+      "type": "string",
+      "description": "The trigger value: a coupon code, SKU string, or email address."
+    }
+  }
+}

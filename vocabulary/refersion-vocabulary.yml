@@ -1,0 +1,98 @@
+vocabulary:
+  - term: affiliate
+    definition: >
+      A person or organization enrolled in a Refersion program who promotes a
+      merchant's products and earns commissions for referred sales or actions.
+    related:
+      - affiliate_code
+      - offer
+      - conversion_trigger
+
+  - term: affiliate_code
+    definition: >
+      A short alphanumeric identifier (e.g. "a3y7") that uniquely represents an
+      affiliate within Refersion. Used to construct referral links and assign
+      conversion triggers.
+
+  - term: offer
+    definition: >
+      A commission program configuration within Refersion that defines commission
+      rates, eligibility rules, and the set of products or SKUs covered. An affiliate
+      is enrolled into one offer at a time.
+
+  - term: conversion
+    definition: >
+      A tracked purchase or qualifying action that is attributed to an affiliate.
+      Conversions carry an order total, commissionable amount, and commission value.
+    related:
+      - conversion_trigger
+      - conversion_status
+
+  - term: conversion_trigger
+    definition: >
+      A mechanism used to attribute a conversion to a specific affiliate. Can be
+      a coupon code (COUPON), a product SKU (SKU), or an email address (EMAIL).
+
+  - term: conversion_status
+    definition: >
+      The approval state of a conversion. Possible values are PENDING, APPROVED,
+      UNQUALIFIED, and DENIED.
+
+  - term: cancellation_conversion
+    definition: >
+      A negative conversion submitted when an order or line item is cancelled or
+      refunded, reversing the associated commission credit.
+
+  - term: commission
+    definition: >
+      The monetary amount earned by an affiliate for a conversion. Can be
+      calculated as a percentage of sale (PERCENT_OF_SALE) or as a flat rate
+      (FLAT_RATE).
+
+  - term: sku_commission
+    definition: >
+      A product-level commission override that assigns a specific commission
+      type and amount to an individual SKU within an offer. Requires a plan
+      that supports SKU/Product Level Commissions.
+
+  - term: manual_credit
+    definition: >
+      An administrative action that directly creates a conversion record for
+      an affiliate, bypassing normal tracking. Can credit a specific commission
+      amount or re-attribute an existing order ID.
+
+  - term: unique_merchant_id
+    definition: >
+      An optional alphanumeric string set by the merchant to map their internal
+      user or customer identifier to an affiliate account in Refersion.
+
+  - term: affiliate_status
+    definition: >
+      The approval state of an affiliate account. Possible values are PENDING,
+      ACTIVE, DENIED, and DISABLED.
+
+  - term: referral_link
+    definition: >
+      The unique URL assigned to an affiliate that tracks clicks and conversions
+      back to that affiliate's account.
+
+  - term: report
+    definition: >
+      A pre-configured data export in Refersion that summarizes affiliate
+      performance, commission details, or conversion data. Can be downloaded
+      via a time-limited public link.
+
+  - term: payment_status
+    definition: >
+      Indicates whether a conversion's commission has been paid to the affiliate.
+      Values are PAID or UNPAID.
+
+  - term: public_key
+    definition: >
+      The Refersion-Public-Key header credential that identifies the merchant
+      account. Used together with the secret key for all API authentication.
+
+  - term: secret_key
+    definition: >
+      The Refersion-Secret-Key header credential used in combination with the
+      public key to authenticate API requests. Must be kept confidential.

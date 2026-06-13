@@ -29,7 +29,7 @@ apis:
       - type: Documentation
         url: https://www.refersion.dev/reference/welcome-to-refersion
       - type: OpenAPI
-        url: https://www.refersion.dev/llms.txt
+        url: https://raw.githubusercontent.com/api-evangelist/refersion/refs/heads/main/openapi/refersion-rest-api-openapi.yml
   - aid: refersion:refersion-graphql-api
     name: Refersion GraphQL API
     description: GraphQL API providing an explorer interface for querying affiliate data, managing program configurations, and integrating with e-commerce platforms.
@@ -80,6 +80,10 @@ common:
     url: rate-limits/refersion-rate-limits.yml
   - type: FinOps
     url: finops/refersion-finops.yml
+  - type: Vocabulary
+    url: vocabulary/refersion-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/refersion-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

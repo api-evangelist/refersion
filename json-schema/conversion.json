@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/refersion/main/json-schema/conversion.json",
+  "title": "Conversion",
+  "description": "A tracked purchase or qualifying action attributed to an affiliate.",
+  "type": "object",
+  "properties": {
+    "conversion_id": {
+      "type": ["string", "integer"],
+      "description": "Unique identifier for the conversion."
+    },
+    "order_id": {
+      "type": "string",
+      "description": "The order ID from the merchant's e-commerce platform."
+    },
+    "affiliate_id": {
+      "type": "integer",
+      "description": "The numeric ID of the affiliate this conversion is attributed to."
+    },
+    "offer_id": {
+      "type": "integer",
+      "description": "The ID of the offer under which this conversion was recorded."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PENDING", "APPROVED", "UNQUALIFIED", "DENIED"],
+      "description": "The approval status of the conversion."
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": ["PAID", "UNPAID"],
+      "description": "Whether the commission for this conversion has been paid."
+    },
+    "commission_total": {
+      "type": "number",
+      "description": "The total commission earned for this conversion."
+    },
+    "order_total": {
+      "type": "number",
+      "description": "The total order value."
+    },
+    "commissionable_order_total": {
+      "type": "number",
+      "description": "The portion of the order total that is commissionable."
+    },
+    "currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3,
+      "description": "Three-letter ISO currency code."
+    },
+    "is_test_conversion": {
+      "type": "boolean",
+      "description": "Whether this is a test conversion."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "AFFILIATE_SITE_CONVERSION",
+        "MANUAL_CREDIT_BY_CLIENT",
+        "CONVERSION_TRIGGER_SKU",
+        "CONVERSION_TRIGGER_COUPON",
+        "CONVERSION_TRIGGER_EMAIL",
+        "AUTO_CREDIT_AFFILIATE_ID",
+        "CANCELLATION_AFFILIATE_SITE_CONVERSION",
+        "CANCELLATION_MANUAL_CREDIT_BY_CLIENT",
+        "CANCELLATION_CONVERSION_TRIGGER_SKU",
+        "CANCELLATION_CONVERSION_TRIGGER_COUPON",
+        "CANCELLATION_CONVERSION_TRIGGER_EMAIL",
+        "CANCELLATION_AUTO_CREDIT_AFFILIATE_ID"
+      ],
+      "description": "The mechanism by which the conversion was tracked."
+    },
+    "items": {
+      "type": "array",
+      "description": "Line items associated with this conversion.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "Product SKU."
+          },
+          "price": {
+            "type": "number",
+            "description": "Unit price."
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity ordered."
+          }
+        },
+        "required": ["sku"]
+      }
+    }
+  }
+}

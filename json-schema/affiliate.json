@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/refersion/main/json-schema/affiliate.json",
+  "title": "Affiliate",
+  "description": "An affiliate enrolled in a Refersion program.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The affiliate's unique code (e.g. 'a3y7')."
+    },
+    "offer_id": {
+      "type": "string",
+      "description": "The ID of the offer the affiliate is enrolled in."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PENDING", "ACTIVE", "DENIED", "DISABLED"],
+      "description": "The affiliate's approval status."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "The affiliate's first name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "The affiliate's last name."
+    },
+    "company_name": {
+      "type": "string",
+      "description": "The affiliate's company name."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The affiliate's registered email address."
+    },
+    "link": {
+      "type": "string",
+      "format": "uri",
+      "description": "The affiliate's referral link."
+    },
+    "custom_fields": {
+      "type": "array",
+      "description": "Custom registration field values.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "The custom field label from the registration form."
+          },
+          "value": {
+            "type": "string",
+            "description": "The affiliate's submitted value."
+          }
+        }
+      }
+    }
+  }
+}

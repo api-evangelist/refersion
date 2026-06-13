@@ -1,0 +1,15 @@
+{
+  "order_id": "ORDER-9001",
+  "items": [
+    {
+      "sku": "TSHIRT-MEDIUM-BLUE",
+      "price": 29.99,
+      "quantity": 2
+    },
+    {
+      "sku": "HAT-ONE-SIZE",
+      "price": 14.99,
+      "quantity": 1
+    }
+  ]
+}

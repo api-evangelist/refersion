@@ -1,0 +1,23 @@
+{
+  "offer_id": "12345",
+  "skus": [
+    {
+      "sku": "TSHIRT-SMALL-RED",
+      "product_description": "T-Shirt Red (Small)",
+      "commission_type": "FLAT_RATE",
+      "commission_amount": "5"
+    },
+    {
+      "sku": "TSHIRT-SMALL-BLUE",
+      "product_description": "T-Shirt Blue (Small)",
+      "commission_type": "PERCENT_OF_SALE",
+      "commission_amount": "25"
+    },
+    {
+      "sku": "PANTS-LARGE-BLACK",
+      "product_description": "Pants Black (Large)",
+      "commission_type": "PERCENT_OF_SALE",
+      "commission_amount": "10"
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "refersion": "https://www.refersion.com/ontology/",
+
+    "Affiliate": "refersion:Affiliate",
+    "Offer": "refersion:Offer",
+    "Conversion": "refersion:Conversion",
+    "ConversionTrigger": "refersion:ConversionTrigger",
+    "Commission": "refersion:Commission",
+    "SkuCommission": "refersion:SkuCommission",
+    "Report": "refersion:Report",
+
+    "id": {
+      "@id": "refersion:affiliateCode",
+      "@type": "xsd:string"
+    },
+    "offer_id": {
+      "@id": "refersion:offerId",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "refersion:status",
+      "@type": "xsd:string"
+    },
+    "affiliate_status": {
+      "@id": "refersion:affiliateStatus",
+      "@type": "xsd:string"
+    },
+    "conversion_status": {
+      "@id": "refersion:conversionStatus",
+      "@type": "xsd:string"
+    },
+    "payment_status": {
+      "@id": "refersion:paymentStatus",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "schema:givenName",
+      "@type": "xsd:string"
+    },
+    "last_name": {
+      "@id": "schema:familyName",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "company": {
+      "@id": "schema:legalName",
+      "@type": "xsd:string"
+    },
+    "company_name": {
+      "@id": "schema:legalName",
+      "@type": "xsd:string"
+    },
+    "paypal_email": {
+      "@id": "refersion:paypalEmail",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "schema:telephone",
+      "@type": "xsd:string"
+    },
+    "address1": {
+      "@id": "schema:streetAddress",
+      "@type": "xsd:string"
+    },
+    "address2": {
+      "@id": "refersion:addressLine2",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "schema:addressLocality",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "schema:addressRegion",
+      "@type": "xsd:string"
+    },
+    "zip": {
+      "@id": "schema:postalCode",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "schema:addressCountry",
+      "@type": "xsd:string"
+    },
+    "link": {
+      "@id": "refersion:referralLink",
+      "@type": "xsd:anyURI"
+    },
+    "custom_fields": {
+      "@id": "refersion:customFields",
+      "@container": "@list"
+    },
+    "unique_merchant_id": {
+      "@id": "refersion:uniqueMerchantId",
+      "@type": "xsd:string"
+    },
+    "conversion_trigger_coupon": {
+      "@id": "refersion:conversionTriggerCoupon",
+      "@type": "xsd:string"
+    },
+    "send_welcome": {
+      "@id": "refersion:sendWelcomeEmail",
+      "@type": "xsd:boolean"
+    },
+    "trigger": {
+      "@id": "refersion:triggerValue",
+      "@type": "xsd:string"
+    },
+    "trigger_id": {
+      "@id": "refersion:triggerId",
+      "@type": "xsd:integer"
+    },
+    "type": {
+      "@id": "refersion:triggerType",
+      "@type": "xsd:string"
+    },
+    "order_id": {
+      "@id": "refersion:orderId",
+      "@type": "xsd:string"
+    },
+    "conversion_id": {
+      "@id": "refersion:conversionId",
+      "@type": "xsd:string"
+    },
+    "commission": {
+      "@id": "refersion:commissionAmount",
+      "@type": "xsd:decimal"
+    },
+    "commission_total": {
+      "@id": "refersion:commissionTotal",
+      "@type": "xsd:decimal"
+    },
+    "order_total": {
+      "@id": "refersion:orderTotal",
+      "@type": "xsd:decimal"
+    },
+    "commissionable_order_total": {
+      "@id": "refersion:commissionableOrderTotal",
+      "@type": "xsd:decimal"
+    },
+    "conversions_count": {
+      "@id": "refersion:conversionsCount",
+      "@type": "xsd:integer"
+    },
+    "currency": {
+      "@id": "schema:currency",
+      "@type": "xsd:string"
+    },
+    "notes": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "sku": {
+      "@id": "schema:sku",
+      "@type": "xsd:string"
+    },
+    "product_description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "commission_type": {
+      "@id": "refersion:commissionType",
+      "@type": "xsd:string"
+    },
+    "commission_amount": {
+      "@id": "refersion:commissionAmount",
+      "@type": "xsd:string"
+    },
+    "report_id": {
+      "@id": "refersion:reportId",
+      "@type": "xsd:integer"
+    },
+    "download_link": {
+      "@id": "refersion:downloadLink",
+      "@type": "xsd:anyURI"
+    },
+    "expire_time": {
+      "@id": "refersion:expireTime",
+      "@type": "xsd:integer"
+    },
+    "ids_changed": {
+      "@id": "refersion:idsChanged",
+      "@container": "@list"
+    },
+    "ids_not_changed": {
+      "@id": "refersion:idsNotChanged",
+      "@container": "@list"
+    },
+    "total": {
+      "@id": "refersion:totalCount",
+      "@type": "xsd:integer"
+    },
+    "results": {
+      "@id": "refersion:results",
+      "@container": "@list"
+    },
+    "items": {
+      "@id": "refersion:items",
+      "@container": "@list"
+    },
+    "skus": {
+      "@id": "refersion:skus",
+      "@container": "@list"
+    },
+    "added": {
+      "@id": "refersion:skusAdded",
+      "@container": "@list"
+    },
+    "duplicate_not_added": {
+      "@id": "refersion:skusDuplicateNotAdded",
+      "@container": "@list"
+    },
+    "affiliates": {
+      "@id": "refersion:affiliates",
+      "@container": "@list"
+    },
+    "ids": {
+      "@id": "refersion:ids",
+      "@container": "@list"
+    },
+    "keyword": {
+      "@id": "refersion:searchKeyword",
+      "@type": "xsd:string"
+    },
+    "limit": {
+      "@id": "refersion:pageLimit",
+      "@type": "xsd:integer"
+    },
+    "page": {
+      "@id": "refersion:pageNumber",
+      "@type": "xsd:integer"
+    },
+    "is_test_conversion": {
+      "@id": "refersion:isTestConversion",
+      "@type": "xsd:boolean"
+    },
+    "created_from": {
+      "@id": "refersion:createdFrom",
+      "@type": "xsd:dateTime"
+    },
+    "created_to": {
+      "@id": "refersion:createdTo",
+      "@type": "xsd:dateTime"
+    },
+    "affiliate_id": {
+      "@id": "refersion:affiliateId",
+      "@type": "xsd:integer"
+    },
+    "label": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "schema:value",
+      "@type": "xsd:string"
+    },
+    "price": {
+      "@id": "schema:price",
+      "@type": "xsd:decimal"
+    },
+    "quantity": {
+      "@id": "schema:orderQuantity",
+      "@type": "xsd:integer"
+    },
+    "message": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "warning": {
+      "@id": "refersion:warning",
+      "@type": "xsd:string"
+    },
+    "error": {
+      "@id": "refersion:error",
+      "@type": "xsd:string"
+    },
+    "errors": {
+      "@id": "refersion:errors",
+      "@container": "@list"
+    }
+  }
+}
