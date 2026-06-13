@@ -1,0 +1,79 @@
+name: Refersion FinOps
+description: Financial operations framework for Refersion API usage, covering cost allocation, usage tracking, and optimization strategies for affiliate marketing platform API consumption.
+specificationVersion: '1.0'
+url: https://www.refersion.com/pricing/
+framework: FinOps Foundation FOCUS 1.0
+costs:
+  - name: Launch Plan
+    description: Base monthly subscription for the Launch plan covering unlimited affiliates and conversion tracking with basic API access.
+    type: subscription
+    price: 39.00
+    unit: month
+    currency: USD
+    category: Platform
+    tags:
+      - Base Cost
+      - Subscription
+  - name: Growth Plan
+    description: Mid-tier monthly subscription with expanded integrations including coupon creation via API, suitable for growing affiliate programs.
+    type: subscription
+    price: 299.00
+    unit: month
+    currency: USD
+    annualPrice: 249.00
+    annualUnit: month
+    category: Platform
+    tags:
+      - Base Cost
+      - Subscription
+      - API Access
+  - name: Scale Plan - Monthly
+    description: Full-featured plan with complete developer API access, webhooks, multi-store tracking. Pricing starts at $599/month plus 1% transaction fee on affiliate-driven sales.
+    type: subscription
+    price: 599.00
+    unit: month
+    currency: USD
+    category: Platform
+    tags:
+      - Base Cost
+      - Subscription
+      - Full API Access
+      - Webhooks
+  - name: Scale Plan - Annual
+    description: Annual Scale plan at $479/month with 0% transaction fees for stores up to $1M annual GMV.
+    type: subscription
+    price: 479.00
+    unit: month
+    currency: USD
+    category: Platform
+    tags:
+      - Annual
+      - Full API Access
+      - Webhooks
+  - name: Transaction Fee
+    description: 1% fee applied to affiliate-driven sales on the monthly Scale plan. Waived on annual Scale plan for stores up to $1M GMV.
+    type: variable
+    rate: 0.01
+    unit: affiliate-driven-sales
+    currency: USD
+    category: Usage
+    tags:
+      - Variable Cost
+      - Transaction Fee
+optimization:
+  - name: Annual Billing Discount
+    description: Switching from monthly to annual billing on the Growth plan saves $50/month ($600/year). Annual Scale plan eliminates the 1% transaction fee for stores up to $1M GMV.
+    savings: Up to $600/year on Growth; eliminates transaction fees on Scale for stores under $1M GMV
+  - name: Plan Right-Sizing
+    description: Evaluate whether full developer API and webhook access (Scale plan) is required, or if Growth plan coupon API access is sufficient for integration needs.
+    recommendation: Start on Growth if coupon creation via API meets integration requirements; upgrade to Scale only when full REST API, webhooks, or multi-store tracking is needed
+  - name: Transaction Fee Avoidance
+    description: High-volume stores should compare the annual Scale plan ($479/month, 0% fees) against the monthly plan ($599/month + 1% of affiliate sales) to determine break-even point.
+    recommendation: Annual plan is cost-effective when monthly affiliate-driven sales exceed $12,000
+allocation:
+  - dimension: Plan Tier
+    description: Allocate base subscription costs by plan tier selected (Launch, Growth, Scale)
+  - dimension: API Usage
+    description: Track API call volume against plan tier limits; attribute costs to integration projects or business units consuming the API
+  - dimension: Affiliate-Driven Revenue
+    description: Track transaction fees (Scale monthly plan) against affiliate-driven GMV to allocate variable costs accurately

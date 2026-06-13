@@ -1,0 +1,85 @@
+aid: refersion
+name: Refersion
+description: Affiliate marketing platform for e-commerce brands providing a REST and GraphQL API for managing affiliates, tracking referrals, processing commissions, and integrating with Shopify, BigCommerce, WooCommerce, and other platforms.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/refersion/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Affiliate Marketing
+  - Influencer Marketing
+  - E-Commerce
+  - Referral Tracking
+  - Commission Management
+  - Shopify
+apis:
+  - aid: refersion:refersion-rest-api
+    name: Refersion REST API
+    description: RESTful API for managing affiliates, tracking conversions, processing commissions, configuring SKU-level commission rates, and generating performance reports.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://www.refersion.dev/reference/welcome-to-refersion
+    baseURL: https://api.refersion.com
+    tags:
+      - Affiliates
+      - Conversions
+      - Commissions
+      - Referral Tracking
+    properties:
+      - type: Documentation
+        url: https://www.refersion.dev/reference/welcome-to-refersion
+      - type: OpenAPI
+        url: https://www.refersion.dev/llms.txt
+  - aid: refersion:refersion-graphql-api
+    name: Refersion GraphQL API
+    description: GraphQL API providing an explorer interface for querying affiliate data, managing program configurations, and integrating with e-commerce platforms.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://www.refersion.dev/reference/graphql-overview
+    baseURL: https://api.refersion.com/graphql
+    tags:
+      - GraphQL
+      - Affiliates
+      - E-Commerce
+    properties:
+      - type: Documentation
+        url: https://www.refersion.dev/reference/graphql-overview
+  - aid: refersion:refersion-webhooks-api
+    name: Refersion Webhooks API
+    description: Webhook API for receiving real-time notifications about affiliate activity, including new conversions, conversion approvals/denials, payments, affiliate status changes, and bonus tier movements.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://www.refersion.dev/reference/webhooks-for-merchants
+    baseURL: https://api.refersion.com
+    tags:
+      - Webhooks
+      - Conversions
+      - Affiliates
+      - Events
+    properties:
+      - type: Documentation
+        url: https://www.refersion.dev/reference/webhooks-for-merchants
+common:
+  - type: Website
+    url: https://www.refersion.com/
+  - type: Documentation
+    url: https://www.refersion.dev/reference/welcome-to-refersion
+  - type: GitHubOrg
+    url: https://github.com/refersion
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/refersion
+  - type: Blog
+    url: https://www.refersion.com/blog/
+  - type: Pricing
+    url: https://www.refersion.com/pricing/
+  - type: StatusPage
+    url: https://statuspage.refersion.com
+  - type: X
+    url: https://x.com/refersion
+  - type: Plans
+    url: plans/refersion-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/refersion-rate-limits.yml
+  - type: FinOps
+    url: finops/refersion-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,27 @@
+name: Refersion Rate Limits
+description: Rate limiting policies for the Refersion REST and GraphQL APIs. Specific rate limit thresholds are not publicly documented; limits are enforced per API key and vary by plan tier.
+specificationVersion: '0.1'
+url: https://www.refersion.dev/reference/welcome-to-refersion
+limits:
+  - name: API Key Rate Limit
+    description: Requests to the Refersion REST API are rate limited per API key. Exact request-per-minute or request-per-hour thresholds are not publicly disclosed and may vary by plan tier.
+    scope: api-key
+    type: requests
+    notes: Contact Refersion support for specific rate limit thresholds applicable to your plan.
+  - name: GraphQL Query Limit
+    description: GraphQL API queries are subject to complexity and depth limits enforced by the platform. Specific thresholds are not publicly documented.
+    scope: api-key
+    type: complexity
+    notes: Use the GraphQL Explorer (Voyager) tool in the developer portal to evaluate query complexity before production use.
+  - name: Webhook Delivery
+    description: Webhook events are delivered in near-real-time for supported event types. Webhook access is restricted to Scale and Enterprise plans.
+    scope: account
+    type: events
+    notes: Available only on Scale plan and above. Events include New Conversion, Conversion Approved, Conversion Denied, New Payment, New Affiliate, Affiliate Status Change, Affiliate Details Change, New Conversion Trigger, and Bonus Tier Movement.
+authentication:
+  - type: API Key
+    description: API key-based authentication is used for the Refersion REST API. Keys are generated within the merchant dashboard and passed via request headers.
+    notes: Full developer API access requires Scale plan or higher
+  - type: OAuth
+    description: OAuth-based authentication may be used for marketplace and partner integrations via the webhooks-for-marketplace-affiliates endpoint.
+    notes: Used for marketplace affiliate webhook integrations

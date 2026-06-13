@@ -1,0 +1,65 @@
+name: Refersion Plans and Pricing
+description: Pricing plans for the Refersion affiliate marketing platform, covering affiliate management, conversion tracking, and API access across three tiers.
+specificationVersion: '0.1'
+url: https://www.refersion.com/pricing/
+plans:
+  - name: Launch
+    description: Entry-level plan for brands launching an affiliate program with unlimited affiliates and conversion tracking.
+    price: 39.00
+    unit: month
+    currency: USD
+    features:
+      - Unlimited affiliates
+      - Unlimited conversion tracking (clicks, visits, conversions)
+      - Tracking via referral links
+      - Coupon code tracking
+      - Manual credit tracking
+      - Lifetime commissions on subscriptions
+      - Post-purchase widget
+      - Affiliate recommendations
+      - Access to Refersion Affiliate Marketplace
+    apiAccess: false
+    webhooks: false
+  - name: Growth
+    description: Mid-tier plan for growing affiliate programs with deeper tracking, customization, and expanded integrations.
+    price: 299.00
+    unit: month
+    currency: USD
+    annualPrice: 249.00
+    annualUnit: month
+    features:
+      - All Launch features
+      - Customer email tracking
+      - Product SKU-level tracking
+      - Customizable affiliate registration pages
+      - Customizable transactional emails
+      - Flat-rate commission structures
+      - Private offer commission structures
+      - Mailchimp integration
+      - Klaviyo integration
+      - Coupon creation via API
+      - Affiliate directories
+      - In-app messaging
+      - Manual payment methods
+    apiAccess: partial
+    webhooks: false
+    notes: Coupon creation via API included; full developer API access requires Scale plan
+  - name: Scale
+    description: Enterprise-grade plan for high-volume affiliate programs with full API access, webhooks, multi-store tracking, and white labeling.
+    price: custom
+    unit: month
+    currency: USD
+    features:
+      - All Growth features
+      - Tiered commission structures
+      - Commission exclusions by coupon or SKU
+      - Multi-store tracking
+      - White labeling
+      - Full access to developer APIs
+      - Webhooks support
+      - Guided onboarding
+      - Enhanced reporting
+      - Bonus tier movement notifications (Enterprise)
+    apiAccess: true
+    webhooks: true
+    notes: Pricing starts at $599/month plus 1% of affiliate-driven sales, or $479/month annually with 0% transaction fees for stores up to $1M GMV
