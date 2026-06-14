@@ -1,0 +1,515 @@
+# Refersion GraphQL Schema
+#
+# Conceptual SDL derived from the confirmed Refersion REST API surface:
+#   - REST endpoint field names, types, and enumerations from the OpenAPI spec
+#   - GraphQL overview: https://www.refersion.dev/reference/graphql-overview
+#   - REST reference: https://www.refersion.dev/reference/welcome-to-refersion
+#
+# Refersion's GraphQL endpoint (https://api.refersion.com/graphql) is
+# authentication-gated and does not expose public introspection.
+# All identifiers here match confirmed REST API field names and enum values.
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+"""ISO 8601 date-time string (UTC)."""
+scalar DateTime
+
+"""Unix epoch integer timestamp."""
+scalar Timestamp
+
+"""Arbitrary JSON value for custom field payloads."""
+scalar JSON
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+"""Lifecycle status of an affiliate account."""
+enum AffiliateStatus {
+  ACTIVE
+  PENDING
+  DENIED
+  DISABLED
+}
+
+"""Type of conversion trigger that fires attribution for an affiliate."""
+enum TriggerType {
+  COUPON
+  SKU
+  EMAIL
+}
+
+"""Approval state of a conversion event."""
+enum ConversionStatus {
+  APPROVED
+  PENDING
+  UNQUALIFIED
+  DENIED
+}
+
+"""Payment disbursement state of a conversion's commission."""
+enum PaymentStatus {
+  PAID
+  UNPAID
+}
+
+"""How a commission amount is calculated."""
+enum CommissionType {
+  PERCENT_OF_SALE
+  FLAT_RATE
+}
+
+"""Source or mechanism that generated a conversion."""
+enum ConversionType {
+  AFFILIATE_SITE_CONVERSION
+  CONVERSION_TRIGGER_COUPON
+  CONVERSION_TRIGGER_SKU
+  CONVERSION_TRIGGER_EMAIL
+  MANUAL_CREDIT_BY_CLIENT
+  MANUAL_CREDIT_ORDER_ID
+}
+
+# ---------------------------------------------------------------------------
+# Object types
+# ---------------------------------------------------------------------------
+
+"""
+A merchant-defined key-value field attached to an affiliate profile.
+Supports extended data capture beyond the standard profile fields.
+"""
+type CustomField {
+  """Human-readable label for the field."""
+  label: String!
+  """Value stored in the field."""
+  value: String
+}
+
+"""Input shape for custom field values when creating or editing an affiliate."""
+input CustomFieldInput {
+  label: String!
+  value: String
+}
+
+"""
+An affiliate registered in a Refersion program. Affiliates drive traffic and
+earn commissions when their conversion triggers fire on customer orders.
+"""
+type Affiliate {
+  """Numeric internal identifier for the affiliate."""
+  id: ID!
+  """Short alphanumeric affiliate code used in referral links (e.g. \"a3y7\")."""
+  affiliateCode: String!
+  """The offer (commission program) this affiliate belongs to."""
+  offerId: ID!
+  """Current lifecycle status of the affiliate account."""
+  status: AffiliateStatus!
+  firstName: String!
+  lastName: String!
+  """Business or organization name."""
+  companyName: String
+  email: String!
+  """PayPal email address for commission disbursement."""
+  paypalEmail: String
+  address1: String
+  address2: String
+  city: String
+  state: String
+  zip: String
+  """Two-letter ISO 3166-1 alpha-2 country code."""
+  country: String
+  phone: String
+  """Unique identifier supplied by the merchant's own system."""
+  uniqueMerchantId: String
+  """The affiliate's unique referral tracking URL."""
+  link: String!
+  """Merchant-defined key-value fields attached to this affiliate."""
+  customFields: [CustomField!]!
+  """Conversion triggers (coupons, SKUs, emails) assigned to this affiliate."""
+  triggers: [ConversionTrigger!]!
+}
+
+"""
+A trigger that attributes a conversion to a specific affiliate when matched
+against an order's coupon code, line-item SKU, or customer email address.
+"""
+type ConversionTrigger {
+  """Numeric identifier of the trigger record."""
+  triggerId: ID!
+  """The type of trigger."""
+  type: TriggerType!
+  """The trigger value: a coupon code, SKU string, or email address."""
+  trigger: String!
+  """The affiliate this trigger belongs to."""
+  affiliateCode: String!
+}
+
+"""
+A line item within a cancellation conversion, referencing a specific product
+SKU, its unit price, and the quantity being cancelled.
+"""
+type OrderItem {
+  """Product SKU matching the merchant's catalogue."""
+  sku: String!
+  """Unit price of the item at time of original order."""
+  price: Float
+  """Number of units being cancelled."""
+  quantity: Int
+}
+
+"""Input shape for order items in a cancellation conversion."""
+input OrderItemInput {
+  sku: String!
+  price: Float
+  quantity: Int
+}
+
+"""
+A conversion event representing an attributed sale, manual credit, or
+cancellation tied to an affiliate via one of their conversion triggers.
+"""
+type Conversion {
+  """Numeric identifier of the conversion record."""
+  id: ID!
+  """Approval status of this conversion."""
+  status: ConversionStatus!
+  """Whether this commission has been paid out."""
+  paymentStatus: PaymentStatus
+  """Mechanism that generated this conversion."""
+  type: ConversionType
+  """Commission amount earned by the affiliate for this conversion."""
+  commission: Float
+  """Currency code for the commission and order amounts."""
+  currency: String
+  """The total value of the associated order."""
+  orderTotal: Float
+  """The portion of the order total eligible for commission calculation."""
+  commissionableOrderTotal: Float
+  """Merchant's order identifier from the e-commerce store."""
+  orderId: String
+  """Optional merchant note attached to manual credits."""
+  notes: String
+  """Whether this was recorded as a test conversion."""
+  isTestConversion: Boolean
+  """The affiliate credited for this conversion."""
+  affiliate: Affiliate
+  """UTC timestamp when the conversion was recorded."""
+  createdAt: DateTime
+}
+
+"""
+Aggregated statistics across a filtered set of conversions, used for
+dashboard-style performance reporting.
+"""
+type ConversionTotals {
+  """Number of conversions matching the filter."""
+  conversionsCount: Int!
+  """Sum of all commission amounts across matched conversions."""
+  commissionTotal: Float!
+  """Sum of all order totals across matched conversions."""
+  orderTotal: Float!
+  """Sum of all commissionable order totals."""
+  commissionableOrderTotal: Float!
+  """Currency code for the aggregated amounts."""
+  currency: String!
+}
+
+"""
+A commission program (offer) that defines commission rates and rules for a
+group of affiliates. Affiliates are enrolled in exactly one offer at a time.
+"""
+type Offer {
+  """Numeric identifier for the offer."""
+  id: ID!
+  """Display name of the offer."""
+  name: String
+  """Whether this is the account's default offer."""
+  isDefault: Boolean
+  """SKU-level commission overrides configured within this offer."""
+  skuCommissions: [SkuCommission!]!
+}
+
+"""
+A product-level commission rate override within an offer. When a matching
+SKU appears in an order, this rate supersedes the offer's default rate.
+"""
+type SkuCommission {
+  """The offer this SKU commission belongs to."""
+  offerId: ID!
+  """Product SKU value exactly as it appears in orders."""
+  sku: String!
+  """Description label shown to affiliates."""
+  productDescription: String
+  """How the commission amount is calculated."""
+  commissionType: CommissionType!
+  """The commission rate or flat amount (as a numeric string)."""
+  commissionAmount: String!
+}
+
+"""Input shape for a single SKU commission entry."""
+input SkuCommissionInput {
+  sku: String!
+  productDescription: String
+  commissionType: CommissionType!
+  commissionAmount: String!
+}
+
+"""
+A saved performance report. The download link is a time-limited public URL
+that expires two minutes after generation.
+"""
+type Report {
+  """Numeric identifier of the saved report."""
+  id: ID!
+  """Time-limited public URL to download the report file."""
+  downloadLink: String
+  """Unix timestamp at which the download link expires."""
+  expireTime: Timestamp
+}
+
+"""Paginated result set for affiliate list and search operations."""
+type AffiliateConnection {
+  """Total number of matching affiliates in the account."""
+  total: Int!
+  """Page of affiliate records."""
+  results: [Affiliate!]!
+}
+
+"""Bulk operation result reporting which IDs succeeded or failed."""
+type BulkChangeResult {
+  """IDs that were successfully updated."""
+  idsChanged: [ID!]!
+  """IDs that could not be updated."""
+  idsNotChanged: [ID!]!
+}
+
+"""Result of a new affiliate creation."""
+type CreateAffiliatePayload {
+  """The new affiliate's unique code."""
+  id: String!
+  """The affiliate's unique referral tracking URL."""
+  link: String!
+  """Confirmation message from the platform."""
+  message: String
+}
+
+"""Result of a conversion trigger creation."""
+type CreateTriggerPayload {
+  """Numeric ID of the new trigger record."""
+  triggerId: ID!
+  """The trigger value as stored (may be normalised, e.g. uppercased)."""
+  trigger: String!
+}
+
+"""Result of adding SKU-level commissions to an offer."""
+type AddSkuCommissionPayload {
+  """SKUs successfully added."""
+  added: [String!]!
+  """SKUs that already existed and were skipped."""
+  duplicateNotAdded: [String!]!
+}
+
+"""Result of a manual commission credit operation."""
+type ManualCreditPayload {
+  """The newly created conversion record ID."""
+  conversionId: ID!
+}
+
+"""Result of a conversion cancellation."""
+type CancelConversionPayload {
+  """The cancellation conversion record ID."""
+  conversionId: String!
+}
+
+"""Result of crediting an order to an affiliate by order ID."""
+type CreditOrderPayload {
+  """Confirmation message from the platform."""
+  message: String!
+  """Present when the order was previously attributed to another affiliate."""
+  warning: String
+}
+
+"""Result of a report link generation."""
+type ReportLinkPayload {
+  """Time-limited public download URL."""
+  downloadLink: String!
+  """Unix timestamp when the link expires."""
+  expireTime: Timestamp!
+}
+
+# ---------------------------------------------------------------------------
+# Input types
+# ---------------------------------------------------------------------------
+
+"""Filter arguments for querying conversion totals."""
+input ConversionTotalsFilter {
+  """One or more conversion statuses to include."""
+  status: [ConversionStatus!]!
+  """Start of the date range (UTC, \"YYYY-MM-DD HH:MM:SS\")."""
+  createdFrom: DateTime
+  """End of the date range (UTC, \"YYYY-MM-DD HH:MM:SS\")."""
+  createdTo: DateTime
+  """Restrict to conversions under a specific offer."""
+  offerId: ID
+  """Restrict to conversions for a specific affiliate."""
+  affiliateId: ID
+  """Filter by payment disbursement state."""
+  paymentStatus: PaymentStatus
+  """One or more conversion source types to include."""
+  type: [ConversionType!]
+  """When true, return only test conversions."""
+  isTestConversion: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Root types
+# ---------------------------------------------------------------------------
+
+type Query {
+  """Retrieve a single affiliate by numeric ID or affiliate code."""
+  affiliate(id: ID, affiliateCode: String): Affiliate
+
+  """
+  List all affiliates with pagination.
+  Maximum 100 results per page.
+  """
+  affiliates(limit: Int, page: Int): AffiliateConnection!
+
+  """
+  Search affiliates by partial email, exact affiliate ID, or name.
+  """
+  searchAffiliates(
+    keyword: String!
+    firstName: String
+    lastName: String
+    page: Int
+  ): AffiliateConnection!
+
+  """
+  Get aggregated conversion statistics across the account with optional filters.
+  """
+  conversionTotals(filter: ConversionTotalsFilter!): ConversionTotals!
+
+  """
+  Generate a time-limited public download link for a saved report.
+  The link expires 2 minutes after generation.
+  """
+  reportLink(reportId: ID!): ReportLinkPayload!
+}
+
+type Mutation {
+  """Create a new affiliate account."""
+  createAffiliate(
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    status: AffiliateStatus!
+    offer: String
+    company: String
+    paypalEmail: String
+    address1: String
+    address2: String
+    city: String
+    state: String
+    zip: String
+    country: String
+    phone: String
+    sendWelcome: Boolean
+    conversionTriggerCoupon: String
+    uniqueMerchantId: String
+  ): CreateAffiliatePayload!
+
+  """
+  Update one or more affiliate profiles.
+  At least one field besides id must be provided per affiliate.
+  """
+  editAffiliates(affiliates: [EditAffiliateInput!]!): BulkChangeResult!
+
+  """Change the status of one or more affiliates (max 50 per call)."""
+  changeAffiliateStatus(ids: [ID!]!, status: AffiliateStatus!): BulkChangeResult!
+
+  """
+  Assign a new conversion trigger (coupon, SKU, or email) to an affiliate.
+  """
+  createConversionTrigger(
+    affiliateCode: String!
+    type: TriggerType!
+    trigger: String!
+  ): CreateTriggerPayload!
+
+  """
+  Delete conversion triggers from one or more affiliates (max 50 per call).
+  """
+  deleteConversionTriggers(affiliates: [DeleteTriggerInput!]!): [ID!]!
+
+  """
+  Add SKU-level commission overrides to an offer (max 50 SKUs per call).
+  """
+  addSkuCommissions(offerId: ID!, skus: [SkuCommissionInput!]!): AddSkuCommissionPayload!
+
+  """Manually credit an affiliate with a commission amount."""
+  manualCommissionCredit(
+    affiliateId: ID!
+    commission: Float!
+    status: ConversionStatus!
+    currency: String
+    notes: String
+  ): ManualCreditPayload!
+
+  """
+  Credit an affiliate for an existing order by order ID.
+  The order re-processes asynchronously; changes may take a few minutes.
+  """
+  manualCreditOrderId(
+    affiliateId: ID!
+    orderId: String!
+    status: ConversionStatus
+    notes: String
+  ): CreditOrderPayload!
+
+  """Change the approval status of one or more conversions."""
+  changeConversionStatus(
+    ids: [ID!]!
+    status: ConversionStatus!
+  ): BulkChangeResult!
+
+  """
+  Create a cancellation conversion for an entire order or specific line items.
+  """
+  cancelConversion(orderId: String!, items: [OrderItemInput!]!): CancelConversionPayload!
+}
+
+# ---------------------------------------------------------------------------
+# Supporting input types referenced in Mutation fields
+# ---------------------------------------------------------------------------
+
+"""Input for editing a single affiliate's profile fields."""
+input EditAffiliateInput {
+  id: ID!
+  offer: ID
+  firstName: String
+  lastName: String
+  email: String
+  paypalEmail: String
+  company: String
+  address1: String
+  address2: String
+  city: String
+  state: String
+  zip: String
+  country: String
+  phone: String
+  customFields: [CustomFieldInput!]
+}
+
+"""Input identifying one conversion trigger to delete."""
+input DeleteTriggerInput {
+  """Numeric affiliate ID."""
+  id: ID!
+  """The trigger value (coupon code, SKU, or email) to remove."""
+  trigger: String!
+  """The type of trigger being deleted."""
+  type: TriggerType!
+}
