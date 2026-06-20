@@ -3,7 +3,7 @@ name: Refersion
 description: Affiliate marketing platform for e-commerce brands providing a REST and
   GraphQL API for managing affiliates, tracking referrals, processing commissions,
   and integrating with Shopify, BigCommerce, WooCommerce, and other platforms.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/refersion/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -21,7 +21,7 @@ apis:
   description: RESTful API for managing affiliates, tracking conversions, processing
     commissions, configuring SKU-level commission rates, and generating performance
     reports.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.refersion.dev/reference/welcome-to-refersion
   baseURL: https://api.refersion.com
   tags:
@@ -38,7 +38,7 @@ apis:
   name: Refersion GraphQL API
   description: GraphQL API providing an explorer interface for querying affiliate
     data, managing program configurations, and integrating with e-commerce platforms.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.refersion.dev/reference/graphql-overview
   baseURL: https://api.refersion.com/graphql
   tags:
@@ -55,7 +55,7 @@ apis:
   description: Webhook API for receiving real-time notifications about affiliate activity,
     including new conversions, conversion approvals/denials, payments, affiliate status
     changes, and bonus tier movements.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.refersion.dev/reference/webhooks-for-merchants
   baseURL: https://api.refersion.com
   tags:
