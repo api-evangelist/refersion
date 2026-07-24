@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: Refersion REST Affiliates Reporting API
+  version: '2.0'
+  description: 'The Refersion REST API v2 is organized around REST, with predictable resource-oriented URLs and HTTP response codes to indicate errors. Valid JSON is returned in all responses, including errors. The API allows you to automate affiliate and conversion approval workflows, generate real-time performance reports, and integrate Refersion into existing e-commerce platforms such as Shopify, BigCommerce, and WooCommerce.
+
+    '
+  contact:
+    name: Refersion Inc
+    email: helpme@refersion.com
+    url: https://www.refersion.com
+  termsOfService: https://www.refersion.com/terms
+servers:
+- url: https://api.refersion.com/v2
+tags:
+- name: Reporting
+  description: Generate download links for saved reports.
+paths:
+  /reporting/link:
+    post:
+      operationId: get_reporting_link
+      summary: Generate Download Link
+      description: 'Get a public download link for a saved report. Links expire 2 minutes from the time of request for security purposes.
+
+        '
+      tags:
+      - Reporting
+      parameters:
+      - $ref: '#/components/parameters/Refersion-Public-Key'
+      - $ref: '#/components/parameters/Refersion-Secret-Key'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - report_id
+              properties:
+                report_id:
+                  type: integer
+                  description: The report ID to generate a download link for.
+                  example: 123
+      responses:
+        '200':
+          description: Report download link generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  download_link:
+                    type: string
+                    description: Public download URL (expires in 2 minutes).
+                  expire_time:
+                    type: integer
+                    description: Unix timestamp when the link expires.
+              examples:
+                response:
+                  value:
+                    download_link: https://www.refersion.com/api/reporting/download/37/87/154ac2e00df1e6275b1a60869ab3123fceea16f5
+                    expire_time: 1452028425
+        '400':
+          $ref: '#/components/responses/400_Error'
+        '401':
+          $ref: '#/components/responses/401_Error'
+        '404':
+          $ref: '#/components/responses/404_Error'
+        '422':
+          $ref: '#/components/responses/422_Error'
+components:
+  responses:
+    400_Error:
+      description: Missing required field in your request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Missing required field X
+    401_Error:
+      description: Unauthorized – Your API keys are incorrect.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Invalid API credentials (error 2).
+    422_Error:
+      description: Unprocessable Entity – The data you are sending has errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    404_Error:
+      description: Empty request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Bad request, no body
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+    ErrorSingle:
+      type: object
+      properties:
+        error:
+          type: string
+  parameters:
+    Refersion-Public-Key:
+      in: header
+      name: Refersion-Public-Key
+      required: true
+      schema:
+        type: string
+        example: pub_abc12300000000000000
+      description: Your Refersion public API key.
+    Refersion-Secret-Key:
+      in: header
+      name: Refersion-Secret-Key
+      required: true
+      schema:
+        type: string
+        example: sec_abc12300000000000000
+      description: Your Refersion secret API key.
+    Content-Type:
+      in: header
+      name: Content-Type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        default: application/json

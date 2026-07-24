@@ -1,0 +1,183 @@
+openapi: 3.0.0
+info:
+  title: Refersion REST Affiliates Offers API
+  version: '2.0'
+  description: 'The Refersion REST API v2 is organized around REST, with predictable resource-oriented URLs and HTTP response codes to indicate errors. Valid JSON is returned in all responses, including errors. The API allows you to automate affiliate and conversion approval workflows, generate real-time performance reports, and integrate Refersion into existing e-commerce platforms such as Shopify, BigCommerce, and WooCommerce.
+
+    '
+  contact:
+    name: Refersion Inc
+    email: helpme@refersion.com
+    url: https://www.refersion.com
+  termsOfService: https://www.refersion.com/terms
+servers:
+- url: https://api.refersion.com/v2
+tags:
+- name: Offers
+  description: Manage offer-level configurations including SKU-specific commission rates.
+paths:
+  /offer/new_sku_commission:
+    post:
+      operationId: new_sku_commission
+      summary: New SKU Level Commission
+      description: 'Add SKU-specific commission rates to a specific offer. Your plan must support SKU/Product Level Commissions. Maximum of 50 SKUs per request.
+
+        '
+      tags:
+      - Offers
+      parameters:
+      - $ref: '#/components/parameters/Refersion-Public-Key'
+      - $ref: '#/components/parameters/Refersion-Secret-Key'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - offer_id
+              - skus
+              properties:
+                offer_id:
+                  type: string
+                  description: The offer ID to add SKU commissions to.
+                  example: '12345'
+                skus:
+                  type: array
+                  description: SKUs to add with their commission configuration (max 50).
+                  items:
+                    type: object
+                    required:
+                    - sku
+                    - commission_type
+                    - commission_amount
+                    properties:
+                      sku:
+                        type: string
+                        description: Must match the exact SKU that would be ordered.
+                        example: TSHIRT-SMALL-RED
+                      product_description:
+                        type: string
+                        description: A label for the SKU visible to affiliates.
+                        example: T-Shirt Red (Small)
+                      commission_type:
+                        type: string
+                        enum:
+                        - PERCENT_OF_SALE
+                        - FLAT_RATE
+                      commission_amount:
+                        type: string
+                        description: Numeric commission amount (e.g. "10" for 10% or $10 flat).
+                        example: '10'
+      responses:
+        '200':
+          description: SKU commission add results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  duplicate_not_added:
+                    type: array
+                    items:
+                      type: string
+                    description: SKUs that already existed and were not re-added.
+                  added:
+                    type: array
+                    items:
+                      type: string
+                    description: SKUs successfully added.
+              examples:
+                response:
+                  value:
+                    duplicate_not_added:
+                    - TSHIRT-SMALL-RED
+                    added:
+                    - TSHIRT-SMALL-BLUE
+                    - PANTS-LARGE-BLACK
+        '400':
+          $ref: '#/components/responses/400_Error'
+        '401':
+          $ref: '#/components/responses/401_Error'
+        '404':
+          $ref: '#/components/responses/404_Error'
+        '422':
+          $ref: '#/components/responses/422_Error'
+components:
+  responses:
+    400_Error:
+      description: Missing required field in your request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Missing required field X
+    401_Error:
+      description: Unauthorized – Your API keys are incorrect.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Invalid API credentials (error 2).
+    422_Error:
+      description: Unprocessable Entity – The data you are sending has errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    404_Error:
+      description: Empty request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Bad request, no body
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+    ErrorSingle:
+      type: object
+      properties:
+        error:
+          type: string
+  parameters:
+    Refersion-Public-Key:
+      in: header
+      name: Refersion-Public-Key
+      required: true
+      schema:
+        type: string
+        example: pub_abc12300000000000000
+      description: Your Refersion public API key.
+    Refersion-Secret-Key:
+      in: header
+      name: Refersion-Secret-Key
+      required: true
+      schema:
+        type: string
+        example: sec_abc12300000000000000
+      description: Your Refersion secret API key.
+    Content-Type:
+      in: header
+      name: Content-Type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        default: application/json

@@ -1,0 +1,474 @@
+openapi: 3.0.0
+info:
+  title: Refersion REST Affiliates Conversions API
+  version: '2.0'
+  description: 'The Refersion REST API v2 is organized around REST, with predictable resource-oriented URLs and HTTP response codes to indicate errors. Valid JSON is returned in all responses, including errors. The API allows you to automate affiliate and conversion approval workflows, generate real-time performance reports, and integrate Refersion into existing e-commerce platforms such as Shopify, BigCommerce, and WooCommerce.
+
+    '
+  contact:
+    name: Refersion Inc
+    email: helpme@refersion.com
+    url: https://www.refersion.com
+  termsOfService: https://www.refersion.com/terms
+servers:
+- url: https://api.refersion.com/v2
+tags:
+- name: Conversions
+  description: Cancel conversions, get totals, issue manual credits, and change conversion statuses.
+paths:
+  /conversion/cancel:
+    post:
+      operationId: cancel_conversion
+      summary: Create a Cancellation Conversion
+      description: 'Send a cancellation conversion for an entire order by order ID. You can cancel one SKU from many SKUs in an order.
+
+        '
+      tags:
+      - Conversions
+      parameters:
+      - $ref: '#/components/parameters/Refersion-Public-Key'
+      - $ref: '#/components/parameters/Refersion-Secret-Key'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - order_id
+              - items
+              properties:
+                order_id:
+                  type: string
+                  description: The order ID from your e-commerce store.
+                  example: '1234'
+                items:
+                  type: array
+                  description: Items to cancel from the order.
+                  items:
+                    type: object
+                    required:
+                    - sku
+                    properties:
+                      price:
+                        type: number
+                        description: The original price of the individual SKU.
+                        example: 9.99
+                      quantity:
+                        type: integer
+                        description: The quantity of items to cancel.
+                        example: 1
+                      sku:
+                        type: string
+                        description: The SKU from your e-commerce store.
+                        example: SKUCODE123
+      responses:
+        '200':
+          description: Cancellation conversion created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversion_id:
+                    type: string
+              examples:
+                response:
+                  value:
+                    conversion_id: '11900254'
+        '400':
+          $ref: '#/components/responses/400_Error'
+        '401':
+          $ref: '#/components/responses/401_Error'
+        '404':
+          $ref: '#/components/responses/404_Error'
+        '422':
+          $ref: '#/components/responses/422_Error'
+  /conversion/totals:
+    post:
+      operationId: get_totals
+      summary: Get Totals
+      description: Get total-related data about conversions in your account with optional filters.
+      tags:
+      - Conversions
+      parameters:
+      - $ref: '#/components/parameters/Refersion-Public-Key'
+      - $ref: '#/components/parameters/Refersion-Secret-Key'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              properties:
+                created_from:
+                  type: string
+                  description: Start date in UTC format "YYYY-MM-DD hh:mm:ss".
+                  example: '2020-11-01 00:00:00'
+                created_to:
+                  type: string
+                  description: End date in UTC format "YYYY-MM-DD hh:mm:ss".
+                  example: '2020-11-30 23:59:59'
+                offer_id:
+                  type: integer
+                  description: Filter by offer ID.
+                  example: 12345
+                affiliate_id:
+                  type: integer
+                  description: Filter by affiliate ID.
+                  example: 12345678
+                status:
+                  type: array
+                  items:
+                    type: string
+                  description: Conversion statuses to include.
+                  example:
+                  - APPROVED
+                  - PENDING
+                payment_status:
+                  type: string
+                  enum:
+                  - PAID
+                  - UNPAID
+                  description: Filter by payment status.
+                type:
+                  type: array
+                  items:
+                    type: string
+                  description: Conversion types to include.
+                  example:
+                  - CONVERSION_TRIGGER_COUPON
+                is_test_conversion:
+                  type: boolean
+                  description: Filter to test conversions only.
+                  default: false
+      responses:
+        '200':
+          description: Conversion totals.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversions_count:
+                    type: integer
+                    description: Number of conversions.
+                  commission_total:
+                    type: number
+                    description: Sum of commission amounts.
+                  order_total:
+                    type: number
+                    description: Sum of order totals.
+                  commissionable_order_total:
+                    type: number
+                    description: Sum of commissionable order totals.
+                  currency:
+                    type: string
+                    description: Currency of the totals.
+              examples:
+                response:
+                  value:
+                    conversions_count: 10
+                    commission_total: 500.84
+                    order_total: 3498.03
+                    commissionable_order_total: 2874.85
+                    currency: USD
+        '400':
+          $ref: '#/components/responses/400_Error'
+        '401':
+          $ref: '#/components/responses/401_Error'
+        '404':
+          $ref: '#/components/responses/404_Error'
+        '422':
+          $ref: '#/components/responses/422_Error'
+  /conversion/manual_credit:
+    post:
+      operationId: manual_commission_credit
+      summary: Manual Commission Credit
+      description: Manually credit an affiliate with any commission amount (can be negative).
+      tags:
+      - Conversions
+      parameters:
+      - $ref: '#/components/parameters/Refersion-Public-Key'
+      - $ref: '#/components/parameters/Refersion-Secret-Key'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              - commission
+              - status
+              properties:
+                id:
+                  type: integer
+                  description: The affiliate's numeric ID.
+                  example: 12345
+                commission:
+                  type: number
+                  description: Commission amount (can be negative).
+                  example: 120.5
+                status:
+                  type: string
+                  enum:
+                  - APPROVED
+                  - PENDING
+                  description: Conversion status for this credit.
+                  example: APPROVED
+                currency:
+                  type: string
+                  maxLength: 3
+                  description: Three-letter currency code. Defaults to account settings.
+                  example: USD
+                notes:
+                  type: string
+                  description: Optional note for this manual credit.
+                  example: This is a manual credit
+      responses:
+        '200':
+          description: Manual credit created.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - conversion_id
+                properties:
+                  conversion_id:
+                    type: integer
+                    description: The created conversion ID.
+              examples:
+                response:
+                  value:
+                    conversion_id: 12345
+        '400':
+          $ref: '#/components/responses/400_Error'
+        '401':
+          $ref: '#/components/responses/401_Error'
+        '404':
+          $ref: '#/components/responses/404_Error'
+        '422':
+          $ref: '#/components/responses/422_Error'
+  /conversion/manual_credit_order_id:
+    post:
+      operationId: manual_credit_order_id
+      summary: Manual Credit Order ID
+      description: Manually credit an affiliate with an existing order ID.
+      tags:
+      - Conversions
+      parameters:
+      - $ref: '#/components/parameters/Refersion-Public-Key'
+      - $ref: '#/components/parameters/Refersion-Secret-Key'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              - order_id
+              properties:
+                id:
+                  type: integer
+                  description: The affiliate's numeric ID.
+                  example: 12345
+                order_id:
+                  type: string
+                  description: The order ID to credit to this affiliate.
+                  example: '1001'
+                status:
+                  type: string
+                  enum:
+                  - APPROVED
+                  - PENDING
+                  description: Conversion status. Defaults to APPROVED.
+                  example: APPROVED
+                notes:
+                  type: string
+                  description: Optional note for this order credit.
+      responses:
+        '200':
+          description: Order credit processing started.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - message
+                properties:
+                  message:
+                    type: string
+                  warning:
+                    type: string
+                    description: Present if the order was already credited to another affiliate.
+              examples:
+                response:
+                  value:
+                    message: Order(s) are re-processing. Changes may take a couple of minutes to appear.
+                    warning: Order ID is already credited to affiliate 12345678
+        '400':
+          $ref: '#/components/responses/400_Error'
+        '401':
+          $ref: '#/components/responses/401_Error'
+        '404':
+          $ref: '#/components/responses/404_Error'
+        '422':
+          $ref: '#/components/responses/422_Error'
+  /conversion/status_change:
+    post:
+      operationId: status_change
+      summary: Conversion Status Change
+      description: Manually change the status of one or more conversions.
+      tags:
+      - Conversions
+      parameters:
+      - $ref: '#/components/parameters/Refersion-Public-Key'
+      - $ref: '#/components/parameters/Refersion-Secret-Key'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - ids
+              - status
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Conversion IDs to update.
+                  example:
+                  - 123
+                  - 456
+                status:
+                  type: string
+                  enum:
+                  - APPROVED
+                  - UNQUALIFIED
+                  - DENIED
+                  description: New conversion status.
+      responses:
+        '200':
+          description: Conversion status change results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - ids_changed
+                - ids_not_changed
+                properties:
+                  ids_changed:
+                    type: array
+                    items:
+                      type: integer
+                    description: Conversion IDs that had their status changed.
+                  ids_not_changed:
+                    type: array
+                    items:
+                      type: integer
+                    description: Conversion IDs that were not changed.
+              examples:
+                response:
+                  value:
+                    ids_changed:
+                    - 123
+                    ids_not_changed:
+                    - 456
+        '400':
+          $ref: '#/components/responses/400_Error'
+        '401':
+          $ref: '#/components/responses/401_Error'
+        '404':
+          $ref: '#/components/responses/404_Error'
+        '422':
+          $ref: '#/components/responses/422_Error'
+components:
+  responses:
+    400_Error:
+      description: Missing required field in your request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Missing required field X
+    401_Error:
+      description: Unauthorized – Your API keys are incorrect.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Invalid API credentials (error 2).
+    422_Error:
+      description: Unprocessable Entity – The data you are sending has errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    404_Error:
+      description: Empty request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Bad request, no body
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+    ErrorSingle:
+      type: object
+      properties:
+        error:
+          type: string
+  parameters:
+    Refersion-Public-Key:
+      in: header
+      name: Refersion-Public-Key
+      required: true
+      schema:
+        type: string
+        example: pub_abc12300000000000000
+      description: Your Refersion public API key.
+    Refersion-Secret-Key:
+      in: header
+      name: Refersion-Secret-Key
+      required: true
+      schema:
+        type: string
+        example: sec_abc12300000000000000
+      description: Your Refersion secret API key.
+    Content-Type:
+      in: header
+      name: Content-Type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        default: application/json
