@@ -3,7 +3,19 @@ name: Refersion
 description: Affiliate marketing platform for e-commerce brands providing a REST and
   GraphQL API for managing affiliates, tracking referrals, processing commissions,
   and integrating with Shopify, BigCommerce, WooCommerce, and other platforms.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Paid
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/refersion.png
 url: https://raw.githubusercontent.com/api-evangelist/refersion/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -16,28 +28,11 @@ tags:
 - Commission Management
 - Shopify
 apis:
-- aid: refersion:refersion-rest-api
-  name: Refersion REST API
-  description: RESTful API for managing affiliates, tracking conversions, processing
-    commissions, configuring SKU-level commission rates, and generating performance
-    reports.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://www.refersion.dev/reference/welcome-to-refersion
-  baseURL: https://api.refersion.com
-  tags:
-  - Affiliates
-  - Conversions
-  - Commissions
-  - Referral Tracking
-  properties:
-  - type: Documentation
-    url: https://www.refersion.dev/reference/welcome-to-refersion
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/refersion/refs/heads/main/openapi/refersion-rest-api-openapi.yml
 - aid: refersion:refersion-graphql-api
   name: Refersion GraphQL API
-  description: GraphQL API providing an explorer interface for querying affiliate
-    data, managing program configurations, and integrating with e-commerce platforms.
+  description: >-
+    GraphQL API providing an explorer interface for querying affiliate data, managing program configurations,
+    and integrating with e-commerce platforms.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.refersion.dev/reference/graphql-overview
   baseURL: https://api.refersion.com/graphql
@@ -52,9 +47,9 @@ apis:
     type: GraphQL
 - aid: refersion:refersion-webhooks-api
   name: Refersion Webhooks API
-  description: Webhook API for receiving real-time notifications about affiliate activity,
-    including new conversions, conversion approvals/denials, payments, affiliate status
-    changes, and bonus tier movements.
+  description: >-
+    Webhook API for receiving real-time notifications about affiliate activity, including new conversions,
+    conversion approvals/denials, payments, affiliate status changes, and bonus tier movements.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.refersion.dev/reference/webhooks-for-merchants
   baseURL: https://api.refersion.com
@@ -66,6 +61,55 @@ apis:
   properties:
   - type: Documentation
     url: https://www.refersion.dev/reference/webhooks-for-merchants
+- aid: refersion:refersion-affiliates-api
+  name: Refersion Affiliates API
+  description: >-
+    Create, retrieve, update, search, and manage affiliate accounts and their conversion triggers.
+  humanURL: https://www.refersion.dev/reference/welcome-to-refersion
+  baseURL: https://api.refersion.com
+  tags:
+  - Affiliates
+  properties:
+  - type: OpenAPI
+    url: openapi/refersion-affiliates-api-openapi.yml
+  - type: Documentation
+    url: https://www.refersion.dev/reference/welcome-to-refersion
+- aid: refersion:refersion-conversions-api
+  name: Refersion Conversions API
+  description: Cancel conversions, get totals, issue manual credits, and change conversion statuses.
+  humanURL: https://www.refersion.dev/reference/welcome-to-refersion
+  baseURL: https://api.refersion.com
+  tags:
+  - Conversions
+  properties:
+  - type: OpenAPI
+    url: openapi/refersion-conversions-api-openapi.yml
+  - type: Documentation
+    url: https://www.refersion.dev/reference/welcome-to-refersion
+- aid: refersion:refersion-offers-api
+  name: Refersion Offers API
+  description: Manage offer-level configurations including SKU-specific commission rates.
+  humanURL: https://www.refersion.dev/reference/welcome-to-refersion
+  baseURL: https://api.refersion.com
+  tags:
+  - Offers
+  properties:
+  - type: OpenAPI
+    url: openapi/refersion-offers-api-openapi.yml
+  - type: Documentation
+    url: https://www.refersion.dev/reference/welcome-to-refersion
+- aid: refersion:refersion-reporting-api
+  name: Refersion Reporting API
+  description: Generate download links for saved reports.
+  humanURL: https://www.refersion.dev/reference/welcome-to-refersion
+  baseURL: https://api.refersion.com
+  tags:
+  - Reporting
+  properties:
+  - type: OpenAPI
+    url: openapi/refersion-reporting-api-openapi.yml
+  - type: Documentation
+    url: https://www.refersion.dev/reference/welcome-to-refersion
 common:
 - type: AgenticAccess
   url: agentic-access/refersion-agentic-access.yml
