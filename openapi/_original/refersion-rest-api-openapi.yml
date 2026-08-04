@@ -1,0 +1,1326 @@
+openapi: 3.0.0
+info:
+  title: Refersion REST API
+  version: "2.0"
+  description: >
+    The Refersion REST API v2 is organized around REST, with predictable
+    resource-oriented URLs and HTTP response codes to indicate errors.
+    Valid JSON is returned in all responses, including errors. The API
+    allows you to automate affiliate and conversion approval workflows,
+    generate real-time performance reports, and integrate Refersion into
+    existing e-commerce platforms such as Shopify, BigCommerce, and
+    WooCommerce.
+  contact:
+    name: Refersion Inc
+    email: helpme@refersion.com
+    url: https://www.refersion.com
+  termsOfService: https://www.refersion.com/terms
+
+servers:
+  - url: https://api.refersion.com/v2
+
+tags:
+  - name: Affiliates
+    description: Create, retrieve, update, search, and manage affiliate accounts and their conversion triggers.
+  - name: Conversions
+    description: Cancel conversions, get totals, issue manual credits, and change conversion statuses.
+  - name: Offers
+    description: Manage offer-level configurations including SKU-specific commission rates.
+  - name: Reporting
+    description: Generate download links for saved reports.
+
+components:
+  parameters:
+    Refersion-Public-Key:
+      in: header
+      name: Refersion-Public-Key
+      required: true
+      schema:
+        type: string
+        example: pub_abc12300000000000000
+      description: Your Refersion public API key.
+    Refersion-Secret-Key:
+      in: header
+      name: Refersion-Secret-Key
+      required: true
+      schema:
+        type: string
+        example: sec_abc12300000000000000
+      description: Your Refersion secret API key.
+    Content-Type:
+      in: header
+      name: Content-Type
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/json
+        default: application/json
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+    ErrorSingle:
+      type: object
+      properties:
+        error:
+          type: string
+
+  responses:
+    401_Error:
+      description: Unauthorized – Your API keys are incorrect.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: "Invalid API credentials (error 2)."
+    400_Error:
+      description: Missing required field in your request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: "Missing required field X"
+    404_Error:
+      description: Empty request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: "Bad request, no body"
+    422_Error:
+      description: Unprocessable Entity – The data you are sending has errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+paths:
+
+  # ── Affiliates ──────────────────────────────────────────────────────────────
+
+  /affiliate/new:
+    post:
+      operationId: new_affiliate
+      summary: New Affiliate
+      description: >
+        Create a new affiliate. Returns the affiliate ID and their referral link.
+        Tip: Save the id from the response to map your user to their affiliate
+        account in Refersion.
+      tags:
+        - Affiliates
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        description: If you want to send custom fields, please contact Refersion support.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - email
+                - password
+                - status
+              properties:
+                offer:
+                  type: string
+                  description: Specific Offer ID to opt affiliate into; defaults to your default offer.
+                  example: "12345"
+                first_name:
+                  type: string
+                  description: The affiliate's first name.
+                  example: Bill
+                last_name:
+                  type: string
+                  description: The affiliate's last name.
+                  example: Smith
+                email:
+                  type: string
+                  description: Must be a valid email address.
+                  example: testing@refersion.com
+                password:
+                  type: string
+                  description: >
+                    Minimum 9 characters, maximum 72 characters, at least 1 uppercase
+                    letter, 1 lowercase letter, 1 number, and 1 special character.
+                    Cannot match the affiliate's email.
+                  example: "Secure!Pass1"
+                company:
+                  type: string
+                  description: Company name.
+                paypal_email:
+                  type: string
+                  description: PayPal email address for commission payments.
+                address1:
+                  type: string
+                address2:
+                  type: string
+                city:
+                  type: string
+                zip:
+                  type: string
+                country:
+                  type: string
+                  minLength: 2
+                  maxLength: 2
+                  description: Two-letter ISO country code (e.g. US, GB, CA).
+                  example: US
+                state:
+                  type: string
+                  description: State or province.
+                phone:
+                  type: string
+                send_welcome:
+                  type: string
+                  enum:
+                    - "TRUE"
+                    - "FALSE"
+                  default: "FALSE"
+                  description: Whether Refersion should send a welcome email.
+                status:
+                  type: string
+                  enum:
+                    - ACTIVE
+                    - PENDING
+                  default: PENDING
+                  description: Initial affiliate status.
+                  example: ACTIVE
+                conversion_trigger_coupon:
+                  type: string
+                  description: A unique coupon code to assign to this affiliate as a conversion trigger.
+                  example: BILLSMITH10
+                unique_merchant_id:
+                  type: string
+                  description: Optional alphanumeric identifier for internal use.
+                  example: abc123
+      responses:
+        "200":
+          description: Affiliate created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The affiliate's unique code.
+                  link:
+                    type: string
+                    description: The affiliate's referral link.
+                  message:
+                    type: string
+              examples:
+                response:
+                  value:
+                    id: a3y7
+                    link: https://site.refersion.com/c/a3y7
+                    message: "The affiliate 37569297 has been created with the status of ACTIVE."
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /affiliate/get:
+    post:
+      operationId: get_affiliate
+      summary: Get Affiliate
+      description: Get information about an affiliate by their ID or affiliate code.
+      tags:
+        - Affiliates
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The affiliate's numeric ID.
+                      example: 12345678
+                - type: object
+                  properties:
+                    affiliate_code:
+                      type: string
+                      description: The Refersion affiliate code returned when creating an affiliate.
+                      example: a3y7
+      responses:
+        "200":
+          description: Affiliate details returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  offer_id:
+                    type: string
+                  status:
+                    type: string
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  company_name:
+                    type: string
+                  email:
+                    type: string
+                  link:
+                    type: string
+                  custom_fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        label:
+                          type: string
+                        value:
+                          type: string
+              examples:
+                response:
+                  value:
+                    id: 37567438
+                    offer_id: "1234"
+                    status: ACTIVE
+                    first_name: Bill
+                    last_name: Smith
+                    company_name: Company
+                    email: testing@refersion.com
+                    link: https://site.refersion.com/c/a3y7
+                    custom_fields:
+                      - label: "What is your web site?"
+                        value: https://www.refersion.com
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /affiliate/edit:
+    post:
+      operationId: edit_affiliate
+      summary: Edit Affiliate
+      description: >
+        Edit existing affiliates. Returns all successfully updated affiliate IDs.
+        Always check ids_changed in the response. At least 1 field besides id must
+        be provided per affiliate.
+      tags:
+        - Affiliates
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                affiliates:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: The affiliate's numeric ID.
+                        example: 12345678
+                      offer:
+                        type: number
+                        description: Offer ID to move the affiliate into.
+                        example: 12345
+                      first_name:
+                        type: string
+                        example: Jane
+                      last_name:
+                        type: string
+                        example: Doe
+                      email:
+                        type: string
+                        example: name@email.com
+                      paypal_email:
+                        type: string
+                        example: name@email.com
+                      company:
+                        type: string
+                        example: "Acme, Inc."
+                      address1:
+                        type: string
+                      address2:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                        example: NY
+                      zip:
+                        type: string
+                      country:
+                        type: string
+                        example: US
+                      phone:
+                        type: string
+                      custom_fields:
+                        type: array
+                        items:
+                          type: object
+                        description: Array of objects keyed by custom field ID.
+      responses:
+        "200":
+          description: Affiliate update results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ids_changed:
+                    type: array
+                    items:
+                      type: integer
+                  ids_not_changed:
+                    type: array
+                    items:
+                      type: integer
+              examples:
+                response:
+                  value:
+                    ids_changed: [1, 3]
+                    ids_not_changed: [2, 4]
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /affiliate/list:
+    post:
+      operationId: list_affiliates
+      summary: List All Affiliates
+      description: Get all affiliates in your account with pagination support (max 100 per call).
+      tags:
+        - Affiliates
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                limit:
+                  type: string
+                  description: Number of results to return per call. Maximum 100.
+                  example: "3"
+                  default: "3"
+                page:
+                  type: string
+                  description: Page offset for pagination.
+                  example: "1"
+                  default: "1"
+      responses:
+        "200":
+          description: Paginated list of affiliates.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of affiliates.
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        offer_id:
+                          type: string
+                        status:
+                          type: string
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        email:
+                          type: string
+                        custom_fields:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              label:
+                                type: string
+                              value:
+                                type: string
+              examples:
+                response:
+                  value:
+                    total: 3
+                    results:
+                      - id: "694c"
+                        offer_id: "1234"
+                        status: ACTIVE
+                        first_name: Barbara
+                        last_name: Verde
+                        email: testing1@refersion.com
+                        custom_fields: []
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /affiliate/search:
+    post:
+      operationId: search_affiliates
+      summary: Search Affiliates
+      description: >
+        Find affiliates based on email address, affiliate ID, or name.
+        Affiliate ID must be exact; email can be a partial match.
+      tags:
+        - Affiliates
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - keyword
+              properties:
+                keyword:
+                  type: string
+                  description: Affiliate ID (exact) or partial email address to search for.
+                  example: testing
+                first_name:
+                  type: string
+                  description: First name to search for.
+                  example: Bill
+                last_name:
+                  type: string
+                  description: Last name to search for.
+                  example: Smith
+                page:
+                  type: string
+                  description: Page offset.
+                  example: "1"
+                  default: "1"
+      responses:
+        "200":
+          description: Search results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The affiliate's code.
+                        offer_id:
+                          type: string
+                        status:
+                          type: string
+                          description: PENDING, ACTIVE, DENIED, or DISABLED.
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        email:
+                          type: string
+                        custom_fields:
+                          type: array
+                          items:
+                            type: object
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /affiliate/status_change:
+    post:
+      operationId: affiliate_status_change
+      summary: Change Affiliates Status
+      description: Set a new status value for a list of affiliate IDs. Limit of 50 IDs per call.
+      tags:
+        - Affiliates
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - ids
+                - status
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: One or more affiliate IDs to change (max 50).
+                  example: [1, 2, 3, 4]
+                status:
+                  type: string
+                  enum:
+                    - ACTIVE
+                    - DENIED
+                    - DISABLED
+                  description: The new status to set.
+      responses:
+        "200":
+          description: Affiliate status change results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ids_changed:
+                    type: array
+                    items:
+                      type: integer
+                  ids_not_changed:
+                    type: array
+                    items:
+                      type: integer
+              examples:
+                response:
+                  value:
+                    ids_changed: [1, 3]
+                    ids_not_changed: [2, 4]
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /affiliate/trigger:
+    post:
+      operationId: new_affiliate_trigger
+      summary: Create Conversion Trigger
+      description: Create a Conversion Trigger (coupon, SKU, or email) for a specific affiliate.
+      tags:
+        - Affiliates
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - affiliate_code
+                - type
+                - trigger
+              properties:
+                affiliate_code:
+                  type: string
+                  description: The Refersion affiliate identifier returned from /affiliate/new.
+                  example: a3y7
+                type:
+                  type: string
+                  enum:
+                    - COUPON
+                    - SKU
+                    - EMAIL
+                  description: The type of conversion trigger.
+                trigger:
+                  type: string
+                  description: The trigger value (e.g. coupon code, email address, or SKU).
+                  example: code100
+      responses:
+        "200":
+          description: Conversion trigger created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trigger_id:
+                    type: integer
+                  trigger:
+                    type: string
+              examples:
+                response:
+                  value:
+                    trigger_id: 1097
+                    trigger: CODE100
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /trigger/delete:
+    post:
+      operationId: delete_conversion_trigger
+      summary: Delete Conversion Triggers
+      description: Delete all conversion triggers passed in the body message and store the affiliate activity. Max 50 triggers per call.
+      tags:
+        - Affiliates
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - affiliates
+              properties:
+                affiliates:
+                  type: array
+                  description: An array of conversion triggers to delete. Max 50.
+                  items:
+                    type: object
+                    required:
+                      - id
+                      - trigger
+                      - type
+                    properties:
+                      id:
+                        type: integer
+                        description: The affiliate's numeric ID.
+                        example: 12345678
+                      trigger:
+                        type: string
+                        description: The trigger value to delete (e.g. "JANEDOE10").
+                        example: SKUNAME123
+                      type:
+                        type: string
+                        enum:
+                          - COUPON
+                          - EMAIL
+                          - SKU
+                        description: The conversion trigger type.
+      responses:
+        "200":
+          description: Array of trigger IDs successfully deleted.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+              examples:
+                response:
+                  value: [23213131]
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+        "429":
+          description: Too many conversion triggers in the affiliates object (max 50).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorSingle'
+
+  # ── Conversions ─────────────────────────────────────────────────────────────
+
+  /conversion/cancel:
+    post:
+      operationId: cancel_conversion
+      summary: Create a Cancellation Conversion
+      description: >
+        Send a cancellation conversion for an entire order by order ID.
+        You can cancel one SKU from many SKUs in an order.
+      tags:
+        - Conversions
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - order_id
+                - items
+              properties:
+                order_id:
+                  type: string
+                  description: The order ID from your e-commerce store.
+                  example: "1234"
+                items:
+                  type: array
+                  description: Items to cancel from the order.
+                  items:
+                    type: object
+                    required:
+                      - sku
+                    properties:
+                      price:
+                        type: number
+                        description: The original price of the individual SKU.
+                        example: 9.99
+                      quantity:
+                        type: integer
+                        description: The quantity of items to cancel.
+                        example: 1
+                      sku:
+                        type: string
+                        description: The SKU from your e-commerce store.
+                        example: SKUCODE123
+      responses:
+        "200":
+          description: Cancellation conversion created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversion_id:
+                    type: string
+              examples:
+                response:
+                  value:
+                    conversion_id: "11900254"
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /conversion/totals:
+    post:
+      operationId: get_totals
+      summary: Get Totals
+      description: Get total-related data about conversions in your account with optional filters.
+      tags:
+        - Conversions
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                created_from:
+                  type: string
+                  description: Start date in UTC format "YYYY-MM-DD hh:mm:ss".
+                  example: "2020-11-01 00:00:00"
+                created_to:
+                  type: string
+                  description: End date in UTC format "YYYY-MM-DD hh:mm:ss".
+                  example: "2020-11-30 23:59:59"
+                offer_id:
+                  type: integer
+                  description: Filter by offer ID.
+                  example: 12345
+                affiliate_id:
+                  type: integer
+                  description: Filter by affiliate ID.
+                  example: 12345678
+                status:
+                  type: array
+                  items:
+                    type: string
+                  description: Conversion statuses to include.
+                  example:
+                    - APPROVED
+                    - PENDING
+                payment_status:
+                  type: string
+                  enum:
+                    - PAID
+                    - UNPAID
+                  description: Filter by payment status.
+                type:
+                  type: array
+                  items:
+                    type: string
+                  description: Conversion types to include.
+                  example:
+                    - CONVERSION_TRIGGER_COUPON
+                is_test_conversion:
+                  type: boolean
+                  description: Filter to test conversions only.
+                  default: false
+      responses:
+        "200":
+          description: Conversion totals.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversions_count:
+                    type: integer
+                    description: Number of conversions.
+                  commission_total:
+                    type: number
+                    description: Sum of commission amounts.
+                  order_total:
+                    type: number
+                    description: Sum of order totals.
+                  commissionable_order_total:
+                    type: number
+                    description: Sum of commissionable order totals.
+                  currency:
+                    type: string
+                    description: Currency of the totals.
+              examples:
+                response:
+                  value:
+                    conversions_count: 10
+                    commission_total: 500.84
+                    order_total: 3498.03
+                    commissionable_order_total: 2874.85
+                    currency: USD
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /conversion/manual_credit:
+    post:
+      operationId: manual_commission_credit
+      summary: Manual Commission Credit
+      description: Manually credit an affiliate with any commission amount (can be negative).
+      tags:
+        - Conversions
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - commission
+                - status
+              properties:
+                id:
+                  type: integer
+                  description: The affiliate's numeric ID.
+                  example: 12345
+                commission:
+                  type: number
+                  description: Commission amount (can be negative).
+                  example: 120.50
+                status:
+                  type: string
+                  enum:
+                    - APPROVED
+                    - PENDING
+                  description: Conversion status for this credit.
+                  example: APPROVED
+                currency:
+                  type: string
+                  maxLength: 3
+                  description: Three-letter currency code. Defaults to account settings.
+                  example: USD
+                notes:
+                  type: string
+                  description: Optional note for this manual credit.
+                  example: "This is a manual credit"
+      responses:
+        "200":
+          description: Manual credit created.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - conversion_id
+                properties:
+                  conversion_id:
+                    type: integer
+                    description: The created conversion ID.
+              examples:
+                response:
+                  value:
+                    conversion_id: 12345
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /conversion/manual_credit_order_id:
+    post:
+      operationId: manual_credit_order_id
+      summary: Manual Credit Order ID
+      description: Manually credit an affiliate with an existing order ID.
+      tags:
+        - Conversions
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - order_id
+              properties:
+                id:
+                  type: integer
+                  description: The affiliate's numeric ID.
+                  example: 12345
+                order_id:
+                  type: string
+                  description: The order ID to credit to this affiliate.
+                  example: "1001"
+                status:
+                  type: string
+                  enum:
+                    - APPROVED
+                    - PENDING
+                  description: Conversion status. Defaults to APPROVED.
+                  example: APPROVED
+                notes:
+                  type: string
+                  description: Optional note for this order credit.
+      responses:
+        "200":
+          description: Order credit processing started.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                  warning:
+                    type: string
+                    description: Present if the order was already credited to another affiliate.
+              examples:
+                response:
+                  value:
+                    message: "Order(s) are re-processing. Changes may take a couple of minutes to appear."
+                    warning: "Order ID is already credited to affiliate 12345678"
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  /conversion/status_change:
+    post:
+      operationId: status_change
+      summary: Conversion Status Change
+      description: Manually change the status of one or more conversions.
+      tags:
+        - Conversions
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - ids
+                - status
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Conversion IDs to update.
+                  example: [123, 456]
+                status:
+                  type: string
+                  enum:
+                    - APPROVED
+                    - UNQUALIFIED
+                    - DENIED
+                  description: New conversion status.
+      responses:
+        "200":
+          description: Conversion status change results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - ids_changed
+                  - ids_not_changed
+                properties:
+                  ids_changed:
+                    type: array
+                    items:
+                      type: integer
+                    description: Conversion IDs that had their status changed.
+                  ids_not_changed:
+                    type: array
+                    items:
+                      type: integer
+                    description: Conversion IDs that were not changed.
+              examples:
+                response:
+                  value:
+                    ids_changed: [123]
+                    ids_not_changed: [456]
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  # ── Offers ──────────────────────────────────────────────────────────────────
+
+  /offer/new_sku_commission:
+    post:
+      operationId: new_sku_commission
+      summary: New SKU Level Commission
+      description: >
+        Add SKU-specific commission rates to a specific offer.
+        Your plan must support SKU/Product Level Commissions.
+        Maximum of 50 SKUs per request.
+      tags:
+        - Offers
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - offer_id
+                - skus
+              properties:
+                offer_id:
+                  type: string
+                  description: The offer ID to add SKU commissions to.
+                  example: "12345"
+                skus:
+                  type: array
+                  description: SKUs to add with their commission configuration (max 50).
+                  items:
+                    type: object
+                    required:
+                      - sku
+                      - commission_type
+                      - commission_amount
+                    properties:
+                      sku:
+                        type: string
+                        description: Must match the exact SKU that would be ordered.
+                        example: TSHIRT-SMALL-RED
+                      product_description:
+                        type: string
+                        description: A label for the SKU visible to affiliates.
+                        example: "T-Shirt Red (Small)"
+                      commission_type:
+                        type: string
+                        enum:
+                          - PERCENT_OF_SALE
+                          - FLAT_RATE
+                      commission_amount:
+                        type: string
+                        description: Numeric commission amount (e.g. "10" for 10% or $10 flat).
+                        example: "10"
+      responses:
+        "200":
+          description: SKU commission add results.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  duplicate_not_added:
+                    type: array
+                    items:
+                      type: string
+                    description: SKUs that already existed and were not re-added.
+                  added:
+                    type: array
+                    items:
+                      type: string
+                    description: SKUs successfully added.
+              examples:
+                response:
+                  value:
+                    duplicate_not_added:
+                      - TSHIRT-SMALL-RED
+                    added:
+                      - TSHIRT-SMALL-BLUE
+                      - PANTS-LARGE-BLACK
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'
+
+  # ── Reporting ────────────────────────────────────────────────────────────────
+
+  /reporting/link:
+    post:
+      operationId: get_reporting_link
+      summary: Generate Download Link
+      description: >
+        Get a public download link for a saved report.
+        Links expire 2 minutes from the time of request for security purposes.
+      tags:
+        - Reporting
+      parameters:
+        - $ref: '#/components/parameters/Refersion-Public-Key'
+        - $ref: '#/components/parameters/Refersion-Secret-Key'
+        - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - report_id
+              properties:
+                report_id:
+                  type: integer
+                  description: The report ID to generate a download link for.
+                  example: 123
+      responses:
+        "200":
+          description: Report download link generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  download_link:
+                    type: string
+                    description: Public download URL (expires in 2 minutes).
+                  expire_time:
+                    type: integer
+                    description: Unix timestamp when the link expires.
+              examples:
+                response:
+                  value:
+                    download_link: "https://www.refersion.com/api/reporting/download/37/87/154ac2e00df1e6275b1a60869ab3123fceea16f5"
+                    expire_time: 1452028425
+        "400":
+          $ref: '#/components/responses/400_Error'
+        "401":
+          $ref: '#/components/responses/401_Error'
+        "404":
+          $ref: '#/components/responses/404_Error'
+        "422":
+          $ref: '#/components/responses/422_Error'

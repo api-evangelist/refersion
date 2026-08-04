@@ -1,0 +1,20 @@
+{
+  "provider": "refersion",
+  "sources": [
+    "refersion-affiliates-api-openapi.yml",
+    "refersion-conversions-api-openapi.yml",
+    "refersion-offers-api-openapi.yml",
+    "refersion-reporting-api-openapi.yml"
+  ],
+  "outputs": [
+    "refersion-affiliates-api-openapi.yml",
+    "refersion-conversions-api-openapi.yml",
+    "refersion-offers-api-openapi.yml",
+    "refersion-reporting-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
