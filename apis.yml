@@ -18,7 +18,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/refersion.png
 url: https://raw.githubusercontent.com/api-evangelist/refersion/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 tags:
 - Affiliate Marketing
@@ -61,6 +61,33 @@ apis:
   properties:
   - type: Documentation
     url: https://www.refersion.dev/reference/webhooks-for-merchants
+  - type: Webhooks
+    url: asyncapi/refersion-webhooks.yml
+- aid: refersion:refersion-order-tracking-api
+  name: Refersion Order Tracking API
+  description: >-
+    Inbound order-reporting surface used to send completed orders to Refersion so commissions are
+    calculated. Server-side integrations POST the order JSON plus a merchant-generated cart_id to
+    inbound-webhooks.refersion.com, authenticated with the same public/secret key pair as the REST
+    API; the browser half is handled by the refersion.js tracking library. Refersion publishes no
+    OpenAPI for this surface.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.refersion.dev/reference/webhook-tracking
+  baseURL: https://inbound-webhooks.refersion.com
+  tags:
+  - Order Tracking
+  - Conversions
+  - Webhooks
+  - E-Commerce
+  properties:
+  - type: Documentation
+    url: https://www.refersion.dev/reference/webhook-tracking
+  - type: Webhooks
+    url: asyncapi/refersion-webhooks.yml
+  - type: Components
+    url: components/refersion-components.yml
+  - type: AgentSkill
+    url: skills/refersion-track-orders.md
 - aid: refersion:refersion-affiliates-api
   name: Refersion Affiliates API
   description: >-
@@ -74,6 +101,10 @@ apis:
     url: openapi/refersion-affiliates-api-openapi.yml
   - type: Documentation
     url: https://www.refersion.dev/reference/welcome-to-refersion
+  - type: Overlay
+    url: overlays/refersion-affiliates-overlay.yaml
+  - type: AgentSkill
+    url: skills/refersion-onboard-affiliate.md
 - aid: refersion:refersion-conversions-api
   name: Refersion Conversions API
   description: Cancel conversions, get totals, issue manual credits, and change conversion statuses.
@@ -86,6 +117,10 @@ apis:
     url: openapi/refersion-conversions-api-openapi.yml
   - type: Documentation
     url: https://www.refersion.dev/reference/welcome-to-refersion
+  - type: Overlay
+    url: overlays/refersion-conversions-overlay.yaml
+  - type: AgentSkill
+    url: skills/refersion-reconcile-conversions.md
 - aid: refersion:refersion-offers-api
   name: Refersion Offers API
   description: Manage offer-level configurations including SKU-specific commission rates.
@@ -98,6 +133,8 @@ apis:
     url: openapi/refersion-offers-api-openapi.yml
   - type: Documentation
     url: https://www.refersion.dev/reference/welcome-to-refersion
+  - type: Overlay
+    url: overlays/refersion-offers-overlay.yaml
 - aid: refersion:refersion-reporting-api
   name: Refersion Reporting API
   description: Generate download links for saved reports.
@@ -110,6 +147,8 @@ apis:
     url: openapi/refersion-reporting-api-openapi.yml
   - type: Documentation
     url: https://www.refersion.dev/reference/welcome-to-refersion
+  - type: Overlay
+    url: overlays/refersion-reporting-overlay.yaml
 common:
 - type: AgenticAccess
   url: agentic-access/refersion-agentic-access.yml
@@ -139,8 +178,55 @@ common:
   url: finops/refersion-finops.yml
 - type: Vocabulary
   url: vocabulary/refersion-vocabulary.yml
+- type: Packages
+  url: packages/refersion-packages.yml
+- type: LLMsTxt
+  url: llms/refersion-llms.txt
+- type: Authentication
+  url: authentication/refersion-authentication.yml
+- type: Conventions
+  url: conventions/refersion-conventions.yml
+- type: ErrorCatalog
+  url: errors/refersion-problem-types.yml
+- type: DataModel
+  url: data-model/refersion-data-model.yml
+- type: Lifecycle
+  url: lifecycle/refersion-lifecycle.yml
+- type: Conformance
+  url: conformance/refersion-conformance.yml
+- type: Components
+  url: components/refersion-components.yml
+- type: Webhooks
+  url: asyncapi/refersion-webhooks.yml
+- type: MCPServer
+  url: mcp/refersion-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/refersion-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DeveloperPortal
+  url: https://www.refersion.dev/
+- type: APIReference
+  url: https://www.refersion.dev/reference/welcome-to-refersion
+- type: GettingStarted
+  url: https://www.refersion.dev/reference/order-tracking-overview
+- type: Support
+  url: https://support.refersion.com/en/
+- type: SignUp
+  url: https://auth.refersion.com/sign-up
+- type: Login
+  url: https://auth.refersion.com/
+- type: TermsOfService
+  url: https://www.refersion.com/terms/
+- type: PrivacyPolicy
+  url: https://www.refersion.com/privacy/
 - type: JSONLDContext
   url: json-ld/refersion-context.jsonld
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 22
+  pass: local-v1
