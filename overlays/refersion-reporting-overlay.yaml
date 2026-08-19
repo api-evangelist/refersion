@@ -1,0 +1,76 @@
+overlay: 1.0.0
+info:
+  title: Refersion Reporting API — API Evangelist enrichment overlay
+  version: 1.0.0
+  description: 'OpenAPI Overlay 1.0.0 capturing API Evangelist enrichments for openapi/refersion-reporting-api-openapi.yml.
+    It never mutates the provider contract: it declares the security schemes Refersion omits, flags two
+    RFC 9110 status-code deviations the provider ships in its own spec, and attaches consequence, idempotency,
+    batch and pagination semantics harvested from https://www.refersion.dev. Nothing here is invented
+    — every value traces to the provider docs or to the harvested spec at openapi/_original/refersion-rest-api-readme-harvest.json.'
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/refersion-reporting-api-openapi.yml
+extends: openapi/refersion-reporting-api-openapi.yml
+actions:
+- target: $.info
+  description: Record that this contract is provider-published and where it was harvested from.
+  update:
+    x-apis-io-provenance:
+      method: searched
+      source: https://www.refersion.dev/reference/ (OpenAPI embedded per operation in the ReadMe .md rendering)
+      harvest: openapi/_original/refersion-rest-api-readme-harvest.json
+      harvested: '2026-08-13'
+- target: $
+  description: Declare the paired API-key credentials as real security schemes. Refersion models them
+    only as required header parameters, so tooling that reads securitySchemes concludes this API is unauthenticated.
+  update:
+    components:
+      securitySchemes:
+        RefersionPublicKey:
+          type: apiKey
+          in: header
+          name: Refersion-Public-Key
+          description: Public half of the Refersion key pair. Example prefix pub_.
+        RefersionSecretKey:
+          type: apiKey
+          in: header
+          name: Refersion-Secret-Key
+          description: Secret half of the Refersion key pair. Server-side only.
+    security:
+    - RefersionPublicKey: []
+      RefersionSecretKey: []
+- target: $
+  description: Attach the cross-cutting runtime semantics an agent needs and that the contract does not
+    express.
+  update:
+    x-conventions: conventions/refersion-conventions.yml
+    x-error-catalog: errors/refersion-problem-types.yml
+    x-data-model: data-model/refersion-data-model.yml
+    x-lifecycle: lifecycle/refersion-lifecycle.yml
+    x-webhooks: asyncapi/refersion-webhooks.yml
+    x-idempotency:
+      supported: false
+      note: No idempotency key of any kind is published. Writes are not safe to retry.
+- target: $.paths.*.*.responses.204
+  description: 'Flag the 204 protocol violation: Refersion returns HTTP 204 No Content WITH a JSON validation-error
+    body, which most HTTP clients discard, turning a hard failure into a silent success.'
+  update:
+    x-protocol-deviation:
+      rfc: RFC 9110
+      issue: 204 No Content carries a response body describing a validation error
+      treat-as: failure
+- target: $.paths.*.*.responses.404
+  description: 'Flag the 404 semantics deviation: 404 here means "empty request body", not "resource not
+    found".'
+  update:
+    x-protocol-deviation:
+      rfc: RFC 9110
+      issue: 404 is returned for a malformed/empty request body rather than a missing resource
+      treat-as: client-error
+- target: $.paths["/reporting/link"].post
+  description: Runtime semantics for get_reporting_link derived from the provider documentation and error
+    catalog.
+  update:
+    x-consequence: read
+    x-idempotent: true
+    x-response-ttl-seconds: 120

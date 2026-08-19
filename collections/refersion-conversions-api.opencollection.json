@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Refersion REST Affiliates Conversions API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conversions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Cancellation Conversion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/conversion/cancel",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a cancellation conversion for an entire order by order ID. You can cancel one SKU from many SKUs in an order.\n"
+        },
+        {
+          "info": {
+            "name": "Get Totals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/conversion/totals",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get total-related data about conversions in your account with optional filters."
+        },
+        {
+          "info": {
+            "name": "Manual Commission Credit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/conversion/manual_credit",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Manually credit an affiliate with any commission amount (can be negative)."
+        },
+        {
+          "info": {
+            "name": "Manual Credit Order ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/conversion/manual_credit_order_id",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Manually credit an affiliate with an existing order ID."
+        },
+        {
+          "info": {
+            "name": "Conversion Status Change",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/conversion/status_change",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Manually change the status of one or more conversions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

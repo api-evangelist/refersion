@@ -1,0 +1,179 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/refersion-rest-api-readme-harvest.json plus
+  https://www.refersion.dev/reference/welcome-to-refersion,
+  https://www.refersion.dev/reference/order-tracking-overview and
+  https://www.refersion.dev/reference/webhook-tracking
+name: Refersion API Conventions
+description: >-
+  Cross-cutting runtime semantics for the Refersion REST API v2 — the rules an agent must hold in
+  its head that are not expressed anywhere in the operation list. The headline facts: every
+  operation is a POST regardless of whether it reads or writes; there is NO idempotency mechanism;
+  HTTP status codes are not used conventionally; and batch operations report partial failure inside
+  a 200.
+http:
+  base_url: https://api.refersion.com/v2
+  method: >-
+    POST for all 15 operations, including pure reads (get_affiliate, list_affiliates,
+    search_affiliates, get_totals, get_reporting_link). There is not a single GET in the published
+    contract, so no operation is cacheable or safely retryable at the HTTP layer.
+  content_type: application/json
+  accept: application/json
+  body_required: true
+  note: >-
+    An empty body returns HTTP 404, not 400 — see errors/refersion-problem-types.yml.
+authentication:
+  style: paired api-key headers
+  headers:
+  - Refersion-Public-Key
+  - Refersion-Secret-Key
+  declared_as_security_scheme: false
+  detail: authentication/refersion-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    Refersion publishes NO idempotency key, NO request-deduplication header, and no
+    at-most-once guarantee anywhere in the contract or the docs. This matters because the API is
+    money-moving: manual_commission_credit will credit an affiliate again on every retry. The only
+    dedupe that exists is server-side and operation-specific — manual_credit_order_id refuses a
+    second credit for the same order/affiliate pair with 422 "The affiliate you provided has
+    already been manually credited for this order ID. (Error 6)", and new_sku_commission silently
+    reports repeats in duplicate_not_added. Neither is a general idempotency mechanism. Callers
+    must implement their own deduplication before retrying any write.
+  safe_to_retry:
+  - get_affiliate
+  - list_affiliates
+  - search_affiliates
+  - get_totals
+  unsafe_to_retry:
+  - new_affiliate
+  - manual_commission_credit
+  - cancel_conversion
+  - new_affiliate_trigger
+pagination:
+  style: page-number
+  applies_to:
+  - list_affiliates
+  - search_affiliates
+  request_params:
+  - name: limit
+    type: string
+    max: 100
+    description: Total returned per call. Maximum 100. Documented on list_affiliates only.
+  - name: page
+    type: string
+    description: Page offset.
+  response_fields:
+  - name: total
+    description: Total matching records.
+  - name: results
+    description: Array of records for the requested page.
+  cursors: false
+  link_header: false
+  note: >-
+    Offset pagination with no stable sort key documented, so records can shift between pages while
+    an affiliate list is being walked. search_affiliates accepts `page` but no `limit`.
+batching:
+  supported: true
+  operations:
+  - operation: edit_affiliate
+    field: affiliates[]
+  - operation: affiliate_status_change
+    field: ids[]
+    max: 50
+  - operation: status_change
+    field: ids[]
+  - operation: delete_conversion_trigger
+    field: affiliates[]
+    max: 50
+  - operation: new_sku_commission
+    field: skus[]
+    max: 50
+  - operation: cancel_conversion
+    field: items[]
+  partial_failure: >-
+    Batch writes return HTTP 200 with ids_changed / ids_not_changed (or added /
+    duplicate_not_added). The docs instruct callers explicitly to check ids_changed rather than the
+    status code. No per-ID failure reason is returned, so a caller cannot tell WHY an ID was
+    skipped.
+  overflow: >-
+    Exceeding a batch maximum returns HTTP 429 with "Max number of elements on attribute (50)
+    reached." — a size limit expressed as a rate-limit status.
+filtering:
+  supported: true
+  operations:
+  - operation: get_totals
+    params:
+    - created_from
+    - created_to
+    - offer_id
+    - affiliate_id
+    - status
+    - payment_status
+    - type
+    - is_test_conversion
+  - operation: search_affiliates
+    params:
+    - keyword
+    - first_name
+    - last_name
+  expansion: false
+  sparse_fieldsets: false
+metadata:
+  custom_fields:
+    supported: true
+    entity: Affiliate
+    shape: 'custom_fields[]{id,name|label,value}'
+    note: Merchant-defined attributes configured in the dashboard, returned on affiliate reads.
+  merchant_identifier:
+    field: unique_merchant_id
+    description: >-
+      Optional alphanumeric identifier a merchant can attach to an affiliate to map it to their own
+      system of record. The closest thing to a metadata escape hatch on this API.
+tracing:
+  request_id_header: none
+  correlation: >-
+    No request-id is echoed in any response and no trace header is documented. The one correlation
+    identifier in the system is application-level — `cart_id`, minted by the merchant, handed to
+    the browser via r.sendCheckoutEvent() and replayed on the server-side order webhook to bind a
+    click to an order. The docs require it be non-sequential and not guessable.
+versioning:
+  scheme: url-path
+  current: v2
+  base: https://api.refersion.com/v2
+  parallel_versions:
+  - name: Tracking JS v4
+    note: >-
+      The browser tracking library versions independently of the REST API and must be enabled per
+      account under Account > Settings > Tracking before v4 snippets work.
+  deprecation_policy: none published
+  sunset_header: false
+  detail: lifecycle/refersion-lifecycle.yml
+errors:
+  envelope: '{"error": "<string>"} on 204/400/401/404 and {"errors": ["<string>"]} on 422'
+  rfc9457: false
+  status_semantics: >-
+    NON-CONVENTIONAL. 204 carries a validation-error body, 404 means "empty request body" rather
+    than "not found", 429 means "payload too large", and plan-gating surfaces as 422. Do not branch
+    on status codes alone.
+  detail: errors/refersion-problem-types.yml
+rate_limiting:
+  headers: none
+  documented_limits: none
+  detail: rate-limits/refersion-rate-limits.yml
+test_mode:
+  sandbox_environment: false
+  note: >-
+    There is no sandbox host and no test-mode key prefix. The only test affordance is a
+    per-conversion boolean, `is_test_conversion`, which appears in webhook payloads and as a filter
+    on get_totals — but no published operation lets an API caller CREATE a test conversion. No
+    sandbox artifact is emitted for this provider.
+webhooks:
+  outbound: asyncapi/refersion-webhooks.yml
+  signature_header: Refersion-Signature
+  topic_header: Refersion-Topic
+  verification_documented: false

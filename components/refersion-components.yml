@@ -1,0 +1,110 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.refersion.dev/reference/javascript-v4-tracking,
+  https://www.refersion.dev/reference/webhook-tracking,
+  https://www.refersion.dev/reference/order-tracking-overview,
+  https://www.refersion.com/pricing/
+name: Refersion Client-Side Components
+description: >-
+  Embeddable and client-side surfaces Refersion asks a merchant to drop into their own storefront.
+  These are distinct from SDKs (Refersion publishes none — see packages/refersion-packages.yml):
+  they are browser-loaded tracking and conversion-capture components plus hosted merchant-facing
+  surfaces.
+loaders:
+- name: refersion.js
+  url: https://cdn.refersion.com/refersion.js
+  type: script-tag
+  versioning: unpinned
+  integrity: none
+  note: >-
+    Single loader for the whole client-side surface. Installed in <head> on every page where
+    affiliate traffic can land. Bootstraps the global tracking object as `r`
+    (window.TrackingSystemObject = "r"), configured with the merchant's Refersion PUBLIC API key
+    only — the secret key is never used client-side.
+families:
+- name: v4 Tracking
+  description: >-
+    Client-side click and conversion tracking. Must be enabled per account under
+    Account > Settings > Tracking before the v4 snippet will function.
+  docs: https://www.refersion.dev/reference/javascript-v4-tracking
+  components:
+  - name: r.initializeXDLS()
+    kind: method
+    description: Initializes cross-domain local storage so click state survives a domain hop.
+  - name: r.launchDefault()
+    kind: method
+    description: >-
+      Starts default click capture. Resolves a promise; the documented pattern dispatches a custom
+      `refersion-loaded` DOM event on completion so merchant code can safely bind afterwards.
+  - name: r.settings.fp_off
+    kind: setting
+    description: Toggles first-party tracking behaviour.
+  - name: r.settings.dbg_mode
+    kind: setting
+    description: Debug logging, commented out in the published snippet and enabled during testing.
+  - name: r.addTrans()
+    kind: method
+    description: >-
+      Adds the order-level transaction. Fields, verbatim from the docs — order_id (string,
+      required), shipping, tax, discount, discount_code, currency_code (required), is_subscription,
+      subscription_id.
+  - name: r.addCustomer()
+    kind: method
+    description: Adds customer context — first_name, last_name, email, ip_address. All optional.
+  - name: r.addItems()
+    kind: method
+    description: >-
+      Adds one line item per call — sku (required), quantity (required), price (required, unit
+      price not extended), name.
+  - name: r.sendConversion()
+    kind: method
+    description: >-
+      Submits the assembled conversion from the thank-you / order-confirmation page. Must run on
+      the same domain AND protocol as the click-tracking snippet.
+- name: Server-side Tracking Bridge
+  description: >-
+    The client half of Refersion's server-side order reporting: the browser hands Refersion a
+    merchant-generated cart_id, and the merchant's backend later posts the order against that same
+    cart_id.
+  docs: https://www.refersion.dev/reference/webhook-tracking
+  components:
+  - name: r.sendCheckoutEvent(cart, id, url, aid, cs)
+    kind: method
+    description: >-
+      Associates a merchant cart_id with the tracked click session. The remaining arguments are
+      read out of localStorage keys the tracker sets — rfsn_v4_id, rfsn_v4_aid, rfsn_v4_cs.
+  - name: 'localStorage: rfsn_v4_id / rfsn_v4_aid / rfsn_v4_cs'
+    kind: storage
+    description: >-
+      Browser-side click identifiers written by refersion.js and read back by the checkout-event
+      helper. Documented verbatim in the published snippet.
+- name: Merchant-facing hosted surfaces
+  description: >-
+    Refersion-hosted pages a merchant links to rather than embeds. Listed here because they are the
+    non-API integration surface, not because they are embeddable widgets.
+  docs: https://www.refersion.com/pricing/
+  components:
+  - name: Post-purchase widget
+    kind: hosted-widget
+    description: >-
+      Published on the pricing feature matrix as "Post-purchase widget (turn customers into
+      affiliates)". Included from the Launch tier. No public developer documentation for it exists
+      on www.refersion.dev.
+  - name: Customizable affiliate registration page
+    kind: hosted-page
+    description: >-
+      Refersion-hosted affiliate sign-up page, brandable per merchant. Feature-matrix item; no
+      developer-facing embed contract is published.
+  - name: Affiliate referral link
+    kind: hosted-redirect
+    description: >-
+      Per-affiliate referral URL of the form https://<site>.refersion.com/c/<code>, returned as the
+      `link` field by the new_affiliate operation.
+notes:
+- >-
+  Every client-side component is authenticated with the PUBLIC key only. The secret key appears
+  exclusively in server-to-server calls (REST API and the inbound order webhook).
+- >-
+  Refersion publishes no web-component / custom-element library and no npm-distributed element
+  package; the entire client surface is the one unpinned CDN script above.

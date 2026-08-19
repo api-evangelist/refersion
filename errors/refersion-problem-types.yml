@@ -1,0 +1,217 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/refersion-rest-api-readme-harvest.json (the provider-published OpenAPI embedded
+  in every https://www.refersion.dev/reference/*.md page), enriched from the same docs pages
+name: Refersion Error Catalog
+description: >-
+  Error surface of the Refersion REST API v2, derived from the 4xx/5xx responses declared on all 15
+  published operations. Refersion does NOT use RFC 9457 problem+json. Every error is a plain
+  application/json object using one of two shapes, and the API commits an unusual protocol
+  violation: it returns HTTP 204 and HTTP 404 as VALIDATION errors with response bodies, which is
+  the single most important thing an agent integrating this API needs to know.
+format: vendor-json
+rfc9457: false
+media_type: application/json
+envelopes:
+- name: single-error
+  shape: '{"error": "<message>"}'
+  used_by:
+  - 204
+  - 400
+  - 401
+  - 404
+  note: >-
+    On 404 for edit_affiliate the same field is documented as an ARRAY of strings in one example
+    and a bare string in others, so `error` is not reliably typed.
+- name: error-list
+  shape: '{"errors": ["<message>", ...]}'
+  used_by:
+  - 422
+  note: >-
+    The declared schema for 204/400/404 is also {"errors": [string]}, but every published EXAMPLE
+    for those codes uses the singular `error` string instead. The spec and the examples disagree;
+    a client must tolerate both.
+problem_types:
+- status: 204
+  name: Invalid field
+  title: There is an invalid field in the request
+  example: '{"error": "Invalid field X"}'
+  applies_to: all operations except delete_conversion_trigger
+  remediation: Remove or correct the unrecognized field, then retry.
+  note: >-
+    PROTOCOL VIOLATION. HTTP 204 No Content is returned WITH a JSON body describing a validation
+    failure. RFC 9110 forbids a body on 204, and most HTTP clients and proxies will discard it, so
+    the caller sees a silent success. Treat any 204 from this API as a hard failure, not a success.
+- status: 400
+  name: Missing required field
+  title: A required field is missing from the request
+  example: '{"error": "Missing required field X"}'
+  applies_to: all 15 operations
+  remediation: Add the named required field to the request body and retry.
+- status: 401
+  name: Invalid API credentials
+  title: Unauthorized – your API keys are incorrect
+  example: '{"error": "Invalid API credentials (error 2)."}'
+  applies_to: all 15 operations
+  component: '#/components/responses/401_Error'
+  remediation: >-
+    Verify Refersion-Public-Key and Refersion-Secret-Key from
+    Account > Settings > Refersion API. Both headers are required on every call.
+- status: 404
+  name: Empty request body
+  title: An empty request body
+  example: '{"error": "Bad request, no body"}'
+  applies_to: all 15 operations
+  remediation: Send a JSON body with Content-Type application/json. Even read operations are POSTs with a body.
+  note: >-
+    PROTOCOL VIOLATION. 404 Not Found is used for a malformed request rather than a missing
+    resource. Do not treat a 404 from this API as "resource does not exist"; a genuinely missing
+    resource surfaces as a 422 with a message such as "Affiliate not found."
+- status: 422
+  name: Unprocessable entity
+  title: The data you are sending has errors
+  applies_to: all 15 operations
+  envelope: error-list
+  remediation: Read each string in `errors` and correct the corresponding input.
+  messages:
+  - message: The email you have entered is taken by another Affiliate.
+    operations:
+    - new_affiliate
+    - edit_affiliate
+  - message: 'The password should be at least 9 characters long. Current password length is N'
+    operations:
+    - new_affiliate
+    - edit_affiliate
+  - message: The password should not be longer than 72 characters. Current password length is N
+    operations:
+    - new_affiliate
+    - edit_affiliate
+  - message: The password should have at least 1 number, 1 uppercase letter, 1 lowercase letter and 1 symbol.
+    operations:
+    - new_affiliate
+    - edit_affiliate
+  - message: The password can't be the same as the e-mail
+    operations:
+    - new_affiliate
+    - edit_affiliate
+  - message: The password can't have the same character repeated more than 3 times in a row
+    operations:
+    - new_affiliate
+    - edit_affiliate
+  - message: X is not a allowed value for field Y
+    operations:
+    - new_affiliate
+    - edit_affiliate
+    - manual_commission_credit
+    - manual_credit_order_id
+    - status_change
+    - get_totals
+    - new_sku_commission
+  - message: Value exceed the char limit
+    operations:
+    - all
+  - message: Affiliate not found.
+    operations:
+    - get_affiliate
+    - new_affiliate_trigger
+  - message: Request filter not provided.
+    operations:
+    - get_affiliate
+    - new_affiliate_trigger
+  - message: Could not find affiliates with this keyword.
+    operations:
+    - search_affiliates
+  - message: Conversion trigger already exists for same or another affiliate.
+    operations:
+    - new_affiliate_trigger
+  - message: Failed to create conversion trigger.
+    operations:
+    - new_affiliate_trigger
+  - message: 'The following affiliates does not exist in our records: N.'
+    operations:
+    - delete_conversion_trigger
+  - message: 'The following conversion trigger does not exist in our records: N.'
+    operations:
+    - delete_conversion_trigger
+  - message: Invalid order ID (error 5)
+    operations:
+    - cancel_conversion
+  - message: Invalid affiliate ID (error 2).
+    operations:
+    - manual_commission_credit
+  - message: X is not a valid currency
+    operations:
+    - manual_commission_credit
+  - message: This order ID is being process (error 5).
+    operations:
+    - manual_credit_order_id
+  - message: The affiliate you provided has already been manually credited for this order ID. (Error 6)
+    operations:
+    - manual_credit_order_id
+  - message: The conversion cannot have this status
+    operations:
+    - status_change
+  - message: Cannot deny an approved conversion
+    operations:
+    - status_change
+  - message: Cannot approve a denied conversion
+    operations:
+    - status_change
+  - message: 'Only 50 sku records can be processed per request.'
+    operations:
+    - new_sku_commission
+  - message: Your account plan does not support this feature (error 1).
+    operations:
+    - new_sku_commission
+    note: Plan-gating surfaces as a 422, not a 402 or 403.
+  - message: Offer ID does not exist
+    operations:
+    - new_sku_commission
+  - message: Report ID not Found or Expired (error 5).
+    operations:
+    - get_reporting_link
+  - message: File is not available
+    operations:
+    - get_reporting_link
+- status: 429
+  name: Collection element limit reached
+  title: Too many conversion triggers in the affiliates object
+  example: '{"error": "Max number of elements on attribute (50) reached."}'
+  applies_to:
+  - delete_conversion_trigger
+  remediation: >-
+    Split the request into batches of at most 50 elements per attribute. This is a PAYLOAD SIZE
+    limit expressed as 429, not a request-rate limit — retrying the same request after a delay will
+    fail identically. See rate-limits/refersion-rate-limits.yml.
+  note: The only 429 declared anywhere in the published contract.
+partial_success:
+- name: ids_changed / ids_not_changed
+  status: 200
+  operations:
+  - edit_affiliate
+  - affiliate_status_change
+  - status_change
+  example: '{"ids_changed": [1, 3], "ids_not_changed": [2, 4]}'
+  note: >-
+    Batch operations return HTTP 200 even when some IDs failed. The docs explicitly instruct
+    callers to check ids_changed rather than trust the status code. There is no per-ID reason.
+- name: added / duplicate_not_added
+  status: 200
+  operations:
+  - new_sku_commission
+  example: '{"duplicate_not_added": ["TSHIRT-SMALL-RED"], "added": ["TSHIRT-SMALL-BLUE"]}'
+- name: warning
+  status: 200
+  operations:
+  - manual_credit_order_id
+  example: '{"message": "Order(s) are re-processing.", "warning": "Order ID is already credited to affiliate 12345678"}'
+  note: A `warning` field on a 200 carries what most APIs would return as a 409.
+gaps:
+- No stable machine-readable error CODE exists — only human-readable English strings.
+- >-
+  Parenthetical codes appear inconsistently inside the message text ("(error 2)", "(Error 6)") and
+  are reused for different meanings across operations — error 2 means "invalid credentials" on 401
+  and "invalid affiliate ID" on manual_commission_credit.
+- No 5xx responses are declared on any operation.
+- No `type` URI, no `instance`, no `traceId` / request-id echo in any error body.

@@ -1,0 +1,155 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes of every apis.yml baseURL host, the OpenAPI servers[] host and the docs host
+name: Refersion Well-Known Probe
+description: >-
+  Probe of the RFC 8615 /.well-known/ namespace across every Refersion host. No path returned a
+  real document on any host, so NO WellKnown or SecurityTxt pointer is emitted in apis.yml. The
+  api.refersion.com and www.refersion.com results are 403 (edge/WAF denial), not 404 — the surface
+  is closed rather than confirmed-absent; www.refersion.dev returns a genuine 404 (the ReadMe docs
+  app 404 shell) for every path.
+hosts:
+- host: api.refersion.com
+  note: >-
+    AWS API Gateway edge. Every /.well-known/ path is answered with an HTML "Unauthorized" page at
+    HTTP 403 — a blanket denial, not a served document.
+  paths:
+  - path: /.well-known/security.txt
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/api-catalog
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+- host: www.refersion.com
+  note: >-
+    WordPress marketing site behind an edge that answers every /.well-known/ path with a 403 HTML
+    page.
+  paths:
+  - path: /.well-known/security.txt
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/api-catalog
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    content_type: text/html
+    document: false
+    file: null
+- host: www.refersion.dev
+  note: >-
+    ReadMe-hosted developer portal. Genuine 404s. This host DOES serve /llms.txt at HTTP 200 —
+    captured separately at llms/refersion-llms.txt.
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: null
+    document: false
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    content_type: null
+    document: false
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    content_type: null
+    document: false
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: null
+    document: false
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    content_type: text/html
+    document: false
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    content_type: text/html
+    document: false
+    file: null
+summary:
+  paths_probed: 24
+  documents_found: 0
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  agent_card: false
+  pointer_emitted: false
+checked: '2026-08-13'

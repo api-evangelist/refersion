@@ -1,65 +1,100 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.refersion.com/pricing/
 name: Refersion Plans and Pricing
-description: Pricing plans for the Refersion affiliate marketing platform, covering affiliate management, conversion tracking, and API access across three tiers.
-specificationVersion: '0.1'
+description: >-
+  Published pricing for the Refersion affiliate marketing platform, re-read from the live pricing
+  page on 2026-08-13. Refersion re-cut its pricing since this file was last written: Growth dropped
+  from $299/mo to $199/mo, Launch's annual price changed, a free Marketplace Listing tier was
+  added, and both paid tiers now carry an explicit percentage of affiliate-driven sales on top of
+  the subscription. Scale no longer advertises a starting price and is contact-sales only.
+specificationVersion: '0.2'
 url: https://www.refersion.com/pricing/
+plan_count: 4
+currency: USD
+billing_note: >-
+  Annual billing is advertised as 20% off. The percentage fee is charged on AFFILIATE-DRIVEN sales
+  only, not on total store revenue — stated verbatim in the pricing FAQ.
 plans:
-  - name: Launch
-    description: Entry-level plan for brands launching an affiliate program with unlimited affiliates and conversion tracking.
-    price: 39.00
-    unit: month
-    currency: USD
-    features:
-      - Unlimited affiliates
-      - Unlimited conversion tracking (clicks, visits, conversions)
-      - Tracking via referral links
-      - Coupon code tracking
-      - Manual credit tracking
-      - Lifetime commissions on subscriptions
-      - Post-purchase widget
-      - Affiliate recommendations
-      - Access to Refersion Affiliate Marketplace
-    apiAccess: false
-    webhooks: false
-  - name: Growth
-    description: Mid-tier plan for growing affiliate programs with deeper tracking, customization, and expanded integrations.
-    price: 299.00
-    unit: month
-    currency: USD
-    annualPrice: 249.00
-    annualUnit: month
-    features:
-      - All Launch features
-      - Customer email tracking
-      - Product SKU-level tracking
-      - Customizable affiliate registration pages
-      - Customizable transactional emails
-      - Flat-rate commission structures
-      - Private offer commission structures
-      - Mailchimp integration
-      - Klaviyo integration
-      - Coupon creation via API
-      - Affiliate directories
-      - In-app messaging
-      - Manual payment methods
-    apiAccess: partial
-    webhooks: false
-    notes: Coupon creation via API included; full developer API access requires Scale plan
-  - name: Scale
-    description: Enterprise-grade plan for high-volume affiliate programs with full API access, webhooks, multi-store tracking, and white labeling.
-    price: custom
-    unit: month
-    currency: USD
-    features:
-      - All Growth features
-      - Tiered commission structures
-      - Commission exclusions by coupon or SKU
-      - Multi-store tracking
-      - White labeling
-      - Full access to developer APIs
-      - Webhooks support
-      - Guided onboarding
-      - Enhanced reporting
-      - Bonus tier movement notifications (Enterprise)
-    apiAccess: true
-    webhooks: true
-    notes: Pricing starts at $599/month plus 1% of affiliate-driven sales, or $479/month annually with 0% transaction fees for stores up to $1M GMV
+- name: Marketplace Listing
+  description: Free public listing in the Refersion Affiliate Marketplace so affiliates can find and apply to the brand.
+  price: 0.00
+  unit: month
+  currency: USD
+  overage: null
+  features:
+  - Public listing in Refersion Marketplace
+  - Publish a percent-of-sale offer
+  - Affiliates can view and apply
+  apiAccess: false
+  webhooks: false
+- name: Launch
+  description: Entry tier for new affiliate programs.
+  price: 39.00
+  unit: month
+  annualPrice: 29.00
+  annualUnit: month
+  currency: USD
+  overage: 3% of affiliate-driven sales
+  features:
+  - Marketplace listing
+  - Personalized affiliate discovery
+  - Unlimited affiliates
+  - Unlimited clicks and conversions
+  - First-party tracking domain (no cookies)
+  - One-click payouts including PayPal
+  - Percent-of-sale or subscription commissions
+  - Post-purchase widget
+  apiAccess: false
+  webhooks: false
+- name: Growth
+  description: For brands approaching $1M GMV. This is the tier at which API access begins.
+  price: 199.00
+  unit: month
+  annualPrice: 159.00
+  annualUnit: month
+  currency: USD
+  overage: 2% of affiliate-driven sales
+  features:
+  - Everything in Launch
+  - Advanced commission options
+  - Advanced tracking by product and customer email
+  - API access
+  - 30+ marketing integrations
+  - Chat support
+  - New vs returning customer commissions
+  - Multi-store management
+  apiAccess: true
+  webhooks: unknown
+  notes: >-
+    The tier card states "API access" plainly. The detailed feature matrix lower on the same page
+    lists "Access to developer APIs" and "Webhooks" as separate Platform rows without a visible
+    tick for Growth, so webhook availability at this tier could not be confirmed from the page.
+- name: Scale
+  description: >-
+    For brands doing more than $1 million GMV per year. Flat monthly subscription, no published
+    price.
+  price: custom
+  unit: month
+  currency: USD
+  overage: null
+  contact_sales: true
+  features:
+  - Everything Refersion offers
+  - Premium support
+  - White-glove onboarding
+  - Shared Slack channel
+  - Early feature access
+  - Flat monthly subscription
+  apiAccess: true
+  webhooks: true
+  notes: >-
+    No price is published for this tier as of 2026-08-13 — the prior "$599/month plus 1%" figure
+    recorded in the previous revision of this file is no longer on the page.
+api_access_summary:
+  first_paid_tier_with_api: Growth
+  free_tier_with_api: false
+  webhooks_tier: Scale (and possibly Growth — see note)
+  note: >-
+    The developer API is not available on the free or entry tier, so the Refersion API cannot be
+    evaluated without a paid subscription.

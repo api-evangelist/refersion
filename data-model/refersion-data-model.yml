@@ -1,0 +1,285 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/refersion-rest-api-readme-harvest.json (provider-published OpenAPI harvested
+  from https://www.refersion.dev/reference/*.md), plus the webhook payloads documented at
+  https://www.refersion.dev/reference/webhooks-for-merchants
+name: Refersion Data Model
+description: >-
+  Entity-relationship graph for the Refersion affiliate-marketing domain, derived from the request
+  bodies and response examples of the 15 published REST operations and from the outbound webhook
+  payloads. The published OpenAPI declares NO components/schemas — every object is defined inline
+  per operation — so these entities are reconstructed from field sets rather than read from named
+  schemas. Relationships are inferred from id-reference fields, not from $ref links, because none
+  exist.
+id_conventions:
+- entity: affiliate
+  note: >-
+    Affiliates carry TWO identifiers that are used interchangeably across operations. `id` is a
+    numeric account identifier (e.g. 37569297) and `code` / `affiliate_code` is a short alphanumeric
+    referral code (e.g. a3y7, 694c). get_affiliate accepts either. new_affiliate_trigger requires
+    the CODE. manual_commission_credit and affiliate_status_change require the numeric ID. Response
+    examples are inconsistent — new_affiliate returns the code in a field named `id`, while
+    get_affiliate returns the numeric id in the same field name.
+- entity: conversion
+  note: numeric conversion_id, returned as string in some examples and integer in others.
+- entity: offer
+  note: numeric offer_id, passed as a string in new_affiliate's `offer` field.
+- entity: report
+  note: numeric report_id, resolvable to a signed download link that expires 2 minutes after issue.
+entities:
+- name: Affiliate
+  description: A partner who drives referred traffic and earns commission.
+  fields:
+  - id
+  - code
+  - offer_id
+  - status
+  - first_name
+  - last_name
+  - company_name
+  - email
+  - paypal_email
+  - password
+  - link
+  - address1
+  - address2
+  - city
+  - state
+  - zip
+  - country
+  - phone
+  - custom_fields[]
+  - unique_merchant_id
+  - last_login
+  - last_conversion
+  - source
+  - is_marketplace_user
+  enums:
+    status:
+    - PENDING
+    - ACTIVE
+    - DENIED
+    - DISABLED
+  relationships:
+  - belongs_to: Offer
+    via: offer_id
+  - has_many: ConversionTrigger
+    via: affiliate_code
+  - has_many: Conversion
+    via: affiliate.id
+  - has_many: Payment
+    via: affiliates.<id>.payments
+  operations:
+  - new_affiliate
+  - edit_affiliate
+  - get_affiliate
+  - search_affiliates
+  - list_affiliates
+  - affiliate_status_change
+- name: Offer
+  description: A commission structure an affiliate is opted into.
+  fields:
+  - id
+  - name
+  - type
+  - amount
+  - skus[]
+  enums:
+    type:
+    - PERCENT_OF_SALE
+  relationships:
+  - has_many: Affiliate
+    via: offer_id
+  - has_many: SkuCommission
+    via: offer_id
+  operations:
+  - new_sku_commission
+- name: SkuCommission
+  description: A product-level commission rate attached to an offer. Plan-gated.
+  fields:
+  - sku
+  - offer_id
+  relationships:
+  - belongs_to: Offer
+    via: offer_id
+  operations:
+  - new_sku_commission
+  note: Maximum 50 SKU records per request; duplicates are reported in duplicate_not_added.
+- name: ConversionTrigger
+  description: >-
+    The thing that attributes an order to an affiliate when no referral link was clicked — a coupon
+    code, a product SKU, or a customer email address.
+  fields:
+  - id
+  - trigger_id
+  - affiliate_id
+  - trigger
+  - type
+  enums:
+    type:
+    - COUPON
+    - SKU
+    - EMAIL
+  relationships:
+  - belongs_to: Affiliate
+    via: affiliate_code
+  operations:
+  - new_affiliate_trigger
+  - delete_conversion_trigger
+  note: >-
+    A trigger value must be globally unique across affiliates — 422 "Conversion trigger already
+    exists for same or another affiliate." Delete accepts at most 50 per request.
+- name: Conversion
+  description: A referred order, its commission, and its approval state.
+  fields:
+  - id
+  - created
+  - updated
+  - status
+  - denied_reason_code
+  - reason
+  - notes
+  - is_recurring
+  - is_test_conversion
+  - total_items
+  - total
+  - commission_total
+  - currency
+  - payment_status
+  - order_id
+  - subscription_id
+  - coupon_code
+  - product_names[]
+  - source
+  enums:
+    payment_status:
+    - UNPAID
+    source:
+    - SHOPIFY
+    - MERCHANT_PROFILE
+    - API
+  relationships:
+  - belongs_to: Affiliate
+    via: affiliate.id
+  - belongs_to: Offer
+    via: offer.id
+  - has_one: Click
+    via: click
+  - has_one: Customer
+    via: customer
+  - belongs_to: Payment
+    via: payment_id
+  operations:
+  - cancel_conversion
+  - manual_commission_credit
+  - manual_credit_order_id
+  - status_change
+  - get_totals
+- name: Click
+  description: The referral touch that preceded a conversion. Embedded, never addressable on its own.
+  fields:
+  - created
+  - referer
+  - landed_url
+  - ip
+  - sub_id
+  - creative_id
+  relationships:
+  - belongs_to: Conversion
+    via: click
+  note: >-
+    In server-side tracking a click is bound to an order by a merchant-generated `cart_id` handed
+    over with r.sendCheckoutEvent(); the browser identifiers live in localStorage as rfsn_v4_id,
+    rfsn_v4_aid and rfsn_v4_cs.
+- name: Customer
+  description: The buyer on a referred order. Embedded in conversions and in the inbound order webhook.
+  fields:
+  - name
+  - first_name
+  - last_name
+  - email
+  - browser_ip
+  - ip_address
+  relationships:
+  - belongs_to: Conversion
+    via: customer
+- name: Item
+  description: A line item on a reported order.
+  fields:
+  - sku
+  - name
+  - quantity
+  - price
+  relationships:
+  - belongs_to: Conversion
+    via: items
+  note: price is the UNIT price, not the extended line total.
+- name: Payment
+  description: A commission payout to an affiliate, covering many conversions.
+  fields:
+  - id
+  - created
+  - total_conversions
+  - payment_method
+  - commission_total
+  - total
+  - currency
+  - note
+  enums:
+    payment_method:
+    - MANUAL
+  relationships:
+  - belongs_to: Affiliate
+    via: affiliates.<id>
+  - has_many: Conversion
+    via: conversions[]
+  operations: []
+  note: >-
+    Payments have NO REST operation. They are observable only through the New Payment webhook — a
+    read-only-by-event entity.
+- name: Reward
+  description: A bonus-tier milestone reached by an affiliate. Enterprise plans only.
+  fields:
+  - id
+  - offer_id
+  - milestone_reached
+  - amount_given
+  - notes
+  relationships:
+  - belongs_to: Affiliate
+    via: webhook payload
+  - belongs_to: Offer
+    via: offer_id
+  operations: []
+- name: Report
+  description: A saved report in the merchant dashboard, resolvable to a signed download link.
+  fields:
+  - report_id
+  - download_link
+  - expire_time
+  operations:
+  - get_reporting_link
+  note: >-
+    Download links expire two minutes after issue; expire_time is a Unix epoch integer. Reports
+    themselves cannot be created or listed through the API — only linked.
+- name: CustomField
+  description: Merchant-defined attribute on an affiliate.
+  fields:
+  - id
+  - name
+  - label
+  - value
+  relationships:
+  - belongs_to: Affiliate
+    via: custom_fields
+gaps:
+- >-
+  The published OpenAPI has an empty components/schemas — no entity is named or reusable, so no
+  $ref graph exists and no code generator can produce typed models from it.
+- >-
+  Payment and Reward are webhook-only entities with no REST read path; a consumer that misses a
+  delivery has no way to reconcile.
+- >-
+  There is no list/read operation for Offer, Conversion or ConversionTrigger — only mutation and
+  aggregate totals. Conversions can be aggregated (get_totals) but never enumerated.

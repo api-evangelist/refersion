@@ -1,0 +1,250 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Refersion REST Affiliates API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Affiliates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "New Affiliate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/affiliate/new",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new affiliate. Returns the affiliate ID and their referral link. Tip: Save the id from the response to map your user to their affiliate account in Refersion.\n"
+        },
+        {
+          "info": {
+            "name": "Get Affiliate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/affiliate/get",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get information about an affiliate by their ID or affiliate code."
+        },
+        {
+          "info": {
+            "name": "Edit Affiliate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/affiliate/edit",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edit existing affiliates. Returns all successfully updated affiliate IDs. Always check ids_changed in the response. At least 1 field besides id must be provided per affiliate.\n"
+        },
+        {
+          "info": {
+            "name": "List All Affiliates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/affiliate/list",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get all affiliates in your account with pagination support (max 100 per call)."
+        },
+        {
+          "info": {
+            "name": "Search Affiliates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/affiliate/search",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Find affiliates based on email address, affiliate ID, or name. Affiliate ID must be exact; email can be a partial match.\n"
+        },
+        {
+          "info": {
+            "name": "Change Affiliates Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/affiliate/status_change",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set a new status value for a list of affiliate IDs. Limit of 50 IDs per call."
+        },
+        {
+          "info": {
+            "name": "Create Conversion Trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/affiliate/trigger",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Conversion Trigger (coupon, SKU, or email) for a specific affiliate."
+        },
+        {
+          "info": {
+            "name": "Delete Conversion Triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/trigger/delete",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete all conversion triggers passed in the body message and store the affiliate activity. Max 50 triggers per call."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

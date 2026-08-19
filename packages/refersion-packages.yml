@@ -1,0 +1,85 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org search + metadata, pypi.org, rubygems.org, packagist.org, crates.io,
+  azuresearch-usnc.nuget.org, api.github.com/orgs/refersion, and
+  https://www.refersion.dev/reference/javascript-v4-tracking
+name: Refersion Packages
+description: >-
+  Client-library inventory for Refersion. Refersion publishes NO first-party server-side SDK in any
+  public package registry — npm, PyPI, RubyGems, Packagist, crates.io, NuGet and Maven Central all
+  return zero first-party results, and the github.com/refersion organization exists (id 32423452)
+  but exposes zero public repositories. The only first-party distributed client is the browser
+  tracking library refersion.js, served unversioned from Refersion's own CloudFront/S3 CDN. Two
+  third-party packages exist and are marked official:false.
+summary:
+  total: 3
+  official: 1
+  third_party: 2
+  registries_searched:
+  - npm
+  - pypi
+  - rubygems
+  - packagist
+  - crates.io
+  - nuget
+  - maven-central
+  - github
+  first_party_registry_packages: 0
+packages:
+- name: refersion.js
+  official: true
+  language: javascript
+  registry: cdn
+  url: https://cdn.refersion.com/refersion.js
+  repository: null
+  version: null
+  published: null
+  note: >-
+    First-party browser tracking/conversion library. Distribution is UNPINNED — the documented
+    script tag loads https://cdn.refersion.com/refersion.js with no version segment and no
+    integrity hash, so a consumer cannot tell which build they are executing and neither can we.
+    There is no registry metadata endpoint to query (registry: cdn). The only currency signal the
+    CDN exposes is the HTTP Last-Modified header, which read 2026-08-12 when probed on 2026-08-13
+    (21,681 bytes, ETag 7f844b34ecb9e8c9eaf531b91777ce6a) — so the library is actively maintained
+    even though it is unversioned. Surfaces the r.addTrans / r.addCustomer / r.addItems /
+    r.sendConversion / r.sendCheckoutEvent API documented for v4 tracking.
+  docs: https://www.refersion.dev/reference/javascript-v4-tracking
+  probed:
+    url: https://cdn.refersion.com/refersion.js
+    http_status: 200
+    content_type: application/x-javascript
+    last_modified: '2026-08-12'
+    checked: '2026-08-13'
+- name: '@pipedream/refersion'
+  official: false
+  language: javascript
+  registry: npm
+  url: https://www.npmjs.com/package/@pipedream/refersion
+  repository: null
+  version: 0.1.0
+  published: '2026-05-20'
+  note: >-
+    Third-party Pipedream integration components for Refersion, published by Pipedream — not by
+    Refersion. Read from registry.npmjs.org search metadata.
+- name: '@andrewcturing/refersion'
+  official: false
+  language: javascript
+  registry: npm
+  url: https://www.npmjs.com/package/@andrewcturing/refersion
+  repository: null
+  version: 0.0.1
+  published: '2022-09-02'
+  note: >-
+    Abandoned individual fork of the Pipedream Refersion components. Last publish 2022-09-02, more
+    than three years stale. Not first-party.
+gaps:
+- >-
+  No first-party SDK exists for any server-side language, so every integration against the REST API
+  documented at https://www.refersion.dev is hand-rolled HTTP with Refersion-Public-Key and
+  Refersion-Secret-Key headers.
+- >-
+  github.com/refersion has zero public repositories, so there is no source-available client, sample
+  app, or Postman collection published by the vendor.
+- >-
+  refersion.js ships unpinned with no Subresource Integrity attribute in the documented snippet.

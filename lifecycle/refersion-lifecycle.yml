@@ -1,0 +1,108 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  https://statuspage.refersion.com/api/v2/summary.json (probed 2026-08-13),
+  https://www.refersion.dev/llms.txt, the provider-published OpenAPI harvested to
+  openapi/_original/refersion-rest-api-readme-harvest.json, and
+  https://www.refersion.dev/reference/javascript-v4-tracking
+name: Refersion API Lifecycle
+description: >-
+  Versioning, deprecation and operational-status posture for the Refersion API surface. Refersion
+  runs a real Statuspage with per-API components and a machine-readable JSON API. It publishes NO
+  deprecation policy, NO Sunset/Deprecation headers, NO changelog and NO SLA, and no operation in
+  the published contract is marked deprecated.
+versioning:
+  scheme: url-path
+  current: v2
+  base_url: https://api.refersion.com/v2
+  info_version: '2.0'
+  previous_versions:
+  - name: v1
+    status: unknown
+    note: >-
+      Implied by the v2 path but never mentioned in current documentation; no migration guide and
+      no end-of-life notice is published.
+  parallel_tracks:
+  - name: Tracking JavaScript v4
+    versioning: opt-in per account
+    note: >-
+      v4 tracking must be switched on under Account > Settings > Tracking before the v4 snippet
+      functions, which implies an older tracking generation is still running for accounts that
+      have not opted in. The library itself ships unversioned from
+      https://cdn.refersion.com/refersion.js.
+  - name: GraphQL API
+    versioning: unversioned
+    endpoint: https://api.refersion.com/graphql
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    Zero of the 15 published operations carry `deprecated: true`. No notice period, no migration
+    window and no advance-warning channel is published anywhere on www.refersion.dev or
+    www.refersion.com.
+status_page:
+  url: https://statuspage.refersion.com
+  alias: https://status.refersion.com
+  platform: Atlassian Statuspage
+  page_id: t8xrt939xw6w
+  machine_readable: true
+  api:
+  - url: https://statuspage.refersion.com/api/v2/status.json
+    http_status: 200
+  - url: https://statuspage.refersion.com/api/v2/summary.json
+    http_status: 200
+  feeds:
+  - url: https://statuspage.refersion.com/history.rss
+    http_status: 200
+    format: rss
+  - url: https://statuspage.refersion.com/history.atom
+    http_status: 200
+    format: atom
+  components:
+  - Client Dashboard (Base)
+  - Affiliate Dashboard
+  - Marketplace
+  - Click Tracking
+  - Conversion Tracking
+  - REST API
+  - GraphQL API
+  - Shopify API & Mobile
+  observed:
+    checked: '2026-08-13'
+    indicator: none
+    description: All Systems Operational
+    open_incidents: 0
+    scheduled_maintenances: 0
+  note: >-
+    The status page breaks out REST API and GraphQL API as separate components, which is a genuine
+    operational-transparency signal — a consumer can distinguish an API incident from a dashboard
+    incident. The component list is duplicated for "Shopify API & Mobile" in the published
+    summary.json, a cosmetic defect on Refersion's side.
+changelog:
+  published: false
+  probed:
+  - url: https://www.refersion.com/changelog/
+    http_status: 404
+  - url: https://www.refersion.com/product-updates/
+    http_status: 404
+  note: >-
+    No dated API changelog or release-notes feed exists. The only dated signal available to a
+    consumer is the `updatedAt` frontmatter ReadMe emits on each documentation page — every
+    reference page currently reads 2025-09-25 or 2025-09-26 — and the HTTP Last-Modified on the
+    tracking library (2026-08-12). No ChangeLog artifact is emitted.
+sla:
+  published: false
+  uptime_commitment: null
+  support_response: null
+  note: >-
+    No public SLA. The pricing page offers "premium support, white-glove onboarding, Slack channel"
+    on the Scale tier but attaches no numeric commitment.
+support:
+  help_center: https://support.refersion.com/en/
+  contact: https://www.refersion.com/contact-us/
+  email: helpme@refersion.com
+  source: OpenAPI info.contact

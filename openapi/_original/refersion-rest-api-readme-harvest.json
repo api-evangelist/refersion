@@ -1,0 +1,3761 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "REST API Documentation",
+    "version": "2.0",
+    "description": "The Refersion APIs are organized around [REST](https://en.wikipedia.org/wiki/Representational_state_transfer), which is easily accessible using most modern programming languages. Our API is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors. In addition, valid JSON will be returned in all responses from the API, including errors.\nThe API keys used in examples in this documentation are not registered to your account and are inactive.",
+    "contact": {
+      "email": "helpme@refersion.com",
+      "url": "https://www.refersion.com",
+      "name": "Refersion Inc"
+    },
+    "license": {
+      "name": ""
+    },
+    "termsOfService": "https://www.refersion.com/terms",
+    "x-readme": {
+      "explorer-enabled": false
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.refersion.com/v2"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Affiliates"
+    }
+  ],
+  "paths": {
+    "/affiliate/status_change": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ids_changed": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "example": [
+                        1,
+                        3
+                      ]
+                    },
+                    "ids_not_changed": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "example": [
+                        2,
+                        4
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "ids_changed": [
+                        1,
+                        3
+                      ],
+                      "ids_not_changed": [
+                        2,
+                        4
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "There's a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity: the data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Change Affiliates Status",
+        "description": "Set a new status value for a list of affiliate IDs. Limit of 50 IDs per call.",
+        "operationId": "affiliate_status_change",
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "One or more Affiliate IDs to change.",
+                    "example": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "A valid status value. Accepted values are: ACTIVE, DENIED, DISABLED",
+                    "enum": [
+                      "ACTIVE",
+                      "DENIED",
+                      "DISABLED"
+                    ]
+                  }
+                },
+                "required": [
+                  "ids",
+                  "status"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "ids": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "status": "ACTIVE"
+            }
+          }
+        }
+      }
+    },
+    "/conversion/cancel": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "conversion_id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "conversion_id": "11900254"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "Invalid order ID (error 5)"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a Cancellation Conversion",
+        "tags": [
+          "Conversions"
+        ],
+        "operationId": "cancel_conversion",
+        "description": "Send a cancellation conversion in for an the entire order by order ID. You can cancel one SKU from many SKUS.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "order_id": {
+                    "type": "string",
+                    "description": "The order from your ecommerce store",
+                    "example": "1234",
+                    "default": "1234"
+                  },
+                  "items": {
+                    "type": "array",
+                    "description": "An array of items to be canceled from the order",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "price": {
+                          "type": "number",
+                          "description": "The original price of the individual SKU",
+                          "default": 9.99,
+                          "example": 9.99
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "description": "The quantity of items you'd like to cancel",
+                          "default": 1,
+                          "example": 1
+                        },
+                        "sku": {
+                          "type": "string",
+                          "description": "The SKU from your ecommerce store",
+                          "default": "SKUCODE123",
+                          "example": "SKUCODE123"
+                        }
+                      },
+                      "required": [
+                        "sku"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "order_id",
+                  "items"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "order_id": "1234",
+              "items": [
+                {
+                  "sku": "PROD_A",
+                  "price": 5.68,
+                  "quantity": 5
+                },
+                {
+                  "sku": "PROD_B",
+                  "price": 10,
+                  "quantity": 1
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/trigger/delete": {
+      "post": {
+        "summary": "Delete Conversion Triggers",
+        "description": "Delete all conversion trigger passed in the body message and store the  affiliate activity.",
+        "operationId": "delete_conversion_trigger",
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "affiliates": {
+                    "type": "array",
+                    "description": "An array of all conversion triggers to delete. Max: 50",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "The ID of the affiliate.",
+                          "example": 12345678,
+                          "default": 123456789
+                        },
+                        "trigger": {
+                          "type": "string",
+                          "description": "The name of the trigger to be deleted (i.e. \"JANEDOE10\", \"JANE@EMAIL.COM\", \"SKUNAME123\") detail.",
+                          "default": "SKUNAME123",
+                          "example": "SKUNAME123"
+                        },
+                        "type": {
+                          "type": "string",
+                          "default": "COUPON",
+                          "description": "The conversion trigger type. Can be one of the following: COUPON, EMAIL or SKU.)",
+                          "enum": [
+                            "COUPON",
+                            "EMAIL",
+                            "SKU"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "trigger",
+                        "type"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "affiliates"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response array of ids of conversion triggers that were successfully  deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "description": "Ids of triggers deleted successfully."
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": [
+                      23213131
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Missing required field: X",
+                        "The following affiliates does not exist in our records: 000000.",
+                        "The following conversion trigger does not exist in our records: 0000000.",
+                        "Failed to delete conversion triggers.",
+                        "Failed while logging affiliate activity."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "To many conversion triggers in the affiliates object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Max number of elements on attribute (50) reached."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/affiliate/edit": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ids_changed": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "example": [
+                        1,
+                        3
+                      ]
+                    },
+                    "ids_not_changed": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "example": [
+                        2,
+                        4
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "ids_changed": [
+                        1,
+                        3
+                      ],
+                      "ids_not_changed": [
+                        2,
+                        4
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": [
+                        "Bad request, no body",
+                        "Offer does not exists on the database."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "The email you have entered is taken by another Affiliate.",
+                        "The password should not be longer than 72 characters. Current password length is 108 characters",
+                        "The password should be at least 9 characters long. Current password length is 8 characters",
+                        "X is not a allowed value for field Y",
+                        "The password can\\'t be the same as the e-mail",
+                        "The password can\\'t have the same character repeated more than 3 times in a row",
+                        "The password should have at least 1 number, 1 uppercase letter, 1 lowercase letter and 1 symbol.",
+                        "Value exceed the char limit'"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Edit Affiliate",
+        "description": "Edit existing affiliates. Returns all the successfully updated affiliates IDs.\n\nTip 1: Always check which IDs were processed by using the ids_changed in the response.\n\nTip 2: There must be at least 1 other key besides ID passed in order to edit an affiliate.",
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "affiliates": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "default": "12345678",
+                          "example": "12345678",
+                          "description": "The ID of the affiliate"
+                        },
+                        "offer": {
+                          "type": "number",
+                          "default": "12345",
+                          "example": "12345",
+                          "description": "The specific offer ID to move the affiliate into"
+                        },
+                        "first_name": {
+                          "type": "string",
+                          "default": "Jane",
+                          "example": "Jane",
+                          "description": "The affiliate's first name"
+                        },
+                        "last_name": {
+                          "type": "string",
+                          "default": "Doe",
+                          "example": "Doe",
+                          "description": "The affiliate's last name"
+                        },
+                        "email": {
+                          "type": "string",
+                          "default": "name@email.com",
+                          "example": "name@email.com",
+                          "description": "A valid email address"
+                        },
+                        "paypal_email": {
+                          "type": "string",
+                          "default": "name@email.com",
+                          "example": "name@email.com",
+                          "description": "A valid PayPal email address"
+                        },
+                        "company": {
+                          "type": "string",
+                          "default": "Acme, Inc.",
+                          "example": "Acme, Inc.",
+                          "description": "A company name"
+                        },
+                        "address1": {
+                          "type": "string",
+                          "example": "123 Street Road"
+                        },
+                        "address2": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "string",
+                          "default": "NY",
+                          "example": "NY",
+                          "description": "Two or three letter state code"
+                        },
+                        "zip": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string",
+                          "description": "Country Code (two letter abbreviation) must match one of: US, AE, AR, AS, AT, AU, BA, BD, BE, BG, BR, CA, CH, CL, CN, CO, CR, CZ, DE, DK, DZ, EE, ES, FI, FM, FO, FR, GB, GH, GR, GU, HK, HN, HR, HU, ID, IE, IL, IM, IN, IS, IT, JM, JP, KR, KW, LT, LU, LV, MA, MH, MK, MP, MT, MX, MY, NG, NL, NO, NZ, OM, PE, PH, PK, PL, PR, PT, PW, QA, RO, RS, RU, SA, SE, SG, SI, SK, SV, TH, TN, TR, TW, TZ, UA, UY, VG, VI, VN, WS, ZA",
+                          "default": "US",
+                          "example": "US"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "custom_fields": {
+                          "type": "array",
+                          "default": [],
+                          "example": [
+                            {
+                              "1234": "Hello World"
+                            },
+                            {
+                              "22222": "me@refersion.com"
+                            }
+                          ],
+                          "items": {
+                            "type": "object"
+                          },
+                          "description": "Custom field array with objects to modify custom fields"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "If you want to send custom fields, follow the instructions below.",
+          "x-examples": {
+            "application/json": {
+              "affiliates": [
+                {
+                  "id": 12345678,
+                  "first_name": "Bill",
+                  "last_name": "Smith",
+                  "email": "testing@refersion.com",
+                  "paypal_email": "testing+payments@refersion.com",
+                  "offer": 12345,
+                  "company": "Acme, Inc.",
+                  "address1": "123 Street Road",
+                  "address2": "FL 2",
+                  "city": "Paradise",
+                  "zip": "12000",
+                  "country": "US",
+                  "state": "NY",
+                  "phone": "555-555-5555",
+                  "custom_fields": [
+                    {
+                      "1234": "Hello World"
+                    },
+                    {
+                      "22222": "me@refersion.com"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "operationId": "edit_affiliate"
+      }
+    },
+    "/affiliate/get": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "offer_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "first_name": {
+                      "type": "string"
+                    },
+                    "last_name": {
+                      "type": "string"
+                    },
+                    "company_name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "link": {
+                      "type": "string"
+                    },
+                    "custom_fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": 37567438,
+                      "offer_id": "1234",
+                      "status": "ACTIVE",
+                      "first_name": "Bill",
+                      "last_name": "Smith",
+                      "company_name": "Company",
+                      "email": "testing@refersion.com",
+                      "link": "https://site.refersion.com/c/a3y7",
+                      "custom_fields": [
+                        {
+                          "label": "What is your web site?",
+                          "value": "https://www.refersion.com"
+                        },
+                        {
+                          "label": "What is your name?",
+                          "value": "Billy"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "Affiliate not found.",
+                        "Request filter not provided."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Affiliate",
+        "description": "Get information about an affiliate. You can get an affiliate's information using their ID or code.",
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "The affiliate's ID",
+                        "example": 12345678
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "affiliate_code": {
+                        "type": "string",
+                        "description": "The Refersion affiliate identifier. You would have captured this from the affiliate/new endpoint response.",
+                        "example": "a3y7"
+                      }
+                    }
+                  }
+                ],
+                "required": [
+                  "affiliate_code or id"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "affiliate_code": "a3y7"
+            }
+          }
+        },
+        "operationId": "get_affiliate"
+      }
+    },
+    "/reporting/link": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "download_link": {
+                      "type": "string"
+                    },
+                    "expire_time": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "download_link": "https://www.refersion.com/api/reporting/download/37/87/154ac2e00df1e6275b1a60869ab3123fceea16f5",
+                      "expire_time": 1452028425
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "Report ID not Found or Expired (error 5).",
+                        "File is not available"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Generate Download Link",
+        "description": "Get a public download link for a report. Links expire in 2 minutes from the time of request for security purposes.",
+        "operationId": "get_reporting_link",
+        "tags": [
+          "Reporting"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "report_id": {
+                    "type": "integer",
+                    "description": "The report ID of the report that you want to generate a download link for.",
+                    "example": 123,
+                    "default": 123
+                  }
+                },
+                "required": [
+                  "report_id"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "report_id": 123
+            }
+          }
+        }
+      }
+    },
+    "/conversion/totals": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "conversions_count": {
+                      "type": "integer",
+                      "example": 10,
+                      "default": 10,
+                      "description": "Amount of conversions"
+                    },
+                    "commission_total": {
+                      "type": "number",
+                      "default": 500.84,
+                      "example": 500.84,
+                      "description": "Sum of commission_total for all conversions"
+                    },
+                    "order_total": {
+                      "type": "number",
+                      "default": 3498.03,
+                      "example": 3498.03,
+                      "description": "Sum of order_total for all conversions"
+                    },
+                    "commissionable_order_total": {
+                      "type": "number",
+                      "default": 2874.85,
+                      "example": 2874.85,
+                      "description": "Sum of commission_order_total for all conversions"
+                    },
+                    "currency": {
+                      "type": "string",
+                      "default": "USD",
+                      "example": "USD",
+                      "description": "Currency of all the conversion totals. If no currency provided then we will use your default account settings."
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "conversions_count": "10,",
+                      "commission_total": "500.84,",
+                      "order_total": "3,498.03,",
+                      "commissionable_order_total": "2,874.85,",
+                      "currency": "USD"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "X is not a allowed value for field Y"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Totals",
+        "description": "Allows you to get total-related data about conversions in your account.",
+        "operationId": "get_totals",
+        "tags": [
+          "Conversions"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "created_from": {
+                    "type": "string",
+                    "description": "Start date for the creation of the conversions to be included in UTC datetime format \"YYYY-MM-DD hh:mm:ss",
+                    "example": "2020-11-01 00:00:00",
+                    "default": "2020-11-01 00:00:00"
+                  },
+                  "created_to": {
+                    "type": "string",
+                    "description": "End date for the creation of the conversions to be included in UTC datetime format \"YYYY-MM-DD hh:mm:ss",
+                    "example": "2020-11-01 00:00:00",
+                    "default": "2020-11-01 00:00:00"
+                  },
+                  "offer_id": {
+                    "type": "integer",
+                    "default": 12345,
+                    "example": 12345,
+                    "description": "Offer ID for the conversions"
+                  },
+                  "affiliate_id": {
+                    "type": "integer",
+                    "default": 12345678,
+                    "example": 12345678,
+                    "description": "Affiliate ID of whom the conversions belong to"
+                  },
+                  "status": {
+                    "type": "array",
+                    "description": "Conversion status",
+                    "example": [
+                      "APPROVED",
+                      "PENDING",
+                      "UNQUALIFIED",
+                      "DENIED"
+                    ],
+                    "default": [
+                      "APPROVED",
+                      "PENDING",
+                      "UNQUALIFIED",
+                      "DENIED"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "payment_status": {
+                    "type": "string",
+                    "default": "PAID",
+                    "description": "Payment status",
+                    "oneOf": [
+                      {
+                        "default": "PAID",
+                        "example": "PAID",
+                        "description": "Payment status"
+                      },
+                      {
+                        "default": "UNPAID",
+                        "example": "UNPAID",
+                        "description": "Payment status"
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "array",
+                    "description": "Conversion type",
+                    "example": [
+                      "AFFILIATE_SITE_CONVERSION",
+                      "MANUAL_CREDIT_BY_CLIENT",
+                      "CONVERSION_TRIGGER_SKU",
+                      "CONVERSION_TRIGGER_COUPON",
+                      "CONVERSION_TRIGGER_EMAIL",
+                      "AUTO_CREDIT_AFFILIATE_ID",
+                      "CANCELLATION_AFFILIATE_SITE_CONVERSION",
+                      "CANCELLATION_MANUAL_CREDIT_BY_CLIENT",
+                      "CANCELLATION_CONVERSION_TRIGGER_SKU",
+                      "CANCELLATION_CONVERSION_TRIGGER_COUPON",
+                      "CANCELLATION_CONVERSION_TRIGGER_EMAIL",
+                      "CANCELLATION_AUTO_CREDIT_AFFILIATE_ID"
+                    ],
+                    "default": [
+                      "AFFILIATE_SITE_CONVERSION",
+                      "MANUAL_CREDIT_BY_CLIENT",
+                      "CONVERSION_TRIGGER_SKU",
+                      "CONVERSION_TRIGGER_COUPON",
+                      "CONVERSION_TRIGGER_EMAIL",
+                      "AUTO_CREDIT_AFFILIATE_ID",
+                      "CANCELLATION_AFFILIATE_SITE_CONVERSION",
+                      "CANCELLATION_MANUAL_CREDIT_BY_CLIENT",
+                      "CANCELLATION_CONVERSION_TRIGGER_SKU",
+                      "CANCELLATION_CONVERSION_TRIGGER_COUPON",
+                      "CANCELLATION_CONVERSION_TRIGGER_EMAIL",
+                      "CANCELLATION_AUTO_CREDIT_AFFILIATE_ID"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "is_test_conversion": {
+                    "type": "boolean",
+                    "default": false,
+                    "example": false,
+                    "description": "Is it a test conversion"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "created_from": "2020-11-01 00:00:00",
+              "created_to": "2020-11-01 00:00:00",
+              "offer_id": 12345,
+              "affiliate_id": 12345678,
+              "status": [
+                "APPROVED"
+              ],
+              "payment_status": "PAID",
+              "type": [
+                "CONVERSION_TRIGGER_COUPON",
+                "CANCELLATION_CONVERSION_TRIGGER_COUPON"
+              ],
+              "is_test_conversion": "FALSE"
+            }
+          }
+        }
+      }
+    },
+    "/affiliate/list": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "offer_id": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "custom_fields": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "label": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "total": 3,
+                      "results": [
+                        {
+                          "id": "694c",
+                          "offer_id": "1234",
+                          "status": "ACTIVE",
+                          "first_name": "Barbara",
+                          "last_name": "Verde",
+                          "email": "testing1@refersion.com",
+                          "custom_fields": [
+                            {
+                              "label": "What is your web site?",
+                              "value": "https://www.refersion.com"
+                            },
+                            {
+                              "label": "What is your name?",
+                              "value": "Billy"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "24fb",
+                          "offer_id": "5678",
+                          "status": "ACTIVE",
+                          "first_name": "Joe",
+                          "last_name": "Smith",
+                          "email": "testing2@refersion.com",
+                          "custom_fields": []
+                        },
+                        {
+                          "id": "g23fz",
+                          "offer_id": "101112",
+                          "status": "ACTIVE",
+                          "first_name": "Martha",
+                          "last_name": "Williams",
+                          "email": "testing3@refersion.com",
+                          "custom_fields": []
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List All Affiliates",
+        "operationId": "list_affiliates",
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "string",
+                    "description": "Total that should be returned per API call. Maximum of 100 per call.",
+                    "example": "3",
+                    "default": "3"
+                  },
+                  "page": {
+                    "type": "string",
+                    "description": "Page offset",
+                    "example": "1",
+                    "default": "1"
+                  }
+                }
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "limit": "3",
+              "page": "1"
+            }
+          }
+        },
+        "description": "Get all affiliates in your account."
+      }
+    },
+    "/conversion/manual_credit": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "conversion_id"
+                  ],
+                  "properties": {
+                    "conversion_id": {
+                      "type": "integer",
+                      "default": 12345,
+                      "example": 12345,
+                      "description": "Conversion ID created"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "conversion_id": 12345
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "X is not a allowed value for field Y",
+                        "Invalid affiliate ID (error 2).",
+                        "X is not a valid currency"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Manual Commission Credit",
+        "description": "Allows you to manually credit an affiliate with any commission amount.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "commission",
+                  "status"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "Affiliate ID",
+                    "example": 12345,
+                    "default": 12345
+                  },
+                  "commission": {
+                    "type": "number",
+                    "default": 120.5,
+                    "example": 120.5,
+                    "description": "Commission amount. Could be a negative number as well"
+                  },
+                  "status": {
+                    "oneOf": [
+                      {
+                        "default": "APPROVED",
+                        "example": "APPROVED",
+                        "description": "Conversion status"
+                      },
+                      {
+                        "default": "PENDING",
+                        "example": "PENDING",
+                        "description": "Conversion status"
+                      }
+                    ],
+                    "description": "Conversion status",
+                    "default": "APPROVED",
+                    "example": "APPROVED",
+                    "type": "string"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "maxLength": 3,
+                    "default": "USD",
+                    "example": "USD",
+                    "description": "Currency of the manual credit. If no currency provided then we will use your default account settings."
+                  },
+                  "notes": {
+                    "type": "string",
+                    "example": "This is a manual credit",
+                    "description": "Manual credit note"
+                  }
+                }
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "id": 12345,
+              "commission": 120.5,
+              "status": "APPROVED",
+              "currency": "USD",
+              "notes": "This is a manual credit"
+            }
+          }
+        },
+        "operationId": "manual_commission_credit",
+        "tags": [
+          "Conversions"
+        ]
+      }
+    },
+    "/conversion/manual_credit_order_id": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Order(s) are re-processing. Changes may take a couple of minutes to appear.",
+                      "default": "Order(s) are re-processing. Changes may take a couple of minutes to appear.",
+                      "description": "Status of the manual order credit"
+                    },
+                    "warning": {
+                      "type": "string",
+                      "default": "Order ID is already credited to affiliate 12345678",
+                      "example": "Order ID is already credited to affiliate 12345678",
+                      "description": "If order has already been credited to another affiliate we will show a warning"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "message": "Order(s) are re-processing. Changes may take a couple of minutes to appear.",
+                      "warning": "Order ID is already credited to affiliate 12345678"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "X is not a allowed value for field Y",
+                        "This order ID is being process (error 5).",
+                        "The affiliate you provided has already been manually credited for this order ID. (Error 6)"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Manual Credit Order ID",
+        "description": "Allows you to manually credit an affiliate with an existing order ID.",
+        "operationId": "manual_credit_order_id",
+        "tags": [
+          "Conversions"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "Affiliate ID",
+                    "example": 12345,
+                    "default": 12345
+                  },
+                  "order_id": {
+                    "default": "1001",
+                    "example": "1001",
+                    "description": "Order ID to credit",
+                    "type": "string"
+                  },
+                  "status": {
+                    "default": "APPROVED",
+                    "description": "Conversion status",
+                    "oneOf": [
+                      {
+                        "default": "APPROVED",
+                        "example": "APPROVED",
+                        "description": "Conversion status"
+                      },
+                      {
+                        "default": "PENDING",
+                        "example": "PENDING",
+                        "description": "Conversion status"
+                      }
+                    ],
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string",
+                    "example": "This is a manual order credit",
+                    "description": "Manual order credit note"
+                  }
+                },
+                "required": [
+                  "id",
+                  "order_id"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "id": 12345,
+              "order_id": "1001",
+              "status": "APPROVED",
+              "notes": "This is a manual order credit"
+            }
+          }
+        }
+      }
+    },
+    "/affiliate/new": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "link": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": "a3y7",
+                      "link": "https://site.refersion.com/c/a3y7",
+                      "message": "The affiliate 37569297 has been created with the status of ACTIVE."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "The email you have entered is taken by another Affiliate.",
+                        "The password should not be longer than 72 characters. Current password length is 108 characters",
+                        "The password should be at least 9 characters long. Current password length is 8 characters",
+                        "X is not a allowed value for field Y",
+                        "The password can\\'t be the same as the e-mail",
+                        "The password can\\'t have the same character repeated more than 3 times in a row",
+                        "The password should have at least 1 number, 1 uppercase letter, 1 lowercase letter and 1 symbol.",
+                        "Value exceed the char limit'"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "New Affiliate",
+        "description": "Create a new affiliate. Returns the affiliate ID and their referral link.\n\nTip: When creating affilates using this endpoint, we recommend that you save the id from the response in order to map your user to their affiliate account in Refersion.",
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "offer": {
+                    "type": "string",
+                    "description": "Specific Offer ID to opt affiliate into, otherwise your default offer is used.",
+                    "default": "12345",
+                    "example": "12345"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "default": "Bill",
+                    "example": "Bill",
+                    "description": "The affiliate's first name."
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "default": "Smith",
+                    "example": "Smith",
+                    "description": "The affiliate's last name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Must be a valid email.",
+                    "example": "testing@refersion.com",
+                    "default": "testing@refersion.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Has at least 9 characters. The password is NOT more than 72 characters. Has at least 1 upper case character. Has at least 1 lower case character. Has at least 1 numerical character. Has at least 1 special character. Does NOT have the same character repeated more than 3 times in a row. Password does NOT match the email of the user.",
+                    "default": "testing",
+                    "example": "testing"
+                  },
+                  "company": {
+                    "type": "string"
+                  },
+                  "paypal_email": {
+                    "type": "string"
+                  },
+                  "address1": {
+                    "type": "string"
+                  },
+                  "address2": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "zip": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 2,
+                    "pattern": "^[A-Z]+",
+                    "example": "US",
+                    "description": "Country Code (two letter abbreviation) must match one of: US, AE, AR, AS, AT, AU, BA, BD, BE, BG, BR, CA, CH, CL, CN, CO, CR, CZ, DE, DK, DZ, EE, ES, FI, FM, FO, FR, GB, GH, GR, GU, HK, HN, HR, HU, ID, IE, IL, IM, IN, IS, IT, JM, JP, KR, KW, LT, LU, LV, MA, MH, MK, MP, MT, MX, MY, NG, NL, NO, NZ, OM, PE, PH, PK, PL, PR, PT, PW, QA, RO, RS, RU, SA, SE, SG, SI, SK, SV, TH, TN, TR, TW, TZ, UA, UY, VG, VI, VN, WS, ZA"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "send_welcome": {
+                    "type": "string",
+                    "enum": [
+                      "TRUE",
+                      "FALSE"
+                    ],
+                    "description": "Should Refersion send our welcome email?\nOptions: TRUE / FALSE; Default = FALSE",
+                    "example": "TRUE",
+                    "default": "FALSE"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ACTIVE",
+                      "PENDING"
+                    ],
+                    "description": "What status should the affiliate be created as: PENDING or ACTIVE?",
+                    "example": "PENDING",
+                    "default": "PENDING"
+                  },
+                  "conversion_trigger_coupon": {
+                    "type": "string",
+                    "description": "A unique coupon code to assign to this affiliate as a conversion trigger.",
+                    "example": "BILLSMITH10",
+                    "default": "BILLSMITH10"
+                  },
+                  "unique_merchant_id": {
+                    "type": "string",
+                    "description": "An optional alphanumeric identifier for the affiliate for your team's internal use.",
+                    "example": "abc123",
+                    "default": "abc123"
+                  }
+                },
+                "required": [
+                  "first_name",
+                  "last_name",
+                  "email",
+                  "password",
+                  "status"
+                ]
+              }
+            }
+          },
+          "description": "If you want to send custom fields, please contact us for detailed instructions.",
+          "x-examples": {
+            "application/json": {
+              "first_name": "Bill",
+              "last_name": "Smith",
+              "email": "testing@refersion.com",
+              "password": "testing",
+              "offer": "12345",
+              "company": "Acme, Inc.",
+              "paypal_email": "testing@refersion.com",
+              "address1": "123 Street Road",
+              "address2": "FL 2",
+              "city": "Paradise",
+              "zip": "12000",
+              "country": "US",
+              "state": "NY",
+              "phone": "555-555-5555",
+              "send_welcome": "TRUE",
+              "unique_merchant_id": "abc123,",
+              "conversion_trigger_coupon": "BILLS_COUPONQA1,",
+              "status\"": "ACTIVE"
+            }
+          }
+        },
+        "operationId": "new_affiliate"
+      }
+    },
+    "/affiliate/trigger": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "trigger_id": {
+                      "type": "integer",
+                      "default": 1097,
+                      "example": 1097
+                    },
+                    "trigger": {
+                      "type": "string",
+                      "default": "CODE100",
+                      "example": "CODE100"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "trigger_id": 1097,
+                      "trigger": "CODE100"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "Conversion trigger already exists for same or another affiliate.",
+                        "Request filter not provided.",
+                        "Affiliate not found.",
+                        "Failed to create conversion trigger."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create Conversion Trigger",
+        "description": "Create a Conversion Trigger for a specific affiliate.",
+        "operationId": "new_affiliate_trigger",
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "affiliate_code": {
+                    "type": "string",
+                    "description": "The Refersion affiliate identifier. You would have captured this from the new_affiliate endpoint response.",
+                    "example": "a3y7",
+                    "default": "a3y7"
+                  },
+                  "type": {
+                    "type": "string",
+                    "default": "COUPON",
+                    "description": "The type of Conversion Trigger. Accepted values are: COUPON, SKU, EMAIL",
+                    "enum": [
+                      "COUPON",
+                      "SKU",
+                      "EMAIL"
+                    ]
+                  },
+                  "trigger": {
+                    "type": "string",
+                    "description": "The actual conversion trigger that should be set. For example, an email address for email triggers and a coupon code for coupon triggers.",
+                    "example": "code100",
+                    "default": "code100"
+                  }
+                },
+                "required": [
+                  "affiliate_code",
+                  "type",
+                  "trigger"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "affiliate_code": "a3y7",
+              "type": "COUPON",
+              "trigger": "code100"
+            }
+          }
+        }
+      }
+    },
+    "/offer/new_sku_commission": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "duplicate_not_added": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "added": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "duplicate_not_added": [
+                        "TSHIRT-SMALL-RED"
+                      ],
+                      "added": [
+                        "TSHIRT-SMALL-BLUE",
+                        "PANTS-LARGE-BLACK"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "X is not a allowed value for field Y",
+                        "Only 50 sku records can be processed per request.",
+                        "Your account plan does not support this feature (error 1).",
+                        "Offer ID does not exist (error 1)."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "New SKU Level Commisison",
+        "description": "Add SKU specific commission rates to a specific offer. Your plan must support SKU/Product Level Commissions.",
+        "operationId": "new_sku_commission",
+        "tags": [
+          "Offers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "offer_id": {
+                    "type": "string",
+                    "description": "The offer ID in which this SKU commission belongs to.",
+                    "example": "12345",
+                    "default": "12345"
+                  },
+                  "skus": {
+                    "type": "array",
+                    "description": "An array of all SKUs to add. Max: 50",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sku": {
+                          "type": "string",
+                          "description": "Must match the exact SKU that would be ordered.",
+                          "example": "TSHIRT-SMALL-RED",
+                          "default": "TSHIRT-SMALL-RED"
+                        },
+                        "product_description": {
+                          "type": "string",
+                          "description": "A custom label for the SKU to give affiliates more detail.",
+                          "default": "T-Shirt Red (Small)",
+                          "example": "T-Shirt Red (Small)"
+                        },
+                        "commission_type": {
+                          "type": "string",
+                          "default": "PERCENT_OF_SALE",
+                          "description": "Must match exactly one of: FLAT_RATE, PERCENT_OF_SALE",
+                          "enum": [
+                            "PERCENT_OF_SALE",
+                            "FLAT_RATE"
+                          ]
+                        },
+                        "commission_amount": {
+                          "type": "string",
+                          "default": "10",
+                          "description": "Amount of commission. Must be a numeric value. For example, for 10%, enter 10."
+                        }
+                      },
+                      "required": [
+                        "sku",
+                        "commission_type",
+                        "commission_amount"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "offer_id",
+                  "skus"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "offer_id": "12345",
+              "skus": [
+                {
+                  "sku": "TSHIRT-SMALL-RED",
+                  "product_description": "T-Shirt Red (Small)",
+                  "commission_type": "FLAT_RATE",
+                  "commission_amount": "5"
+                },
+                {
+                  "sku": "TSHIRT-SMALL-BLUE",
+                  "commission_type": "PERCENT_OF_SALE",
+                  "product_description": "T-Shirt Blue (Small)",
+                  "commission_amount": "25"
+                },
+                {
+                  "sku": "PANTS-LARGE-BLACK",
+                  "product_description": "Pants Black (Large)",
+                  "commission_type": "PERCENT_OF_SALE",
+                  "commission_amount": "10"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/affiliate/search": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The affiliate's code"
+                          },
+                          "offer_id": {
+                            "type": "string",
+                            "description": "The affiliate's offer"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "The affiliate's approval status. Can be PENDING, ACTIVE, DENIED or DISABLED."
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "custom_fields": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "label": {
+                                  "type": "string",
+                                  "description": "The label of the custom field from the affiliate registration page."
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "total": 2,
+                      "results": [
+                        {
+                          "id": "694c",
+                          "offer_id": "1234",
+                          "status": "ACTIVE",
+                          "first_name": "Barbara",
+                          "last_name": "Verde",
+                          "email": "testing1@refersion.com",
+                          "custom_fields": [
+                            {
+                              "label": "What is your web site?",
+                              "value": "https://www.refersion.com"
+                            },
+                            {
+                              "label": "What is your name?",
+                              "value": "Billy"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "24fb",
+                          "offer_id": "5678",
+                          "status": "PENDING",
+                          "first_name": "Joe",
+                          "last_name": "Smith",
+                          "email": "testing2@refersion.com",
+                          "custom_fields": []
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "Could not find affiliates with this keyword."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Search Affiliates",
+        "description": "Find affiliates based on email address or ID.",
+        "tags": [
+          "Affiliates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "keyword": {
+                    "type": "string",
+                    "description": "The keyword to search for. Can be the affiliate ID or registered email address. Affiliate ID must be exact and complete, but email can be a partial string.",
+                    "example": "testing",
+                    "default": "testing"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "The first name of the affiliate to search for.",
+                    "example": "Bill",
+                    "default": "Bill"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "The last name of the affiliate to search for.",
+                    "example": "Smith",
+                    "default": "Smith"
+                  },
+                  "page": {
+                    "type": "string",
+                    "description": "Page offset",
+                    "example": "1",
+                    "default": "1"
+                  }
+                },
+                "required": [
+                  "keyword"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "keyword": "testing"
+            }
+          }
+        },
+        "operationId": "search_affiliates"
+      }
+    },
+    "/conversion/status_change": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ids_changed": {
+                      "type": "array",
+                      "example": [
+                        123
+                      ],
+                      "default": [
+                        123
+                      ],
+                      "description": "Array of conversion ids that had their status changed."
+                    },
+                    "ids_not_changed": {
+                      "type": "array",
+                      "default": [
+                        456
+                      ],
+                      "example": [
+                        456
+                      ],
+                      "description": "Array of conversion ids that did not have their status changed."
+                    }
+                  },
+                  "required": [
+                    "ids_changed",
+                    "ids_not_changed"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "ids_changed": [
+                        123
+                      ],
+                      "ids_not_changed": [
+                        456
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Theres an invalid field in the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Invalid field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Theres a missing required field in your request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Missing required field X"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401_Error"
+          },
+          "404": {
+            "description": "An empty request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "error": "Bad request, no body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity \u2013 The data that you\u2019re sending has errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "errors": [
+                        "Value exceed the char limit",
+                        "X is not a allowed value for field Y",
+                        "The conversion cannot have this status",
+                        "Cannot deny an approved conversion",
+                        "Cannot approve a denied conversion"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Conversion Status Change",
+        "description": "Allows you to manually change the status of a conversion",
+        "operationId": "status_change",
+        "tags": [
+          "Conversions"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Refersion-Public-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Refersion-Secret-Key"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "description": "Conversion IDs",
+                    "example": [
+                      123,
+                      456
+                    ],
+                    "default": [
+                      123,
+                      456
+                    ]
+                  },
+                  "status": {
+                    "default": "APPROVED",
+                    "description": "Conversion status",
+                    "oneOf": [
+                      {
+                        "default": "APPROVED",
+                        "example": "APPROVED",
+                        "description": "Conversion status"
+                      },
+                      {
+                        "default": "UNQUALIFIED",
+                        "example": "UNQUALIFIED",
+                        "description": "Conversion status"
+                      },
+                      {
+                        "default": "DENIED",
+                        "example": "DENIED",
+                        "description": "Conversion status"
+                      }
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ids",
+                  "status"
+                ]
+              }
+            }
+          },
+          "x-examples": {
+            "application/json": {
+              "id": [
+                123,
+                456
+              ],
+              "status": "APPROVED"
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "Refersion-Public-Key": {
+        "in": "header",
+        "name": "Refersion-Public-Key",
+        "schema": {
+          "type": "string",
+          "example": "pub_abc12300000000000000"
+        }
+      },
+      "Refersion-Secret-Key": {
+        "in": "header",
+        "name": "Refersion-Secret-Key",
+        "schema": {
+          "type": "string",
+          "example": "sec_abc12300000000000000"
+        }
+      },
+      "Content-Type": {
+        "in": "header",
+        "name": "Content-Type",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "application/json"
+          ],
+          "default": "application/json"
+        }
+      }
+    },
+    "responses": {
+      "401_Error": {
+        "description": "Unauthorized \u2013 Your API keys are incorrect.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "value": {
+                  "error": "Invalid API credentials (error 2)."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

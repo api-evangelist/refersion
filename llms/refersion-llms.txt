@@ -1,0 +1,22 @@
+# Refersion Documentation
+
+> Documentation for Refersion
+
+## API Reference
+- [Welcome to Refersion](https://www.refersion.dev/reference/welcome-to-refersion.md)
+- [Edit Affiliate](https://www.refersion.dev/reference/edit_affiliate.md): Edit existing affiliates. Returns all the successfully updated affiliates IDs.  Tip 1: Always check which IDs were processed by using the ids_changed in the response.  Tip 2: There must be at least 1 other key besides ID passed in order to edit an affiliate.
+- [New Affiliate](https://www.refersion.dev/reference/new_affiliate.md): Create a new affiliate. Returns the affiliate ID and their referral link.  Tip: When creating affilates using this endpoint, we recommend that you save the id from the response in order to map your user to their affiliate account in Refersion.
+- [Get Affiliate](https://www.refersion.dev/reference/get_affiliate.md): Get information about an affiliate. You can get an affiliate's information using their ID or code.
+- [Search Affiliates](https://www.refersion.dev/reference/search_affiliates.md): Find affiliates based on email address or ID.
+- [List All Affiliates](https://www.refersion.dev/reference/list_affiliates.md): Get all affiliates in your account.
+- [Create Conversion Trigger](https://www.refersion.dev/reference/new_affiliate_trigger.md): Create a Conversion Trigger for a specific affiliate.
+- [Change Affiliates Status](https://www.refersion.dev/reference/affiliate_status_change.md): Set a new status value for a list of affiliate IDs. Limit of 50 IDs per call.
+- [Delete Conversion Triggers](https://www.refersion.dev/reference/delete_conversion_trigger.md): Delete all conversion trigger passed in the body message and store the  affiliate activity.
+- [Manual Commission Credit](https://www.refersion.dev/reference/manual_commission_credit.md): Allows you to manually credit an affiliate with any commission amount.
+- [Manual Credit Order ID](https://www.refersion.dev/reference/manual_credit_order_id.md): Allows you to manually credit an affiliate with an existing order ID.
+- [Conversion Status Change](https://www.refersion.dev/reference/status_change.md): Allows you to manually change the status of a conversion
+- [Get Totals](https://www.refersion.dev/reference/get_totals.md): Allows you to get total-related data about conversions in your account.
+- [Create a Cancellation Conversion](https://www.refersion.dev/reference/cancel_conversion.md): Send a cancellation conversion in for an the entire order by order ID. You can cancel one SKU from many SKUS.
+- [New SKU Level Commisison](https://www.refersion.dev/reference/new_sku_commission.md): Add SKU specific commission rates to a specific offer. Your plan must support SKU/Product Level Commissions.
+- [Generate Download Link](https://www.refersion.dev/reference/get_reporting_link-1.md): Get a public download link for a report. Links expire in 2 minutes from the time of request for security purposes.
+- [Overview](https://www.refersion.dev/reference/graphql-overview.md)

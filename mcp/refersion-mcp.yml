@@ -1,0 +1,148 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/refersion-rest-api-readme-harvest.json — DERIVED candidate. No Refersion MCP
+  server exists.
+name: Refersion MCP Server (candidate)
+status: candidate
+description: >-
+  Refersion publishes NO Model Context Protocol server — remote or local. This document is a
+  DERIVED candidate tool surface, computed one-to-one from the 15 operations in Refersion's own
+  published OpenAPI, so that an integrator can stand one up. Nothing here is served by Refersion
+  and no endpoint below is real.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+  note: >-
+    Probed on 2026-08-13: https://api.refersion.com/mcp returned 403 {"message":"Forbidden"} (the
+    API Gateway blanket denial, the same response every unmapped path gets),
+    https://mcp.refersion.com/mcp returned 404 and https://www.refersion.com/mcp returned 404. No
+    MCP server is listed in the docs, the llms.txt index, or the github.com/refersion organization
+    (which has zero public repositories). The only Refersion-named package on npm is a third-party
+    Pipedream component set. `auth: api-key` records what a server WOULD need — the paired
+    Refersion-Public-Key / Refersion-Secret-Key headers — not a live authentication scheme.
+discovery:
+  probes:
+  - url: https://api.refersion.com/mcp
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 403
+  - url: https://mcp.refersion.com/mcp
+    method: POST
+    http_status: 404
+  - url: https://www.refersion.com/mcp
+    method: POST
+    http_status: 404
+  checked: '2026-08-13'
+transport: null
+tools:
+- name: create_affiliate
+  operationId: new_affiliate
+  path: /affiliate/new
+  method: POST
+  consequence: write
+  description: Create a new affiliate and return their ID and referral link.
+- name: edit_affiliate
+  operationId: edit_affiliate
+  path: /affiliate/edit
+  method: POST
+  consequence: write
+  description: Update one or more existing affiliates. Returns ids_changed and ids_not_changed.
+- name: get_affiliate
+  operationId: get_affiliate
+  path: /affiliate/get
+  method: POST
+  consequence: read
+  description: Retrieve one affiliate by numeric ID or referral code.
+- name: search_affiliates
+  operationId: search_affiliates
+  path: /affiliate/search
+  method: POST
+  consequence: read
+  description: Find affiliates by keyword, email, ID or name.
+- name: list_affiliates
+  operationId: list_affiliates
+  path: /affiliate/list
+  method: POST
+  consequence: read
+  description: Page through every affiliate in the account (limit max 100).
+- name: change_affiliate_status
+  operationId: affiliate_status_change
+  path: /affiliate/status_change
+  method: POST
+  consequence: write
+  description: Set ACTIVE, DENIED or DISABLED on up to 50 affiliate IDs.
+- name: create_conversion_trigger
+  operationId: new_affiliate_trigger
+  path: /affiliate/trigger
+  method: POST
+  consequence: write
+  description: Attach a COUPON, SKU or EMAIL conversion trigger to an affiliate.
+- name: delete_conversion_triggers
+  operationId: delete_conversion_trigger
+  path: /trigger/delete
+  method: POST
+  consequence: write
+  description: Delete up to 50 conversion triggers.
+- name: credit_commission
+  operationId: manual_commission_credit
+  path: /conversion/manual_credit
+  method: POST
+  consequence: write
+  human_in_the_loop: recommended
+  description: Manually credit an affiliate with an arbitrary commission amount. Moves money.
+- name: credit_order
+  operationId: manual_credit_order_id
+  path: /conversion/manual_credit_order_id
+  method: POST
+  consequence: write
+  human_in_the_loop: recommended
+  description: Credit an affiliate for an existing order ID.
+- name: change_conversion_status
+  operationId: status_change
+  path: /conversion/status_change
+  method: POST
+  consequence: write
+  description: Approve, deny or otherwise re-status conversions in bulk.
+- name: cancel_conversion
+  operationId: cancel_conversion
+  path: /conversion/cancel
+  method: POST
+  consequence: write
+  description: Submit a cancellation conversion for an order or specific SKUs.
+- name: get_conversion_totals
+  operationId: get_totals
+  path: /conversion/totals
+  method: POST
+  consequence: read
+  description: Aggregate conversion counts, commission and order totals with date and status filters.
+- name: add_sku_commission
+  operationId: new_sku_commission
+  path: /offer/new_sku_commission
+  method: POST
+  consequence: write
+  description: Add SKU-level commission rates to an offer (max 50 SKUs, plan-gated).
+- name: get_report_link
+  operationId: get_reporting_link
+  path: /reporting/link
+  method: POST
+  consequence: read
+  description: Generate a signed download link for a saved report. Link expires in 2 minutes.
+implementation_notes:
+- >-
+  Every tool inherits its inputSchema verbatim from the corresponding operation's requestBody in
+  openapi/_original/refersion-rest-api-readme-harvest.json. No parameter here is invented.
+- >-
+  A server MUST NOT treat HTTP 200 as success on edit_affiliate, affiliate_status_change,
+  status_change or new_sku_commission — inspect ids_changed / ids_not_changed / duplicate_not_added
+  and surface partial failure to the agent. See errors/refersion-problem-types.yml.
+- >-
+  A server MUST NOT treat HTTP 204 as success. Refersion returns 204 with a validation-error body.
+- >-
+  There is no idempotency key. Retrying credit_commission double-credits an affiliate. Any server
+  exposing it to an autonomous agent should gate it behind human confirmation — see
+  agentic-access/refersion-agentic-access.yml.

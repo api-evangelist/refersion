@@ -1,27 +1,106 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.refersion.dev/reference/welcome-to-refersion, the provider-published OpenAPI harvested
+  to openapi/_original/refersion-rest-api-readme-harvest.json, and https://www.refersion.com/pricing/
 name: Refersion Rate Limits
-description: Rate limiting policies for the Refersion REST and GraphQL APIs. Specific rate limit thresholds are not publicly documented; limits are enforced per API key and vary by plan tier.
-specificationVersion: '0.1'
-url: https://www.refersion.dev/reference/welcome-to-refersion
+description: >-
+  Rate-limiting posture for the Refersion REST and GraphQL APIs. Refersion publishes NO
+  request-rate limit — no requests-per-second, no requests-per-minute, no daily quota — for any
+  surface, and returns NO rate-limit response headers. What the contract DOES declare is a set of
+  hard payload-size caps, and it signals one of them with HTTP 429, which is the single most
+  misleading thing about this API's throttling behaviour: a 429 from Refersion means "your array is
+  too big", not "slow down", so an exponential-backoff retry of the identical request will fail
+  forever.
+documented_request_rate_limits: 0
+limit_count: 5
+response_headers:
+  x_ratelimit: false
+  ratelimit_rfc9331: false
+  retry_after: false
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header is documented on any operation, and none is
+    declared in the published OpenAPI. An agent has no runtime signal to pace itself by.
+exhaustion_status: null
 limits:
-  - name: API Key Rate Limit
-    description: Requests to the Refersion REST API are rate limited per API key. Exact request-per-minute or request-per-hour thresholds are not publicly disclosed and may vary by plan tier.
-    scope: api-key
-    type: requests
-    notes: Contact Refersion support for specific rate limit thresholds applicable to your plan.
-  - name: GraphQL Query Limit
-    description: GraphQL API queries are subject to complexity and depth limits enforced by the platform. Specific thresholds are not publicly documented.
-    scope: api-key
-    type: complexity
-    notes: Use the GraphQL Explorer (Voyager) tool in the developer portal to evaluate query complexity before production use.
-  - name: Webhook Delivery
-    description: Webhook events are delivered in near-real-time for supported event types. Webhook access is restricted to Scale and Enterprise plans.
-    scope: account
-    type: events
-    notes: Available only on Scale plan and above. Events include New Conversion, Conversion Approved, Conversion Denied, New Payment, New Affiliate, Affiliate Status Change, Affiliate Details Change, New Conversion Trigger, and Bonus Tier Movement.
-authentication:
-  - type: API Key
-    description: API key-based authentication is used for the Refersion REST API. Keys are generated within the merchant dashboard and passed via request headers.
-    notes: Full developer API access requires Scale plan or higher
-  - type: OAuth
-    description: OAuth-based authentication may be used for marketplace and partner integrations via the webhooks-for-marketplace-affiliates endpoint.
-    notes: Used for marketplace affiliate webhook integrations
+- name: Conversion triggers per delete request
+  scope: per-request
+  type: payload-size
+  limit: 50
+  unit: elements
+  operations:
+  - delete_conversion_trigger
+  status_on_exceed: 429
+  body_on_exceed: '{"error": "Max number of elements on attribute (50) reached."}'
+  evidence: Declared as the 429 response on POST /trigger/delete in Refersion's own OpenAPI.
+  remediation: Split into batches of 50 or fewer. Retrying unchanged will not succeed.
+- name: SKU records per commission request
+  scope: per-request
+  type: payload-size
+  limit: 50
+  unit: skus
+  operations:
+  - new_sku_commission
+  status_on_exceed: 422
+  body_on_exceed: '{"errors": ["Only 50 sku records can be processed per request."]}'
+  evidence: >-
+    Declared as a 422 message on POST /offer/new_sku_commission, and as "Max: 50" on the skus field.
+- name: Affiliate IDs per status change
+  scope: per-request
+  type: payload-size
+  limit: 50
+  unit: ids
+  operations:
+  - affiliate_status_change
+  status_on_exceed: unknown
+  evidence: >-
+    "Limit of 50 IDs per call" — stated verbatim in the operation description published in
+    https://www.refersion.dev/llms.txt and on the reference page.
+- name: Affiliate list page size
+  scope: per-request
+  type: pagination
+  limit: 100
+  unit: records
+  operations:
+  - list_affiliates
+  evidence: '"Total that should be returned per API call. Maximum of 100 per call." — the `limit` field description in the published spec.'
+- name: Report download link validity
+  scope: per-resource
+  type: ttl
+  limit: 120
+  unit: seconds
+  operations:
+  - get_reporting_link
+  evidence: >-
+    "Links expire in 2 minutes from the time of request for security purposes." — operation
+    description in llms.txt and the reference page. Response returns `expire_time` as a Unix epoch
+    integer.
+surfaces:
+- surface: REST API v2
+  base_url: https://api.refersion.com/v2
+  request_rate_limit: undocumented
+- surface: GraphQL API
+  base_url: https://api.refersion.com/graphql
+  request_rate_limit: undocumented
+  note: >-
+    No published query-complexity or depth limit. The endpoint refuses anonymous introspection
+    (HTTP 403 on 2026-08-13), so no limit could be observed either.
+- surface: Inbound order tracking webhook
+  base_url: https://inbound-webhooks.refersion.com
+  request_rate_limit: undocumented
+- surface: Outbound webhooks
+  request_rate_limit: undocumented
+  note: No documented delivery-rate cap, retry schedule or backoff policy. See asyncapi/refersion-webhooks.yml.
+plan_gating:
+  note: >-
+    Access to the developer API is a plan boundary rather than a rate boundary — the pricing page
+    lists API access starting at the Growth tier ($199/mo, or $159/mo billed annually). Plan-gated
+    features fail with 422 "Your account plan does not support this feature (error 1)." rather than
+    402 or 403.
+  source: https://www.refersion.com/pricing/
+gaps:
+- No published request-rate limit for any surface.
+- No rate-limit response headers, so clients cannot self-pace.
+- >-
+  HTTP 429 is overloaded to mean a payload-size violation, which will mislead any generic client
+  library that implements standard 429 backoff.

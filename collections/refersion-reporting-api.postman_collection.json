@@ -1,0 +1,403 @@
+{
+  "item": [
+    {
+      "id": "e1d3cec7-b98e-4a61-a28b-78c7868c0201",
+      "name": "Reporting",
+      "description": {
+        "content": "Generate download links for saved reports.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9d08181f-117c-4750-b63b-a34995658347",
+          "name": "Generate Download Link",
+          "request": {
+            "name": "Generate Download Link",
+            "description": {
+              "content": "Get a public download link for a saved report. Links expire 2 minutes from the time of request for security purposes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reporting",
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"report_id\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4cd787a-4199-4f60-966a-1634b5f6aac0",
+              "name": "Report download link generated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reporting",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"report_id\": 123\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"download_link\": \"https://www.refersion.com/api/reporting/download/37/87/154ac2e00df1e6275b1a60869ab3123fceea16f5\",\n  \"expire_time\": 1452028425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2319b8e5-53e3-49b3-90b2-2ec138a1f01e",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reporting",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"report_id\": 123\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bd855d4-bb2b-43f3-9ac6-76b987502ecc",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reporting",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"report_id\": 123\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05849c71-0e4c-4033-85eb-802eadce4db3",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reporting",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"report_id\": 123\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f201b1b5-d8b2-4cbc-ad83-f931233dcba2",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reporting",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"report_id\": 123\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.refersion.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "479f7a2c-2d57-49ab-8e5f-b286cf334a1c",
+    "name": "Refersion REST Affiliates Reporting API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Refersion REST API v2 is organized around REST, with predictable resource-oriented URLs and HTTP response codes to indicate errors. Valid JSON is returned in all responses, including errors. The API allows you to automate affiliate and conversion approval workflows, generate real-time performance reports, and integrate Refersion into existing e-commerce platforms such as Shopify, BigCommerce, and WooCommerce.\n\n\nContact Support:\n Name: Refersion Inc\n Email: helpme@refersion.com",
+      "type": "text/plain"
+    }
+  }
+}

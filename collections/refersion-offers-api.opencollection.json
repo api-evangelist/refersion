@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Refersion REST Affiliates Offers API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Offers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "New SKU Level Commission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/offer/new_sku_commission",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add SKU-specific commission rates to a specific offer. Your plan must support SKU/Product Level Commissions. Maximum of 50 SKUs per request.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

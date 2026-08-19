@@ -1,0 +1,223 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.refersion.dev/reference/webhooks-for-merchants,
+  https://www.refersion.dev/reference/webhooks-for-marketplace-affiliates,
+  https://www.refersion.dev/reference/webhook-tracking
+name: Refersion Webhooks
+description: >-
+  Refersion's outbound event surface. Refersion publishes NO AsyncAPI, CloudEvents or event-catalog
+  document — this is a faithful capture of the webhook catalog as documented on the developer
+  portal, so the artifact is Webhooks and NOT AsyncAPI. Two distinct audiences receive different
+  topic sets: merchants (nine topics) and marketplace affiliates (four topics). A third, INBOUND
+  webhook exists for server-side order reporting and is recorded separately below because it flows
+  the other direction.
+transport: https
+format: application/json
+configuration:
+  merchant:
+    ui: Account > Settings > Webhooks
+    url: https://www.refersion.com/base/settings/integrations/webhooks
+    note: >-
+      Multiple webhook endpoints may be configured, each subscribed to a chosen topic set or to
+      "All Topics".
+  marketplace_affiliate:
+    ui: '"Your Name" > Edit Your Profile > Webhooks'
+    url: https://marketplace.refersion.com/profile
+    note: >-
+      An affiliate promoting for multiple brands receives one webhook per brand per event — five
+      brands means five NEW_CONVERSION deliveries for the same topic.
+delivery:
+  method: POST
+  headers:
+  - name: Refersion-Topic
+    description: The event topic, upper snake case. Example values seen in the docs — AFFILIATE_DETAILS_CHANGE, APPROVED_CONVERSION.
+  - name: Refersion-Signature
+    description: >-
+      Signature used to validate that the delivery came from Refersion. The docs link a "Webhook
+      Validation" page but the link target is empty (href="#"), so the signing algorithm, the
+      signed payload construction and the key material are NOT publicly documented.
+    verification_documented: false
+  - name: Content-Type
+    description: application/json
+  - name: Content-Length
+  retries: undocumented
+  ordering: undocumented
+  ip_allowlist: undocumented
+access:
+  note: >-
+    Webhooks are a paid-tier capability. The pricing feature matrix lists "Webhooks" alongside
+    "Access to developer APIs" in the Platform section; API access is stated as included from the
+    Growth tier.
+  source: https://www.refersion.com/pricing/
+topics:
+- name: New Conversion
+  audience:
+  - merchant
+  - marketplace-affiliate
+  payload: conversion
+  description: A new conversion has been recorded against an affiliate.
+- name: Conversion Approved
+  audience:
+  - merchant
+  - marketplace-affiliate
+  payload: conversion
+  header_example: APPROVED_CONVERSION
+  description: A pending conversion moved to approved.
+- name: Conversion Denied
+  audience:
+  - merchant
+  - marketplace-affiliate
+  payload: conversion
+  description: A conversion was denied; the payload carries denied_reason_code and reason.
+- name: New Payment
+  audience:
+  - merchant
+  - marketplace-affiliate
+  payload: payment
+  description: >-
+    A commission payment was issued. The merchant-side payload is keyed by affiliate id under
+    data.affiliates; the affiliate-side payload is a single flat payment with its conversions.
+- name: New Affiliate
+  audience:
+  - merchant
+  payload: affiliate
+  description: An affiliate account was created in the merchant's program.
+- name: Affiliate Status Change
+  audience:
+  - merchant
+  payload: affiliate
+  description: An affiliate's status changed (for example PENDING to ACTIVE).
+- name: Affiliate Details Change
+  audience:
+  - merchant
+  payload: affiliate
+  header_example: AFFILIATE_DETAILS_CHANGE
+  description: Affiliate profile fields, address, custom fields or offer assignment changed.
+- name: New Conversion Trigger
+  audience:
+  - merchant
+  payload: conversion_trigger
+  description: >-
+    A conversion trigger (coupon code or customer email) was added for an affiliate. Documented as
+    useful for auto-creating discount codes in the merchant's commerce platform.
+- name: Bonus Tier Movement
+  audience:
+  - merchant
+  payload: affiliate_with_reward
+  plan_restriction: Enterprise plans only
+  description: >-
+    An affiliate reached a new bonus-tier milestone. Payload is the affiliate object plus a
+    `reward` object carrying offer_id, milestone_reached, amount_given and notes.
+payloads:
+- name: conversion
+  fields:
+  - id
+  - created
+  - status
+  - denied_reason_code
+  - is_recurring
+  - total_items
+  - total
+  - commission_total
+  - currency
+  - is_test_conversion
+  - payment_status
+  - updated
+  - affiliate{id,code,first_name,last_name,email}
+  - payment_id
+  - offer{id,name,type,amount}
+  - customer{name,email,browser_ip}
+  - coupon_code
+  - order_id
+  - subscription_id
+  - reason
+  - notes
+  - click{created,referer,landed_url,ip,sub_id,creative_id}
+  - source
+  note: >-
+    Merchant deliveries carry `customer` and `source` (e.g. SHOPIFY); marketplace-affiliate
+    deliveries drop `customer` and instead carry `merchant{name}` and `product_names[]`.
+- name: payment
+  fields:
+  - data.affiliates.<affiliate_id>{id,first_name,last_name,email,paypal_email}
+  - payments[]{id,created,total_conversions,payment_method,commission_total,total,currency,note}
+  note: Marketplace-affiliate variant is flat — {id, payment_total, payment_method, conversions[][]}.
+- name: affiliate
+  fields:
+  - id
+  - code
+  - status
+  - last_login
+  - last_conversion
+  - first_name
+  - last_name
+  - email
+  - paypal_email
+  - company
+  - address_1
+  - address_2
+  - city
+  - state
+  - zip
+  - country
+  - phone_number
+  - source
+  - custom_fields[]{id,name,value}
+  - offer{id,name}
+  - is_marketplace_user
+- name: conversion_trigger
+  fields:
+  - id
+  - affiliate_id
+  - trigger
+  - type
+  note: 'type is the trigger kind, e.g. EMAIL; trigger is the value, e.g. CUSTOMER@TRIGGER.COM.'
+- name: affiliate_with_reward
+  fields:
+  - '<all affiliate fields>'
+  - reward{id,offer_id,milestone_reached,amount_given,notes}
+inbound:
+- name: Order Tracking Webhook
+  direction: inbound
+  description: >-
+    Server-side order reporting. The merchant's backend POSTs completed orders to Refersion,
+    matched to the browser click session by a merchant-generated cart_id previously handed over
+    with r.sendCheckoutEvent(). This is the server-side alternative to reporting conversions with
+    r.sendConversion() from the thank-you page.
+  endpoint: https://inbound-webhooks.refersion.com/tracker/orders/paid
+  method: POST
+  content_type: application/json
+  auth:
+  - Refersion-Public-Key
+  - Refersion-Secret-Key
+  docs: https://www.refersion.dev/reference/webhook-tracking
+  body:
+  - cart_id
+  - order_id
+  - subscription_id
+  - is_subscription
+  - auto_credit_affiliate_id
+  - shipping
+  - tax
+  - discount
+  - discount_code
+  - currency_code
+  - customer{first_name,last_name,email,ip_address}
+  - items[]{sku,name,quantity,price}
+  required:
+  - cart_id
+  - order_id
+  - currency_code
+  - 'items[].sku'
+  - 'items[].quantity'
+  - 'items[].price'
+  note: >-
+    cart_id must be non-sequential and not guessable — the docs explicitly warn against session IDs
+    and simple encodings. price is the UNIT price, not the extended line total.
+gaps:
+- No AsyncAPI, CloudEvents or JSON Schema document is published for any topic.
+- >-
+  The Refersion-Signature verification procedure is referenced but the linked page is a dead anchor,
+  so consumers cannot verify webhook authenticity from public documentation.
+- Retry, backoff, ordering and delivery-guarantee semantics are undocumented.

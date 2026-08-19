@@ -1,0 +1,3062 @@
+{
+  "item": [
+    {
+      "id": "5f30ad5d-9503-4ab3-a40c-1afa7d21cca2",
+      "name": "Affiliates",
+      "description": {
+        "content": "Create, retrieve, update, search, and manage affiliate accounts and their conversion triggers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "67e8bb6a-ac8a-4415-998e-9180de173840",
+          "name": "New Affiliate",
+          "request": {
+            "name": "New Affiliate",
+            "description": {
+              "content": "Create a new affiliate. Returns the affiliate ID and their referral link. Tip: Save the id from the response to map your user to their affiliate account in Refersion.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "affiliate",
+                "new"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\",\n  \"status\": \"PENDING\",\n  \"offer\": \"<string>\",\n  \"company\": \"<string>\",\n  \"paypal_email\": \"<string>\",\n  \"address1\": \"<string>\",\n  \"address2\": \"<string>\",\n  \"city\": \"<string>\",\n  \"zip\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"send_welcome\": \"FALSE\",\n  \"conversion_trigger_coupon\": \"<string>\",\n  \"unique_merchant_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ce2ffb5-2d6c-4413-9cc5-75b140f9a12b",
+              "name": "Affiliate created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"email\": \"testing@refersion.com\",\n  \"password\": \"Secure!Pass1\",\n  \"status\": \"ACTIVE\",\n  \"offer\": \"12345\",\n  \"company\": \"<string>\",\n  \"paypal_email\": \"<string>\",\n  \"address1\": \"<string>\",\n  \"address2\": \"<string>\",\n  \"city\": \"<string>\",\n  \"zip\": \"<string>\",\n  \"country\": \"US\",\n  \"state\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"send_welcome\": \"FALSE\",\n  \"conversion_trigger_coupon\": \"BILLSMITH10\",\n  \"unique_merchant_id\": \"abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a3y7\",\n  \"link\": \"https://site.refersion.com/c/a3y7\",\n  \"message\": \"The affiliate 37569297 has been created with the status of ACTIVE.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c779b15-397d-4753-b717-3df78f977e57",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"email\": \"testing@refersion.com\",\n  \"password\": \"Secure!Pass1\",\n  \"status\": \"ACTIVE\",\n  \"offer\": \"12345\",\n  \"company\": \"<string>\",\n  \"paypal_email\": \"<string>\",\n  \"address1\": \"<string>\",\n  \"address2\": \"<string>\",\n  \"city\": \"<string>\",\n  \"zip\": \"<string>\",\n  \"country\": \"US\",\n  \"state\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"send_welcome\": \"FALSE\",\n  \"conversion_trigger_coupon\": \"BILLSMITH10\",\n  \"unique_merchant_id\": \"abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff7b4ba4-0f7c-4709-bfac-721a9f3c67df",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"email\": \"testing@refersion.com\",\n  \"password\": \"Secure!Pass1\",\n  \"status\": \"ACTIVE\",\n  \"offer\": \"12345\",\n  \"company\": \"<string>\",\n  \"paypal_email\": \"<string>\",\n  \"address1\": \"<string>\",\n  \"address2\": \"<string>\",\n  \"city\": \"<string>\",\n  \"zip\": \"<string>\",\n  \"country\": \"US\",\n  \"state\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"send_welcome\": \"FALSE\",\n  \"conversion_trigger_coupon\": \"BILLSMITH10\",\n  \"unique_merchant_id\": \"abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e878ad13-9613-49d0-8813-89a3523fd1f8",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"email\": \"testing@refersion.com\",\n  \"password\": \"Secure!Pass1\",\n  \"status\": \"ACTIVE\",\n  \"offer\": \"12345\",\n  \"company\": \"<string>\",\n  \"paypal_email\": \"<string>\",\n  \"address1\": \"<string>\",\n  \"address2\": \"<string>\",\n  \"city\": \"<string>\",\n  \"zip\": \"<string>\",\n  \"country\": \"US\",\n  \"state\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"send_welcome\": \"FALSE\",\n  \"conversion_trigger_coupon\": \"BILLSMITH10\",\n  \"unique_merchant_id\": \"abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b280109-7a39-4b1d-ae9a-e84eb52d126c",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"email\": \"testing@refersion.com\",\n  \"password\": \"Secure!Pass1\",\n  \"status\": \"ACTIVE\",\n  \"offer\": \"12345\",\n  \"company\": \"<string>\",\n  \"paypal_email\": \"<string>\",\n  \"address1\": \"<string>\",\n  \"address2\": \"<string>\",\n  \"city\": \"<string>\",\n  \"zip\": \"<string>\",\n  \"country\": \"US\",\n  \"state\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"send_welcome\": \"FALSE\",\n  \"conversion_trigger_coupon\": \"BILLSMITH10\",\n  \"unique_merchant_id\": \"abc123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42d517ca-be07-49ca-9b5e-d18870449abe",
+          "name": "Get Affiliate",
+          "request": {
+            "name": "Get Affiliate",
+            "description": {
+              "content": "Get information about an affiliate by their ID or affiliate code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "affiliate",
+                "get"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bc9016b7-8212-4b7e-b8cb-8e26ee0fb27c",
+              "name": "Affiliate details returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 12345678\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 37567438,\n  \"offer_id\": \"1234\",\n  \"status\": \"ACTIVE\",\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"company_name\": \"Company\",\n  \"email\": \"testing@refersion.com\",\n  \"link\": \"https://site.refersion.com/c/a3y7\",\n  \"custom_fields\": [\n    {\n      \"label\": \"What is your web site?\",\n      \"value\": \"https://www.refersion.com\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5290095d-2241-4ea2-a3e4-295fed16371e",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 12345678\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54c282d9-47b7-4590-8cb7-d75c7f0e01d4",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 12345678\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "801081a7-acef-4dc8-bac6-99925e3619f5",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 12345678\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96a27615-2031-4b98-a5c1-e22782ceef33",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 12345678\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b167a165-0305-4075-90ae-9eede1d5a471",
+          "name": "Edit Affiliate",
+          "request": {
+            "name": "Edit Affiliate",
+            "description": {
+              "content": "Edit existing affiliates. Returns all successfully updated affiliate IDs. Always check ids_changed in the response. At least 1 field besides id must be provided per affiliate.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "affiliate",
+                "edit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": \"<integer>\",\n      \"offer\": \"<number>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"paypal_email\": \"<string>\",\n      \"company\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip\": \"<string>\",\n      \"country\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"offer\": \"<number>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"paypal_email\": \"<string>\",\n      \"company\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"zip\": \"<string>\",\n      \"country\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7ff3eb7-7abb-4cef-91c3-e63d45dcf0d6",
+              "name": "Affiliate update results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ids_changed\": [\n    1,\n    3\n  ],\n  \"ids_not_changed\": [\n    2,\n    4\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b867b3d4-5e17-4e38-b550-36c817400c31",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57f02439-1853-43fe-95fc-51fcd592c117",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a6e59ef-78ec-458f-b8e1-b7194cef7d21",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f1935d3-7f7d-425d-9522-2537c5685880",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    {\n      \"id\": 12345678,\n      \"offer\": 12345,\n      \"first_name\": \"Jane\",\n      \"last_name\": \"Doe\",\n      \"email\": \"name@email.com\",\n      \"paypal_email\": \"name@email.com\",\n      \"company\": \"Acme, Inc.\",\n      \"address1\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"NY\",\n      \"zip\": \"<string>\",\n      \"country\": \"US\",\n      \"phone\": \"<string>\",\n      \"custom_fields\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66aac140-afb2-418e-8bf2-425eda0ed3e0",
+          "name": "List All Affiliates",
+          "request": {
+            "name": "List All Affiliates",
+            "description": {
+              "content": "Get all affiliates in your account with pagination support (max 100 per call).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "affiliate",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": \"3\",\n  \"page\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "138a2390-9801-4606-a754-f29df1c7ff0b",
+              "name": "Paginated list of affiliates.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": \"3\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 3,\n  \"results\": [\n    {\n      \"id\": \"694c\",\n      \"offer_id\": \"1234\",\n      \"status\": \"ACTIVE\",\n      \"first_name\": \"Barbara\",\n      \"last_name\": \"Verde\",\n      \"email\": \"testing1@refersion.com\",\n      \"custom_fields\": []\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e8ee7af-1521-4856-ba1a-c4fe9f9d0d78",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": \"3\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd2add8a-83d5-413d-9332-9400b3a4c901",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": \"3\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcc43bde-bd36-4cef-94d3-33076f2ddf41",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": \"3\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2c9372a-c974-43cb-954b-2dbc8ace19f9",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": \"3\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bb426e4-d940-4df3-bfd9-a4b40511abb1",
+          "name": "Search Affiliates",
+          "request": {
+            "name": "Search Affiliates",
+            "description": {
+              "content": "Find affiliates based on email address, affiliate ID, or name. Affiliate ID must be exact; email can be a partial match.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "affiliate",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keyword\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"page\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e42f348b-043c-4577-87c4-1823c39e0b0b",
+              "name": "Search results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyword\": \"testing\",\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 1841,\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"offer_id\": \"string\",\n      \"status\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"offer_id\": \"string\",\n      \"status\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "367ca8ab-7303-42f2-9f7a-8a5091fae494",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyword\": \"testing\",\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa72d95b-0fc0-44a3-bfd1-f90d6f2bb98e",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyword\": \"testing\",\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14462c95-ff3a-4398-ad80-5cfd5fef9307",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyword\": \"testing\",\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21a8a8ec-df2f-4d43-92b6-f1b7e4ba321a",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyword\": \"testing\",\n  \"first_name\": \"Bill\",\n  \"last_name\": \"Smith\",\n  \"page\": \"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed9aece8-7bbf-4454-a9c4-fb1e6a07c725",
+          "name": "Change Affiliates Status",
+          "request": {
+            "name": "Change Affiliates Status",
+            "description": {
+              "content": "Set a new status value for a list of affiliate IDs. Limit of 50 IDs per call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "affiliate",
+                "status_change"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8cc7d295-094e-41e7-826e-1b8c3e30124b",
+              "name": "Affiliate status change results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "status_change"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    1,\n    2,\n    3,\n    4\n  ],\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ids_changed\": [\n    1,\n    3\n  ],\n  \"ids_not_changed\": [\n    2,\n    4\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb4f7ac9-6951-4907-bd8c-027c7f372452",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "status_change"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    1,\n    2,\n    3,\n    4\n  ],\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "731bec76-c4a5-4193-967d-0593f5ea74e0",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "status_change"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    1,\n    2,\n    3,\n    4\n  ],\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff98d746-88e0-4a3a-98c1-8dc2347084d1",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "status_change"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    1,\n    2,\n    3,\n    4\n  ],\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "038b760f-92eb-46fd-b245-c4c30c982b86",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "status_change"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\n    1,\n    2,\n    3,\n    4\n  ],\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c83996cb-61bd-4636-9222-949c0687ae68",
+          "name": "Create Conversion Trigger",
+          "request": {
+            "name": "Create Conversion Trigger",
+            "description": {
+              "content": "Create a Conversion Trigger (coupon, SKU, or email) for a specific affiliate.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "affiliate",
+                "trigger"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"affiliate_code\": \"<string>\",\n  \"type\": \"<string>\",\n  \"trigger\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab032fa7-89ce-464b-8fa5-6c5db95aae6f",
+              "name": "Conversion trigger created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "trigger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliate_code\": \"a3y7\",\n  \"type\": \"<string>\",\n  \"trigger\": \"code100\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trigger_id\": 1097,\n  \"trigger\": \"CODE100\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a5eaf81-432a-42dd-97e1-c424e5a43d92",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "trigger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliate_code\": \"a3y7\",\n  \"type\": \"<string>\",\n  \"trigger\": \"code100\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89344e07-ba10-4a40-b22e-9eeaa199837f",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "trigger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliate_code\": \"a3y7\",\n  \"type\": \"<string>\",\n  \"trigger\": \"code100\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13d66732-25a1-47da-8dbd-16e5944a6a5a",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "trigger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliate_code\": \"a3y7\",\n  \"type\": \"<string>\",\n  \"trigger\": \"code100\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "312f439b-d4b9-41cb-afa4-003ac99b49df",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "affiliate",
+                    "trigger"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliate_code\": \"a3y7\",\n  \"type\": \"<string>\",\n  \"trigger\": \"code100\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49f10ea2-c79a-47c0-a864-f8eae95b88fe",
+          "name": "Delete Conversion Triggers",
+          "request": {
+            "name": "Delete Conversion Triggers",
+            "description": {
+              "content": "Delete all conversion triggers passed in the body message and store the affiliate activity. Max 50 triggers per call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trigger",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": \"<integer>\",\n      \"trigger\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"trigger\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8203e505-eabd-4eee-90b2-4e0e30487ccf",
+              "name": "Array of trigger IDs successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trigger",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  23213131\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7671f4fc-73fa-445b-916e-fe2904cfaff3",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trigger",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4eb4b43a-aa56-455d-9c3e-6ed46e75bcf4",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trigger",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a51958c-2ea6-44a9-82d6-6a0ba3af962a",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trigger",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ceda67d-f65b-4fce-8c7b-299f4a4160e2",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trigger",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8673e857-7c97-4229-99ee-bb14eb2c9644",
+              "name": "Too many conversion triggers in the affiliates object (max 50).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trigger",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"affiliates\": [\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": 12345678,\n      \"trigger\": \"SKUNAME123\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.refersion.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "23f7739b-95f4-4046-8952-025875cb3e78",
+    "name": "Refersion REST Affiliates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Refersion REST API v2 is organized around REST, with predictable resource-oriented URLs and HTTP response codes to indicate errors. Valid JSON is returned in all responses, including errors. The API allows you to automate affiliate and conversion approval workflows, generate real-time performance reports, and integrate Refersion into existing e-commerce platforms such as Shopify, BigCommerce, and WooCommerce.\n\n\nContact Support:\n Name: Refersion Inc\n Email: helpme@refersion.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,184 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  mcp/refersion-mcp.yml (derived candidate tool list),
+  openapi/_original/refersion-rest-api-readme-harvest.json (provider-published OpenAPI),
+  graphql/refersion-schema.graphql (conceptual SDL — Refersion's live GraphQL refuses anonymous
+  introspection)
+name: Refersion Tool Crosswalk
+description: >-
+  Binding of every candidate MCP tool to the REST operation that backs it, so an agent knows
+  exactly which published operation a tool call becomes and which parameters it inherits. Confidence
+  is `high` throughout because the tool list was derived one-to-one FROM the OpenAPI rather than
+  discovered from a shipped server — there is no naming ambiguity to resolve. What is NOT high
+  confidence is the GraphQL column: Refersion's /graphql endpoint returns HTTP 403 to anonymous
+  introspection, so field names are taken from the conceptual SDL in graphql/ and are marked
+  accordingly.
+surfaces:
+  openapi:
+    path: openapi/_original/refersion-rest-api-readme-harvest.json
+    refined:
+    - openapi/refersion-affiliates-api-openapi.yml
+    - openapi/refersion-conversions-api-openapi.yml
+    - openapi/refersion-offers-api-openapi.yml
+    - openapi/refersion-reporting-api-openapi.yml
+    base_url: https://api.refersion.com/v2
+    gated: false
+    note: >-
+      The spec is published only as per-operation JSON embedded in each ReadMe reference page;
+      there is no single downloadable spec URL.
+  graphql:
+    endpoint: https://api.refersion.com/graphql
+    gated: true
+    http_status: 403
+    checked: '2026-08-13'
+    note: >-
+      Anonymous POST of {__schema{queryType{name}}} returns {"message":"Forbidden"}. Field names in
+      the crosswalk below come from the conceptual SDL and require authenticated introspection to
+      confirm.
+  mcp:
+    url: null
+    gated: false
+    exists: false
+    note: No MCP server is published by Refersion. See mcp/refersion-mcp.yml.
+crosswalk:
+- tool: create_affiliate
+  category: affiliates
+  rest:
+  - new_affiliate
+  graphql: createAffiliate
+  binding: 1:1
+  confidence: high
+  note: Inherits requestBody — first_name, last_name, email, password, status required.
+- tool: edit_affiliate
+  category: affiliates
+  rest:
+  - edit_affiliate
+  graphql: updateAffiliates
+  binding: 1:1
+  confidence: high
+  note: Batch. Returns ids_changed / ids_not_changed inside a 200.
+- tool: get_affiliate
+  category: affiliates
+  rest:
+  - get_affiliate
+  graphql: affiliate
+  binding: 1:1
+  confidence: high
+  note: 'Requires exactly one of affiliate_code or id — the spec names the required field literally "affiliate_code or id".'
+- tool: search_affiliates
+  category: affiliates
+  rest:
+  - search_affiliates
+  graphql: searchAffiliates
+  binding: 1:1
+  confidence: high
+- tool: list_affiliates
+  category: affiliates
+  rest:
+  - list_affiliates
+  graphql: affiliates
+  binding: 1:1
+  confidence: high
+  note: limit max 100, page offset.
+- tool: change_affiliate_status
+  category: affiliates
+  rest:
+  - affiliate_status_change
+  graphql: changeAffiliateStatus
+  binding: 1:1
+  confidence: high
+  note: Max 50 IDs per call.
+- tool: create_conversion_trigger
+  category: triggers
+  rest:
+  - new_affiliate_trigger
+  graphql: createConversionTrigger
+  binding: 1:1
+  confidence: high
+- tool: delete_conversion_triggers
+  category: triggers
+  rest:
+  - delete_conversion_trigger
+  graphql: deleteConversionTriggers
+  binding: 1:1
+  confidence: high
+  note: Max 50; overflow returns HTTP 429.
+- tool: credit_commission
+  category: conversions
+  rest:
+  - manual_commission_credit
+  graphql: creditCommission
+  binding: 1:1
+  confidence: high
+  note: Money-moving and non-idempotent.
+- tool: credit_order
+  category: conversions
+  rest:
+  - manual_credit_order_id
+  graphql: creditOrder
+  binding: 1:1
+  confidence: high
+  note: Server-side dedupe exists for this one operation only (422 Error 6 on repeat).
+- tool: change_conversion_status
+  category: conversions
+  rest:
+  - status_change
+  graphql: changeConversionStatus
+  binding: 1:1
+  confidence: high
+- tool: cancel_conversion
+  category: conversions
+  rest:
+  - cancel_conversion
+  graphql: cancelConversion
+  binding: 1:1
+  confidence: high
+- tool: get_conversion_totals
+  category: reporting
+  rest:
+  - get_totals
+  graphql: conversionTotals
+  binding: 1:1
+  confidence: high
+- tool: add_sku_commission
+  category: offers
+  rest:
+  - new_sku_commission
+  graphql: addSkuCommission
+  binding: 1:1
+  confidence: high
+  note: Plan-gated — 422 "Your account plan does not support this feature (error 1)."
+- tool: get_report_link
+  category: reporting
+  rest:
+  - get_reporting_link
+  graphql: reportDownloadLink
+  binding: 1:1
+  confidence: high
+  note: Returned link expires 2 minutes after issue.
+mcp_only: []
+rest_only: []
+event_only:
+- surface: webhook
+  topics:
+  - New Payment
+  - Bonus Tier Movement
+  reason: >-
+    Payments and bonus-tier rewards have NO REST operation and therefore no possible tool binding.
+    They are observable only by receiving the corresponding webhook. An agent asked "what did we pay
+    this affiliate" cannot answer it from the API.
+  detail: asyncapi/refersion-webhooks.yml
+- surface: inbound-webhook
+  endpoint: https://inbound-webhooks.refersion.com/tracker/orders/paid
+  reason: >-
+    Order reporting is an inbound webhook on a different host, not a v2 REST operation, so it sits
+    outside the OpenAPI entirely and has no operationId to bind to.
+coverage:
+  tools: 15
+  rest_operations: 15
+  bound: 15
+  mcp_only: 0
+  rest_only: 0
+  unbindable_event_surfaces: 3
+  binding_rate: 1.0

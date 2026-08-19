@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Refersion REST Affiliates Reporting API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reporting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Download Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.refersion.com/v2/reporting/link",
+            "headers": [
+              {
+                "name": "Refersion-Public-Key",
+                "value": ""
+              },
+              {
+                "name": "Refersion-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a public download link for a saved report. Links expire 2 minutes from the time of request for security purposes.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

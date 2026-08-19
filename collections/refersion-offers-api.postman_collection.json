@@ -1,0 +1,403 @@
+{
+  "item": [
+    {
+      "id": "db1c5afe-c9a2-406f-95b3-ad9d868e1799",
+      "name": "Offers",
+      "description": {
+        "content": "Manage offer-level configurations including SKU-specific commission rates.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2aa2abe9-053f-4411-90f4-f5d88f2c32f2",
+          "name": "New SKU Level Commission",
+          "request": {
+            "name": "New SKU Level Commission",
+            "description": {
+              "content": "Add SKU-specific commission rates to a specific offer. Your plan must support SKU/Product Level Commissions. Maximum of 50 SKUs per request.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "offer",
+                "new_sku_commission"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion public API key.",
+                "key": "Refersion-Public-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Your Refersion secret API key.",
+                "key": "Refersion-Secret-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"offer_id\": \"<string>\",\n  \"skus\": [\n    {\n      \"sku\": \"<string>\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"<string>\",\n      \"product_description\": \"<string>\"\n    },\n    {\n      \"sku\": \"<string>\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"<string>\",\n      \"product_description\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c39041c9-34ed-4fe1-b131-2255ae912bcb",
+              "name": "SKU commission add results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "offer",
+                    "new_sku_commission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offer_id\": \"12345\",\n  \"skus\": [\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    },\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"duplicate_not_added\": [\n    \"TSHIRT-SMALL-RED\"\n  ],\n  \"added\": [\n    \"TSHIRT-SMALL-BLUE\",\n    \"PANTS-LARGE-BLACK\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "042b9d3a-afbb-4583-94f1-bea52f8614b6",
+              "name": "Missing required field in your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "offer",
+                    "new_sku_commission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offer_id\": \"12345\",\n  \"skus\": [\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    },\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing required field X\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "607b12c3-4139-4c55-a6a5-b19957f96709",
+              "name": "Unauthorized – Your API keys are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "offer",
+                    "new_sku_commission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offer_id\": \"12345\",\n  \"skus\": [\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    },\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid API credentials (error 2).\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39ef0a71-b19a-4a95-befc-5df16e979d8a",
+              "name": "Empty request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "offer",
+                    "new_sku_commission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offer_id\": \"12345\",\n  \"skus\": [\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    },\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad request, no body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1977eda-7f60-4ca2-86d1-2103d2ab1406",
+              "name": "Unprocessable Entity – The data you are sending has errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "offer",
+                    "new_sku_commission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion public API key.",
+                    "key": "Refersion-Public-Key",
+                    "value": "pub_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Your Refersion secret API key.",
+                    "key": "Refersion-Secret-Key",
+                    "value": "sec_abc12300000000000000"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offer_id\": \"12345\",\n  \"skus\": [\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    },\n    {\n      \"sku\": \"TSHIRT-SMALL-RED\",\n      \"commission_type\": \"<string>\",\n      \"commission_amount\": \"10\",\n      \"product_description\": \"T-Shirt Red (Small)\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.refersion.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "16e61346-241f-43d6-820a-5485f9e21f47",
+    "name": "Refersion REST Affiliates Offers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Refersion REST API v2 is organized around REST, with predictable resource-oriented URLs and HTTP response codes to indicate errors. Valid JSON is returned in all responses, including errors. The API allows you to automate affiliate and conversion approval workflows, generate real-time performance reports, and integrate Refersion into existing e-commerce platforms such as Shopify, BigCommerce, and WooCommerce.\n\n\nContact Support:\n Name: Refersion Inc\n Email: helpme@refersion.com",
+      "type": "text/plain"
+    }
+  }
+}

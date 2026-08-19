@@ -1,0 +1,162 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/refersion-rest-api-readme-harvest.json, security/refersion-domain-security.yml,
+  well-known/refersion-well-known.yml, errors/refersion-problem-types.yml,
+  conventions/refersion-conventions.yml, and the developer portal at https://www.refersion.dev
+name: Refersion Standards Conformance
+description: >-
+  Assertion of Refersion's API surface against cross-cutting industry standards. Every entry is
+  evidence-backed. Refersion conforms to almost nothing in this list: the API is a bespoke JSON-over-
+  POST design with paired API-key headers, no OAuth, no problem+json, no HTTP caching semantics and
+  no event-specification document. That is a finding, not an omission.
+standards:
+- id: openapi
+  name: OpenAPI Specification
+  conforms: true
+  version: 3.0.0
+  evidence: >-
+    Refersion publishes a real OpenAPI 3.0.0 document — ReadMe embeds the operation-scoped
+    definition in every https://www.refersion.dev/reference/<operation>.md page. Harvested and
+    merged to openapi/_original/refersion-rest-api-readme-harvest.json (15 paths, 15 operations,
+    servers[0] https://api.refersion.com/v2, info.contact helpme@refersion.com). It is NOT offered
+    as a single downloadable file anywhere; api.refersion.com/openapi.json returns 403 and
+    www.refersion.dev/openapi.json returns 404.
+- id: oauth2
+  name: OAuth 2.0
+  conforms: false
+  evidence: >-
+    No securitySchemes of type oauth2 in the published spec; no authorization or token endpoint
+    documented; /.well-known/oauth-authorization-server returns 403 on api.refersion.com and
+    www.refersion.com and 404 on www.refersion.dev. Authentication is a static public/secret header
+    pair.
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: /.well-known/openid-configuration is absent on all three hosts. No id_token, no discovery document.
+- id: rfc9457
+  name: 'RFC 9457: Problem Details for HTTP APIs'
+  conforms: false
+  evidence: >-
+    All error responses are application/json with a vendor envelope — {"error": "..."} or
+    {"errors": [...]}. No application/problem+json media type, no type/title/status/detail/instance
+    members.
+- id: rfc9110-status-semantics
+  name: 'RFC 9110: HTTP semantics for status codes'
+  conforms: false
+  evidence: >-
+    The published contract returns HTTP 204 No Content WITH a JSON error body ("Invalid field X"),
+    uses 404 to mean "empty request body" rather than "resource not found", and uses 429 to mean
+    "more than 50 elements in an array attribute" rather than rate limiting. Documented on every
+    operation in the provider's own spec.
+- id: idempotency
+  name: Idempotency keys (draft-ietf-httpapi-idempotency-key-header)
+  conforms: false
+  evidence: >-
+    No idempotency header of any name is documented or declared. Every operation, including the
+    money-moving manual_commission_credit, is a POST with no request-deduplication contract.
+- id: pagination
+  name: Pagination
+  conforms: partial
+  evidence: >-
+    Offset pagination on list_affiliates (limit, max 100; page) and search_affiliates (page only),
+    with `total` and `results` in the response. No Link header, no cursors, no documented stable
+    sort.
+- id: rfc8594
+  name: 'RFC 8594: The Sunset HTTP Header Field'
+  conforms: false
+  evidence: No Sunset or Deprecation header is documented and no operation is marked deprecated.
+- id: rfc9116
+  name: 'RFC 9116: security.txt'
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt returns 403 on api.refersion.com and www.refersion.com and 404 on
+    www.refersion.dev. See well-known/refersion-well-known.yml.
+- id: rfc8615
+  name: 'RFC 8615: Well-Known URIs'
+  conforms: false
+  evidence: 24 well-known paths probed across three hosts on 2026-08-13; zero returned a document.
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: >-
+    Refersion documents a nine-topic outbound webhook catalog plus an inbound order webhook, but
+    publishes no AsyncAPI, CloudEvents or event-schema document. Captured as a Webhooks artifact at
+    asyncapi/refersion-webhooks.yml instead.
+- id: json-schema
+  name: JSON Schema
+  conforms: partial
+  evidence: >-
+    Request and response bodies are described with inline OpenAPI 3.0 schema objects, but
+    components/schemas is EMPTY — no named, reusable, referenceable schema exists anywhere in the
+    contract. The json-schema/ files in this repo are ours, not Refersion's.
+- id: graphql
+  name: GraphQL
+  conforms: partial
+  evidence: >-
+    A GraphQL endpoint is documented at https://api.refersion.com/graphql with an overview page,
+    but anonymous introspection is refused — POST of a __schema query returned HTTP 403
+    {"message":"Forbidden"} on 2026-08-13. The SDL in graphql/ was captured from the provider's
+    documented explorer, not from live introspection.
+- id: webhook-signing
+  name: Signed webhook delivery
+  conforms: partial
+  evidence: >-
+    Deliveries carry a Refersion-Signature header, but the documentation link describing how to
+    verify it is a dead anchor (href="#"), so the algorithm and key material are not publicly
+    specified. A consumer cannot implement verification from public docs.
+- id: tls
+  name: TLS / transport security
+  conforms: true
+  evidence: >-
+    TLSv1.3 on www.refersion.com, www.refersion.dev and api.refersion.com; HSTS present on
+    www.refersion.com (max-age 15552000) and www.refersion.dev (max-age 31536000) but ABSENT on
+    api.refersion.com. DNSSEC enabled and SPF + DMARC (p=quarantine) published on refersion.com.
+    See security/refersion-domain-security.yml.
+- id: soc2
+  name: SOC 2
+  conforms: unknown
+  evidence: >-
+    No trust center, compliance page or named certification was found. /security, /trust and
+    /legal/privacy-policy all return 404 on www.refersion.com; probe-security-programs.py returned
+    vdp=none trust=none on 2026-08-13. No Compliance pointer is emitted.
+- id: pci-dss
+  name: PCI DSS
+  conforms: not-applicable
+  evidence: >-
+    Refersion computes and records commission amounts but the API accepts no card data; payouts run
+    through PayPal, Trolley and gift cards per the published feature matrix.
+- id: gdpr
+  name: GDPR
+  conforms: unknown
+  evidence: >-
+    A privacy policy is published at https://www.refersion.com/privacy/ (HTTP 200) but no DPA,
+    subprocessor list or data-residency statement was located. The API transports affiliate and
+    customer PII — names, emails, postal addresses, IP addresses — including a plaintext `password`
+    field on affiliate creation.
+- id: fhir
+  name: FHIR
+  conforms: not-applicable
+  evidence: Not a healthcare API.
+- id: fapi
+  name: FAPI
+  conforms: not-applicable
+  evidence: Not an open-banking API.
+- id: scim
+  name: SCIM
+  conforms: not-applicable
+  evidence: No identity-provisioning surface.
+- id: odata
+  name: OData
+  conforms: not-applicable
+  evidence: No OData query surface.
+- id: jsonapi
+  name: 'JSON:API'
+  conforms: false
+  evidence: Responses are bespoke flat objects; no data/attributes/relationships envelope, no type members.
+summary:
+  conformant: 2
+  partial: 4
+  non_conformant: 9
+  unknown: 2
+  not_applicable: 5

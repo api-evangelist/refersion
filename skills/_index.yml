@@ -1,0 +1,47 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  openapi/_original/refersion-rest-api-readme-harvest.json and the Refersion developer portal at
+  https://www.refersion.dev — Refersion publishes no AGENTS.md and no skills of its own.
+name: Refersion Agent Skills
+description: >-
+  Packaged Agent Skills for the marquee Refersion flows. Every step is grounded in a real
+  operationId from Refersion's own published OpenAPI, or — for order tracking, which has no
+  OpenAPI — in verbatim snippets from the developer portal. No operation, field or endpoint below
+  is invented.
+skills:
+- name: refersion-onboard-affiliate
+  file: refersion-onboard-affiliate.md
+  api: refersion:refersion-affiliates-api
+  description: Create an affiliate, attach a conversion trigger, verify, and activate.
+  operations:
+  - new_affiliate
+  - new_affiliate_trigger
+  - get_affiliate
+  - affiliate_status_change
+- name: refersion-reconcile-conversions
+  file: refersion-reconcile-conversions.md
+  api: refersion:refersion-conversions-api
+  description: Pull totals, approve/deny in bulk, cancel orders, and issue manual commission credits.
+  operations:
+  - get_totals
+  - status_change
+  - cancel_conversion
+  - manual_commission_credit
+  - manual_credit_order_id
+  caution: money-moving; no idempotency key
+- name: refersion-track-orders
+  file: refersion-track-orders.md
+  api: refersion:refersion-order-tracking-api
+  description: >-
+    Report completed orders client-side with refersion.js or server-side to the inbound tracking
+    webhook, and confirm via the New Conversion webhook.
+  operations: []
+  note: No OpenAPI covers this surface; steps are verbatim from the developer portal.
+cross_cutting:
+  conventions: conventions/refersion-conventions.yml
+  errors: errors/refersion-problem-types.yml
+  authentication: authentication/refersion-authentication.yml
+  data_model: data-model/refersion-data-model.yml
+  webhooks: asyncapi/refersion-webhooks.yml
+  agentic_access: agentic-access/refersion-agentic-access.yml
