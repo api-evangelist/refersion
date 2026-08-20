@@ -54,6 +54,11 @@ apis:
   humanURL: https://www.refersion.dev/reference/webhooks-for-merchants
   baseURL: https://api.refersion.com
   tags:
+  - Webhook
+  - Conversions
+  - Affiliates
+  - Event
+  tags_raw:
   - Webhooks
   - Conversions
   - Affiliates
@@ -75,6 +80,11 @@ apis:
   humanURL: https://www.refersion.dev/reference/webhook-tracking
   baseURL: https://inbound-webhooks.refersion.com
   tags:
+  - Order Tracking
+  - Conversions
+  - Webhook
+  - E-Commerce
+  tags_raw:
   - Order Tracking
   - Conversions
   - Webhooks
