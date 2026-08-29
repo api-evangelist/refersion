@@ -3,6 +3,18 @@ name: Refersion
 description: Affiliate marketing platform for e-commerce brands providing a REST and
   GraphQL API for managing affiliates, tracking referrals, processing commissions,
   and integrating with Shopify, BigCommerce, WooCommerce, and other platforms.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: unknown
