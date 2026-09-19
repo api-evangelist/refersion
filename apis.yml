@@ -67,7 +67,7 @@ apis:
   baseURL: https://api.refersion.com
   tags:
   - Webhook
-  - Conversions
+  - Conversion
   - Affiliates
   - Event
   tags_raw:
@@ -93,7 +93,7 @@ apis:
   baseURL: https://inbound-webhooks.refersion.com
   tags:
   - Order Tracking
-  - Conversions
+  - Conversion
   - Webhook
   - E-Commerce
   tags_raw:
@@ -133,6 +133,8 @@ apis:
   humanURL: https://www.refersion.dev/reference/welcome-to-refersion
   baseURL: https://api.refersion.com
   tags:
+  - Conversion
+  tags_raw:
   - Conversions
   properties:
   - type: OpenAPI
