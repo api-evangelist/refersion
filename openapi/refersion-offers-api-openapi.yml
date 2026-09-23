@@ -1,10 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Refersion REST Affiliates Offers API
+  title: Refersion REST Offers API
   version: '2.0'
-  description: 'The Refersion REST API v2 is organized around REST, with predictable resource-oriented URLs and HTTP response codes to indicate errors. Valid JSON is returned in all responses, including errors. The API allows you to automate affiliate and conversion approval workflows, generate real-time performance reports, and integrate Refersion into existing e-commerce platforms such as Shopify, BigCommerce, and WooCommerce.
-
-    '
+  description: The Refersion REST API v2 is organized around REST, with predictable resource-oriented URLs and HTTP response codes to indicate errors. Valid JSON is returned in all responses, including errors. The API allows you to automate affiliate and conversion approval workflows, generate real-time performance reports, and integrate Refersion into existing e-commerce platforms such as Shopify, BigCommerce, and WooCommerce.
   contact:
     name: Refersion Inc
     email: helpme@refersion.com
@@ -20,9 +18,7 @@ paths:
     post:
       operationId: new_sku_commission
       summary: New SKU Level Commission
-      description: 'Add SKU-specific commission rates to a specific offer. Your plan must support SKU/Product Level Commissions. Maximum of 50 SKUs per request.
-
-        '
+      description: Add SKU-specific commission rates to a specific offer. Your plan must support SKU/Product Level Commissions. Maximum of 50 SKUs per request.
       tags:
       - Offers
       parameters:
@@ -106,6 +102,12 @@ paths:
           $ref: '#/components/responses/422_Error'
 components:
   responses:
+    422_Error:
+      description: Unprocessable Entity – The data you are sending has errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     400_Error:
       description: Missing required field in your request.
       content:
@@ -126,12 +128,6 @@ components:
             response:
               value:
                 error: Invalid API credentials (error 2).
-    422_Error:
-      description: Unprocessable Entity – The data you are sending has errors.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     404_Error:
       description: Empty request body.
       content:
@@ -142,28 +138,7 @@ components:
             response:
               value:
                 error: Bad request, no body
-  schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-    ErrorSingle:
-      type: object
-      properties:
-        error:
-          type: string
   parameters:
-    Refersion-Public-Key:
-      in: header
-      name: Refersion-Public-Key
-      required: true
-      schema:
-        type: string
-        example: pub_abc12300000000000000
-      description: Your Refersion public API key.
     Refersion-Secret-Key:
       in: header
       name: Refersion-Secret-Key
@@ -181,3 +156,24 @@ components:
         enum:
         - application/json
         default: application/json
+    Refersion-Public-Key:
+      in: header
+      name: Refersion-Public-Key
+      required: true
+      schema:
+        type: string
+        example: pub_abc12300000000000000
+      description: Your Refersion public API key.
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+    ErrorSingle:
+      type: object
+      properties:
+        error:
+          type: string

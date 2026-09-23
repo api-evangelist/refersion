@@ -1,10 +1,7 @@
 {
   "provider": "refersion",
   "sources": [
-    "refersion-affiliates-api-openapi.yml",
-    "refersion-conversions-api-openapi.yml",
-    "refersion-offers-api-openapi.yml",
-    "refersion-reporting-api-openapi.yml"
+    "_original/refersion-rest-api-openapi.yml"
   ],
   "outputs": [
     "refersion-affiliates-api-openapi.yml",
@@ -15,6 +12,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "refersion-rest-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/refersion-rest-api-readme-harvest.json: archived document superseded by a larger archived document",
+    "refersion-affiliates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "refersion-conversions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "refersion-offers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "refersion-reporting-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: Refersion Conversions API — API Evangelist enrichment overlay
   version: 1.0.0
-  description: 'OpenAPI Overlay 1.0.0 capturing API Evangelist enrichments for openapi/refersion-conversions-api-openapi.yml.
+  x-description: 'OpenAPI Overlay 1.0.0 capturing API Evangelist enrichments for openapi/refersion-conversions-api-openapi.yml.
     It never mutates the provider contract: it declares the security schemes Refersion omits, flags two
     RFC 9110 status-code deviations the provider ships in its own spec, and attaches consequence, idempotency,
     batch and pagination semantics harvested from https://www.refersion.dev. Nothing here is invented
