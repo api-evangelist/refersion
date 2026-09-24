@@ -55,8 +55,6 @@ apis:
   properties:
   - type: Documentation
     url: https://www.refersion.dev/reference/graphql-overview
-  - url: graphql/refersion-graphql.md
-    type: GraphQL
 - aid: refersion:refersion-webhooks-api
   name: Refersion Webhooks API
   description: >-
