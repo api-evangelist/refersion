@@ -694,12 +694,6 @@ paths:
                 $ref: '#/components/schemas/ErrorSingle'
 components:
   responses:
-    422_Error:
-      description: Unprocessable Entity – The data you are sending has errors.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     400_Error:
       description: Missing required field in your request.
       content:
@@ -710,16 +704,6 @@ components:
             response:
               value:
                 error: Missing required field X
-    401_Error:
-      description: Unauthorized – Your API keys are incorrect.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorSingle'
-          examples:
-            response:
-              value:
-                error: Invalid API credentials (error 2).
     404_Error:
       description: Empty request body.
       content:
@@ -730,15 +714,31 @@ components:
             response:
               value:
                 error: Bad request, no body
+    422_Error:
+      description: Unprocessable Entity – The data you are sending has errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    401_Error:
+      description: Unauthorized – Your API keys are incorrect.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Invalid API credentials (error 2).
   parameters:
-    Refersion-Secret-Key:
+    Refersion-Public-Key:
       in: header
-      name: Refersion-Secret-Key
+      name: Refersion-Public-Key
       required: true
       schema:
         type: string
-        example: sec_abc12300000000000000
-      description: Your Refersion secret API key.
+        example: pub_abc12300000000000000
+      description: Your Refersion public API key.
     Content-Type:
       in: header
       name: Content-Type
@@ -748,15 +748,20 @@ components:
         enum:
         - application/json
         default: application/json
-    Refersion-Public-Key:
+    Refersion-Secret-Key:
       in: header
-      name: Refersion-Public-Key
+      name: Refersion-Secret-Key
       required: true
       schema:
         type: string
-        example: pub_abc12300000000000000
-      description: Your Refersion public API key.
+        example: sec_abc12300000000000000
+      description: Your Refersion secret API key.
   schemas:
+    ErrorSingle:
+      type: object
+      properties:
+        error:
+          type: string
     ErrorResponse:
       type: object
       properties:
@@ -764,8 +769,3 @@ components:
           type: array
           items:
             type: string
-    ErrorSingle:
-      type: object
-      properties:
-        error:
-          type: string
