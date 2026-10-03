@@ -392,43 +392,6 @@ paths:
         '422':
           $ref: '#/components/responses/422_Error'
 components:
-  responses:
-    400_Error:
-      description: Missing required field in your request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorSingle'
-          examples:
-            response:
-              value:
-                error: Missing required field X
-    404_Error:
-      description: Empty request body.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorSingle'
-          examples:
-            response:
-              value:
-                error: Bad request, no body
-    422_Error:
-      description: Unprocessable Entity – The data you are sending has errors.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    401_Error:
-      description: Unauthorized – Your API keys are incorrect.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorSingle'
-          examples:
-            response:
-              value:
-                error: Invalid API credentials (error 2).
   parameters:
     Refersion-Public-Key:
       in: header
@@ -455,6 +418,43 @@ components:
         type: string
         example: sec_abc12300000000000000
       description: Your Refersion secret API key.
+  responses:
+    422_Error:
+      description: Unprocessable Entity – The data you are sending has errors.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    404_Error:
+      description: Empty request body.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Bad request, no body
+    400_Error:
+      description: Missing required field in your request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Missing required field X
+    401_Error:
+      description: Unauthorized – Your API keys are incorrect.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSingle'
+          examples:
+            response:
+              value:
+                error: Invalid API credentials (error 2).
   schemas:
     ErrorSingle:
       type: object
