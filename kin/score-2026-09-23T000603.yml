@@ -1,21 +1,19 @@
-# Kin Score artifact — refersion — 2026-08-25T154045
+# Kin Score artifact — refersion — 2026-09-23T000603
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: refersion
-  schema_version: 0.14.0
-  scored_at: '2026-08-25'
-  run_ts: 2026-08-25T154045
-  composite: 64.1
+  schema_version: 0.22.0
+  scored_at: '2026-09-23'
+  run_ts: 2026-09-23T000603
+  composite: 61.1
   band: strong
   facets:
-    discoverability: 81.5
-    contract_quality: 72.9
-    governance: 41.7
+    discoverability: 75.9
+    contract_quality: 72.0
+    contract_governance: 29.5
     operational_transparency: 60.5
     developer_ergonomics: 39.9
-    commercial_clarity: 84.2
-    contract_governance: 41.7
     access_clarity: 84.2
   agent_readiness:
     score: 34.6
