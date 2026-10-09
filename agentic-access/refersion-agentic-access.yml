@@ -1,15 +1,18 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/refersion-rest-api-openapi.yml
+source: openapi/refersion-affiliates-api-openapi.yml, openapi/refersion-conversions-api-openapi.yml,
+  openapi/refersion-offers-api-openapi.yml, openapi/refersion-reporting-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 15
   by_action_class:
-    acting: 15
+    acting: 10
+    connected: 5
   by_consequence:
-    write: 14
+    write: 9
+    read: 5
     physical: 1
   human_in_the_loop_required: 0
 operations:
@@ -33,18 +36,12 @@ operations:
   method: post
   operationId: get_affiliate
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /affiliate/edit
   method: post
   operationId: edit_affiliate
@@ -65,34 +62,22 @@ operations:
   method: post
   operationId: list_affiliates
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /affiliate/search
   method: post
   operationId: search_affiliates
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /affiliate/status_change
   method: post
   operationId: affiliate_status_change
@@ -161,18 +146,12 @@ operations:
   method: post
   operationId: get_totals
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /conversion/manual_credit
   method: post
   operationId: manual_commission_credit
@@ -243,15 +222,9 @@ operations:
   method: post
   operationId: get_reporting_link
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
