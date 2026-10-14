@@ -179,7 +179,6 @@
   arazzo: null
 - slug: refersion-microsoft-excel
   label: Microsoft Excel
-  partner: microsoft-excel
   partner_name: Microsoft Excel
   category: Microsoft
   type: marketplace
@@ -187,7 +186,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/refersion/integrations/excel
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: refersion-tracker
   label: Tracker
@@ -291,4 +290,16 @@
   evidence: https://zapier.com/apps/refersion/integrations/mailsso-email-validation-ca20385
   source: edge
   status: pending-partner-spec
+  arazzo: null
+- slug: refersion-twilio-segment
+  label: Twilio Segment
+  partner: segment
+  partner_name: Twilio Segment
+  type: coverage
+  marketplace: coverage
+  channel: partner-built
+  evidence: https://www.twilio.com/docs/segment/connections/destinations/catalog/refersion
+  source: edge
+  relationship: connector-coverage
+  status: not-a-workflow
   arazzo: null
