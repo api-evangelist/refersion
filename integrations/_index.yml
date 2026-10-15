@@ -326,7 +326,7 @@
     app_slug: refersion
     beta: false
     builder: unknown (not in the directory record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: refersion-wordpress-own
   label: WordPress (own)
