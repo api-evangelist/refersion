@@ -15,6 +15,7 @@
   evidence: https://zapier.com/apps/omnisend/integrations/refersion/147548/add-new-refersion-affiliates-to-subscriber-lists-in-omnisend
   template: https://zapier.com/apps/omnisend/integrations/refersion/147548/add-new-refersion-affiliates-to-subscriber-lists-in-omnisend
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: refersion-add-new-refersion-affiliates-as-contacts-in-activecampaign
@@ -29,6 +30,7 @@
   evidence: https://zapier.com/apps/activecampaign/integrations/refersion/147532/add-new-refersion-affiliates-as-contacts-in-activecampaign
   template: https://zapier.com/apps/activecampaign/integrations/refersion/147532/add-new-refersion-affiliates-as-contacts-in-activecampaign
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
 - slug: refersion-add-new-refersion-affiliates-as-tinyemail-subscribers
@@ -42,6 +44,7 @@
   evidence: https://zapier.com/apps/refersion/integrations/tinyemail/1155993/add-new-refersion-affiliates-as-tinyemail-subscribers
   template: https://zapier.com/apps/refersion/integrations/tinyemail/1155993/add-new-refersion-affiliates-as-tinyemail-subscribers
   source: template
+  relationship: ipaas-bridge
   status: pending-partner-spec
   arazzo: null
 - slug: refersion-add-new-refersion-affiliates-to-a-google-sheets-spreadsheet-as-rows
@@ -56,252 +59,8 @@
   evidence: https://zapier.com/apps/google-sheets/integrations/refersion/1235657/add-new-refersion-affiliates-to-a-google-sheets-spreadsheet-as-rows
   template: https://zapier.com/apps/google-sheets/integrations/refersion/1235657/add-new-refersion-affiliates-to-a-google-sheets-spreadsheet-as-rows
   source: template
+  relationship: ipaas-bridge
   status: pending-generation
-  arazzo: null
-- slug: refersion-clickfunnels-classic
-  label: ClickFunnels Classic
-  partner: clickfunnels
-  partner_name: ClickFunnels Classic
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/clickfunnels-classic
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-stripe
-  label: Stripe
-  partner: stripe
-  partner_name: Stripe
-  category: Payment Processing
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/stripe
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-rebrandly
-  label: Rebrandly
-  partner: rebrandly
-  partner_name: Rebrandly
-  category: URL Shortener
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/rebrandly
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-learnworlds
-  label: LearnWorlds
-  partner: learnworlds
-  partner_name: LearnWorlds
-  category: Online Courses
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/learnworlds
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-intercom
-  label: Intercom
-  partner: intercom
-  partner_name: Intercom
-  category: Customer Support
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/intercom
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-mighty-networks
-  label: Mighty Networks
-  partner: mighty-networks
-  partner_name: Mighty Networks
-  category: Website Builders
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/mightynetworks
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-recharge
-  label: Recharge
-  partner: recharge-payments
-  partner_name: Recharge
-  category: eCommerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/recharge
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-google-forms
-  label: Google Forms
-  partner: google-forms
-  partner_name: Google Forms
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/google-forms
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-sql-server
-  label: SQL Server
-  partner_name: SQL Server
-  category: Databases
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/sql-server
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-clickup
-  label: ClickUp
-  partner: clickup
-  partner_name: ClickUp
-  category: Project Management
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/clickup
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-microsoft-excel
-  label: Microsoft Excel
-  partner_name: Microsoft Excel
-  category: Microsoft
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/excel
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-tracker
-  label: Tracker
-  partner_name: Tracker
-  category: CRM (Customer Relationship Management)
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/tracker-1
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-proabono
-  label: ProAbono
-  partner_name: ProAbono
-  category: Payment Processing
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/proabono-da76382
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-specific
-  label: Specific
-  partner: specific
-  partner_name: Specific
-  category: Forms & Surveys
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/specific
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-xero
-  label: Xero
-  partner: xero
-  partner_name: Xero
-  category: Accounting
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/xero
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-basecamp
-  label: Basecamp
-  partner: basecamp
-  partner_name: Basecamp
-  category: Project Management
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/basecamp
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: refersion-evernote
-  label: Evernote
-  partner: evernote
-  partner_name: Evernote
-  category: Notes
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/evernote
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-clearbit
-  label: Clearbit
-  partner_name: Clearbit
-  category: Contact Management
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/clearbit
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-modash
-  label: Modash
-  partner_name: Modash
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/modash
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-mails-so
-  label: mails.so
-  partner_name: mails.so
-  category: Marketing Automation
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/refersion/integrations/mailsso-email-validation-ca20385
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: refersion-twilio-segment
-  label: Twilio Segment
-  partner: segment
-  partner_name: Twilio Segment
-  type: marketplace
-  marketplace: segment-partner-destinations
-  channel: partner-built
-  evidence: https://www.twilio.com/docs/segment/connections/destinations/catalog/refersion
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
   arazzo: null
 - slug: refersion-zapier
   label: Zapier
@@ -340,4 +99,271 @@
   source: edge
   relationship: platform-app
   status: not-a-workflow
+  arazzo: null
+- slug: refersion-twilio-segment
+  label: Twilio Segment
+  partner: segment
+  partner_name: Twilio Segment
+  type: marketplace
+  marketplace: segment-partner-destinations
+  channel: partner-built
+  evidence: https://www.twilio.com/docs/segment/connections/destinations/catalog/refersion
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: refersion-clickfunnels-classic
+  label: ClickFunnels Classic
+  partner: clickfunnels
+  partner_name: ClickFunnels Classic
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/clickfunnels-classic
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-stripe
+  label: Stripe
+  partner: stripe
+  partner_name: Stripe
+  category: Payment Processing
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/stripe
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-rebrandly
+  label: Rebrandly
+  partner: rebrandly
+  partner_name: Rebrandly
+  category: URL Shortener
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/rebrandly
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: refersion-learnworlds
+  label: LearnWorlds
+  partner: learnworlds
+  partner_name: LearnWorlds
+  category: Online Courses
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/learnworlds
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-intercom
+  label: Intercom
+  partner: intercom
+  partner_name: Intercom
+  category: Customer Support
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/intercom
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-mighty-networks
+  label: Mighty Networks
+  partner: mighty-networks
+  partner_name: Mighty Networks
+  category: Website Builders
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/mightynetworks
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-recharge
+  label: Recharge
+  partner: recharge-payments
+  partner_name: Recharge
+  category: eCommerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/recharge
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-google-forms
+  label: Google Forms
+  partner: google-forms
+  partner_name: Google Forms
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/google-forms
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-sql-server
+  label: SQL Server
+  partner: microsoft-sql-server
+  partner_name: SQL Server
+  category: Databases
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/sql-server
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-clickup
+  label: ClickUp
+  partner: clickup
+  partner_name: ClickUp
+  category: Project Management
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/clickup
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-microsoft-excel
+  label: Microsoft Excel
+  partner_name: Microsoft Excel
+  category: Microsoft
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/excel
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: refersion-tracker
+  label: Tracker
+  partner_name: Tracker
+  category: CRM (Customer Relationship Management)
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/tracker-1
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: refersion-proabono
+  label: ProAbono
+  partner_name: ProAbono
+  category: Payment Processing
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/proabono-da76382
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: refersion-specific
+  label: Specific
+  partner: specific
+  partner_name: Specific
+  category: Forms & Surveys
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/specific
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: refersion-xero
+  label: Xero
+  partner: xero
+  partner_name: Xero
+  category: Accounting
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/xero
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-basecamp
+  label: Basecamp
+  partner: basecamp
+  partner_name: Basecamp
+  category: Project Management
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/basecamp
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: refersion-evernote
+  label: Evernote
+  partner: evernote
+  partner_name: Evernote
+  category: Notes
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/evernote
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: refersion-clearbit
+  label: Clearbit
+  partner: clearbit
+  partner_name: Clearbit
+  category: Contact Management
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/clearbit
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: refersion-modash
+  label: Modash
+  partner_name: Modash
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/modash
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: refersion-mails-so
+  label: mails.so
+  partner_name: mails.so
+  category: Marketing Automation
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/refersion/integrations/mailsso-email-validation-ca20385
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
   arazzo: null
