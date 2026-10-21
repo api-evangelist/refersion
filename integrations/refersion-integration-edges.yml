@@ -10,6 +10,7 @@ checked:
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/refersion/integrations
 - wordpress/integrations/wordpress-integration-edges.yml
+- yotpo/integrations/yotpo-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -389,6 +390,22 @@ edges:
   direction: third-party
   category: Marketing Automation
   partner_url: https://mails.so/
+- partner_name: Yotpo (own)
+  partner: yotpo
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.yotpo.com/integrations/refersion/
+  mirror_of: yotpo/integrations/yotpo-integration-edges.yml
+  apps:
+  - Refersion
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
 templates:
 - title: Send new Refersion affiliate notifications to a Slack channel
   url: https://zapier.com/apps/refersion/integrations/slack/121289/send-new-refersion-affiliate-notifications-to-a-slack-channel
