@@ -87,19 +87,6 @@
     builder: unknown (not in the directory record)
   status: not-a-workflow
   arazzo: null
-- slug: refersion-wordpress-own
-  label: WordPress (own)
-  partner: wordpress
-  partner_name: WordPress (own)
-  category: WordPress plugin
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://wordpress.org/plugins/refersion-for-woocommerce/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: refersion-twilio-segment
   label: Twilio Segment
   partner: segment
@@ -367,6 +354,19 @@
   relationship: ipaas-bridge
   status: pending-partner-spec
   arazzo: null
+- slug: refersion-wordpress-own
+  label: WordPress (own)
+  partner: wordpress
+  partner_name: WordPress (own)
+  category: WordPress plugin
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://wordpress.org/plugins/refersion-for-woocommerce/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
 - slug: refersion-yotpo-own
   label: Yotpo (own)
   partner: yotpo
@@ -375,6 +375,19 @@
   marketplace: own
   channel: partner-built
   evidence: https://www.yotpo.com/integrations/refersion/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: refersion-bigcommerce-own
+  label: BigCommerce (own)
+  partner: bigcommerce
+  partner_name: BigCommerce (own)
+  category: Marketing, Affiliate Programs, Marketing, Digital Marketing & Advertising
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.bigcommerce.com/apps/refersion/
   source: edge
   relationship: platform-app
   status: not-a-workflow
